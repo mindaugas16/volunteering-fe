@@ -1,0 +1,7 @@
+{
+  "env": {
+    "MONGO_USER": "mindaugas",
+    "MONGO_PASSWORD": "T50hXVP2tJ2w5YVQ",
+    "MONGO_DB": "volunteering-app-dev"
+  }
+}
