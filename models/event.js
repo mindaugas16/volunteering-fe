@@ -15,14 +15,34 @@ const eventSchema = new Schema({
         type: Date,
         required: true
     },
+    location: {
+        type: Schema.Types.Mixed,
+        required: true
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    opportunities: [
+    activities: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Opportunity'
+            ref: 'Activity'
+        }
+    ],
+    tags: [
+        {
+            type: String
+        }
+    ],
+    volunteers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    sponsors: [
+        {
+            type: String
         }
     ]
 });

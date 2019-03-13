@@ -9,7 +9,7 @@ type Booking {
     updatedAt: String!
 }
 
-type Opportunity {
+type Activity {
     _id: ID!
     name: String!
     description: String!
@@ -35,7 +35,7 @@ type Event {
     description: String!
     date: String!
     creator: User!
-    opportunities: [Opportunity!]
+    activities: [Activity!]
 }
 
 type User {
@@ -43,7 +43,7 @@ type User {
     email: String!
     password: String
     createdEvents: [Event!]!
-    createdOpportunities: [Opportunity!]!
+    createdActivities: [Activity!]!
 }
 
 type AuthData {
@@ -52,7 +52,15 @@ type AuthData {
     tokenExpiration: Int!
 }
 
-input OpportunityInput {
+type Participation {
+    volunteer: User!
+    activity: Activity!
+    additionalInformation: String
+    createdAt: String!
+    updatedAt: String!
+}
+
+input ActivityInput {
     name: String!
     description: String!
     location: LocationInput!
@@ -79,11 +87,17 @@ input LocationInput {
     postalCode: String!
 }
 
+input ParticipationInput {
+    activityId: ID!
+    additionalInformation: String
+}
+
 type RootQuery {
     events: [Event!]!
     bookings: [Booking!]!
     login(email: String!, password: String!): AuthData!
-    opportunities: [Opportunity!]!
+    activities: [Activity!]!
+    participations: [Participation!]!
 }
 
 type RootMutation {
@@ -91,7 +105,8 @@ type RootMutation {
     createUser(userInput: UserInput): User
     bookEvent(eventId: ID!): Booking!
     cancelBooking(bookingId: ID!): Event!
-    createOpportunity(opportunityInput: OpportunityInput): Opportunity
+    createActivity(activityInput: ActivityInput): Activity
+    participate(participationInput: ParticipationInput): Participation
 }
 
 schema {

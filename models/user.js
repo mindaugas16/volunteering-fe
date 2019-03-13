@@ -11,16 +11,31 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    postalCode: {
+        type: String
+    },
     createdEvents: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Event'
         }
     ],
-    createdOpportunities: [
+    createdActivities: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Opportunity'
+            ref: 'Activity'
+        }
+    ],
+    participatingEvents: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Event'
+        }
+    ],
+    participations: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Participation'
         }
     ]
 });

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const opportunitySchema = new Schema({
+const activitySchema = new Schema({
     name: {
         type: String,
         required: true
@@ -18,9 +18,9 @@ const opportunitySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    location: {
-        type: Schema.Types.Mixed,
-        required: true
+    volunteersNeeded: {
+        type: Number,
+        default: 1
     },
     event: {
         type: Schema.Types.ObjectId,
@@ -30,7 +30,19 @@ const opportunitySchema = new Schema({
         {
             type: String
         }
+    ],
+    volunteers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    participations: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Participation'
+        }
     ]
 }, { timestamps: true });
 
-module.exports = mongoose.model('Opportunity', opportunitySchema);
+module.exports = mongoose.model('Activity', activitySchema);
