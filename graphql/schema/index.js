@@ -13,12 +13,16 @@ type Activity {
     _id: ID!
     name: String!
     description: String!
-    date: String!
+    date: DateRange!
     creator: User!
-    location: Location!
     createdAt: String!
     updatedAt: String!
     event: Event!
+}
+
+type DateRange {
+    start: String!
+    end: String
 }
 
 type Location {
@@ -64,9 +68,13 @@ type Participation {
 input ActivityInput {
     name: String!
     description: String!
-    location: LocationInput!
-    date: String
+    date: DateRangeInput!
     eventId: ID!
+}
+
+input DateRangeInput {
+    start: String!
+    end: String
 }
 
 input EventInput {
@@ -95,11 +103,12 @@ input ParticipationInput {
 }
 
 type RootQuery {
-    events: [Event!]!
     event(eventId: ID!): Event!
+    events: [Event!]!
+    activity(activityId: ID!): Activity!
+    activities: [Activity!]!
     bookings: [Booking!]!
     login(email: String!, password: String!): AuthData!
-    activities: [Activity!]!
     participations: [Participation!]!
 }
 

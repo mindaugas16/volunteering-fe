@@ -22,11 +22,18 @@ const transformParticipation = participation => {
     }
 };
 
+const transformDateRange = date => {
+    return {
+        start: dateToString(date.start),
+        end: dateToString(date.end)
+    }
+};
+
 const transformActivity = activity => {
     return {
         ...activity._doc,
         _id: activity.id,
-        date: dateToString(activity._doc.date),
+        date: transformDateRange(activity._doc.date),
         creator: user.bind(this, activity._doc.creator),
         event: singleEvent.bind(this, activity._doc.event),
         createdAt: dateToString(activity._doc.createdAt),
@@ -106,3 +113,4 @@ exports.transformEvent = transformEvent;
 exports.transformBooking = transformBooking;
 exports.transformActivity = transformActivity;
 exports.transformParticipation = transformParticipation;
+exports.transformDateRange = transformDateRange;

@@ -12,7 +12,7 @@ const activitySchema = new Schema({
         required: true
     },
     date: {
-        type: Date,
+        type: Schema.Types.Mixed
     },
     creator: {
         type: Schema.Types.ObjectId,
@@ -24,7 +24,8 @@ const activitySchema = new Schema({
     },
     event: {
         type: Schema.Types.ObjectId,
-        ref: 'Event'
+        ref: 'Event',
+        required: true
     },
     tags: [
         {

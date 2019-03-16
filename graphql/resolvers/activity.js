@@ -1,8 +1,7 @@
 const Activity = require('../../models/activity');
 const User = require('../../models/user');
 const Event = require('../../models/event');
-const { dateToString } = require('../../helpers/date');
-const { transformActivity } = require('./merge');
+const { transformActivity, transformDateRange } = require('./merge');
 
 module.exports = {
     activities: async () => {
@@ -11,6 +10,14 @@ module.exports = {
             return activities.map(activity => {
                 return transformActivity(activity);
             });
+        } catch (err) {
+            throw err;
+        }
+    },
+    activity: async (args) => {
+        try {
+            const activity = await Activity.findById(args.activityId);
+            return transformActivity(activity);
         } catch (err) {
             throw err;
         }
@@ -24,25 +31,25 @@ module.exports = {
         const activity = new Activity({
             name: args.activityInput.name,
             description: args.activityInput.description,
-            date: dateToString(args.activityInput.date),
+            date: transformDateRange(args.activityInput.date),
             creator: req.userId,
-            location: args.activityInput.location,
             event: fetchedEvent
         });
         let createdActivity;
         try {
-            const result = await activity.save();
-            createdActivity = transformActivity(result);
             const user = await User.findById(req.userId);
             if (!user) {
                 throw new Error('User not found.');
             }
-            user.createdActivities.push(createdActivity);
-            await user.save();
-
             if (!fetchedEvent) {
                 throw new Error('Event not found.');
             }
+            const result = await activity.save();
+            createdActivity = transformActivity(result);
+
+            user.createdActivities.push(createdActivity);
+            await user.save();
+
             fetchedEvent.activities.push(createdActivity);
             await fetchedEvent.save();
 
