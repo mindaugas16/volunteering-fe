@@ -31,18 +31,15 @@ const activitySchema = new Schema({
             type: String
         }
     ],
-    volunteers: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
     participations: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Participation'
         }
-    ]
+    ],
+    requirements: {
+        type: String
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Activity', activitySchema);

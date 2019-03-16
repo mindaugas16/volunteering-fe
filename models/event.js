@@ -44,6 +44,16 @@ const eventSchema = new Schema({
         {
             type: String
         }
+    ],
+    requiredSkills: [
+        {
+            type: String,
+        }
+    ],
+    categories: [
+        {
+            type: String,
+        }
     ]
 });
 

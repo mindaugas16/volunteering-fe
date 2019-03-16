@@ -14,6 +14,12 @@ const userSchema = new Schema({
     postalCode: {
         type: String
     },
+    contacts: {
+        type: String
+    },
+    bio: {
+        type: String
+    },
     createdEvents: [
         {
             type: Schema.Types.ObjectId,
@@ -26,13 +32,35 @@ const userSchema = new Schema({
             ref: 'Activity'
         }
     ],
-    participatingEvents: [
+    participations: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Event'
+            ref: 'Participation'
         }
     ],
-    participations: [
+    skills: [
+        {
+            type: String
+        }
+    ],
+    interests: [
+        {
+            type: String
+        }
+    ],
+    organizations: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Organization'
+        }
+    ],
+    achievements: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Achievement'
+        }
+    ],
+    favorites: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Participation'
