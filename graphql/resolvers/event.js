@@ -14,27 +14,36 @@ module.exports = {
             throw err;
         }
     },
+    event: async (args) => {
+        try {
+            const event = await Event.findById(args.eventId);
+            return transformEvent(event);
+        } catch (err) {
+            throw err;
+        }
+    },
     createEvent: async (args, req) => {
         if (!req.isAuth) {
             throw new Error('Unauthenticated!');
         }
-        const event = new Event({
-            title: args.eventInput.title,
-            description: args.eventInput.description,
-            date: dateToString(args.eventInput.date),
-            creator: req.userId
-        });
-        let createdEvent;
         try {
-            const result = await event.save();
-            createdEvent = transformEvent(result);
             const user = await User.findById(req.userId);
             if (!user) {
                 throw new Error('User not found.');
             }
+
+            const event = new Event({
+                title: args.eventInput.title,
+                description: args.eventInput.description,
+                date: dateToString(args.eventInput.date),
+                location: args.eventInput.location,
+                creator: req.userId
+            });
+            const result = await event.save();
+
             user.createdEvents.push(event);
             await user.save();
-            return createdEvent;
+            return transformEvent(result);
         } catch (err) {
             throw err;
         }

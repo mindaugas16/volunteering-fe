@@ -16,8 +16,7 @@ const eventSchema = new Schema({
         required: true
     },
     location: {
-        type: Schema.Types.Mixed,
-        required: true
+        type: Schema.Types.Mixed
     },
     creator: {
         type: Schema.Types.ObjectId,
@@ -34,20 +33,9 @@ const eventSchema = new Schema({
             type: String
         }
     ],
-    volunteers: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
     sponsors: [
         {
             type: String
-        }
-    ],
-    requiredSkills: [
-        {
-            type: String,
         }
     ],
     categories: [

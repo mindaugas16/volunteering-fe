@@ -36,6 +36,7 @@ type Event {
     date: String!
     creator: User!
     activities: [Activity!]
+    location: Location
 }
 
 type User {
@@ -72,6 +73,7 @@ input EventInput {
     title: String!
     description: String!
     date: String!
+    location: LocationInput
 }
 
 input UserInput {
@@ -94,6 +96,7 @@ input ParticipationInput {
 
 type RootQuery {
     events: [Event!]!
+    event(eventId: ID!): Event!
     bookings: [Booking!]!
     login(email: String!, password: String!): AuthData!
     activities: [Activity!]!
