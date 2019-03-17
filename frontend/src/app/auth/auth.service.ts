@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 const LOCAL_STORAGE_KEY = 'currentUser';
 
@@ -12,7 +13,8 @@ const LOCAL_STORAGE_KEY = 'currentUser';
 export class AuthService {
   private authenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo,
+              private router: Router) {
     this.authenticated$.next(this.isAuthenticated());
   }
 
@@ -23,10 +25,6 @@ export class AuthService {
 
   static getUser() {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || null;
-  }
-
-  private authenticated(authenticated: boolean) {
-    this.authenticated$.next(authenticated);
   }
 
   signIn(email: string, password: string): Observable<any> {
@@ -58,17 +56,23 @@ export class AuthService {
       tap(res => {
         setSession(res);
         this.authenticated(true);
+        this.router.navigate(['/']);
       })
     );
+  }
+
+  private authenticated(authenticated: boolean) {
+    this.authenticated$.next(authenticated);
   }
 
   authenticatedObservable(): Observable<boolean> {
     return this.authenticated$.asObservable();
   }
 
-
   public logout() {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
+    this.authenticated(false);
+    this.router.navigate(['/auth/sign-in']);
   }
 
   public isAuthenticated() {
