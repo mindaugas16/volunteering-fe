@@ -1,10 +1,28 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
+import { AuthGuard } from './auth/guards/auth/auth.guard';
+import { HomepageComponent } from './core/homepage/homepage.component';
+import { UserGuard } from './auth/guards/user/user.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomepageComponent
+  },
+  {
     path: 'auth',
+    canActivate: [AuthGuard],
     loadChildren: './auth/auth.module#AuthModule'
+  },
+  {
+    path: 'profile',
+    canActivate: [UserGuard],
+    loadChildren: './profile/profile.module#ProfileModule'
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   }
 ];
 
@@ -12,4 +30,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

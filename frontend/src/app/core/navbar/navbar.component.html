@@ -56,7 +56,8 @@
           </a>
         </div>
         <ng-template #userProfile>
-          <a class="button is-primary">
+          <a class="button is-primary"
+             [routerLink]="'/profile'">
             {{user.email}}
           </a>
         </ng-template>
