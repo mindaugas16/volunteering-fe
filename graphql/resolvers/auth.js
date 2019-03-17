@@ -14,6 +14,9 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
             const createdUser = new User({
                 email: args.userInput.email,
+                firstName: args.userInput.firstName,
+                lastName: args.userInput.lastName,
+                postalCode: args.userInput.postalCode,
                 password: hashedPassword,
             });
             const result = await createdUser.save();

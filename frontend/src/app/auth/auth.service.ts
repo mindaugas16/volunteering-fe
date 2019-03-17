@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { CreateUserInterface } from './user.interface';
 
 const LOCAL_STORAGE_KEY = 'currentUser';
 
@@ -57,6 +58,28 @@ export class AuthService {
         setSession(res);
         this.authenticated(true);
         this.router.navigate(['/']);
+      })
+    );
+  }
+
+  signUp(form: CreateUserInterface) {
+    console.log(form);
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation createUser($email: String!, $password: String!, $lastName: String!, $firstName: String!, $postalCode: String!) {
+          createUser(userInput: {email: $email, password: $password, lastName: $lastName, firstName: $firstName, postalCode: $postalCode}) {
+            email
+            firstName
+            lastName
+            postalCode
+          }
+        }
+      `,
+      variables: form
+    }).pipe(
+      map(({data}) => data),
+      tap(res => {
+        this.router.navigate(['/auth/sign-in']);
       })
     );
   }

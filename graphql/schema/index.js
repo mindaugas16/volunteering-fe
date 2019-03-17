@@ -46,6 +46,9 @@ type Event {
 type User {
     _id: ID!
     email: String!
+    firstName: String!
+    lastName: String!
+    postalCode: String!
     password: String
     createdEvents: [Event!]!
     createdActivities: [Activity!]!
@@ -88,6 +91,9 @@ input EventInput {
 input UserInput {
     email: String!
     password: String!
+    firstName: String!
+    lastName: String!
+    postalCode: String!
 }
 
 input LocationInput {
