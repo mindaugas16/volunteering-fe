@@ -53,6 +53,7 @@ module.exports = {
         return {
             userId: user.id,
             token,
+            email: user._doc.email,
             tokenExpiration: 1
         }
     }

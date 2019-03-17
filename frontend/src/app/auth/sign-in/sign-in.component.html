@@ -1,0 +1,41 @@
+<div class="columns is-mobile mt-4">
+  <form [formGroup]="form"
+        class="column is-half is-offset-one-quarter">
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input"
+               id="email"
+               type="email"
+               placeholder="Email"
+               formControlName="email">
+        <span class="icon is-small is-left">
+          <i class="fa fa-envelope"></i>
+        </span>
+        <span class="icon is-small is-right">
+          <i class="fa fa-check"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control has-icons-left">
+        <input
+          class="input"
+          id="password"
+          type="password"
+          placeholder="Password"
+          formControlName="password">
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control">
+        <button class="button is-success"
+                (click)="submit()">
+          Login
+        </button>
+      </p>
+    </div>
+  </form>
+</div>
