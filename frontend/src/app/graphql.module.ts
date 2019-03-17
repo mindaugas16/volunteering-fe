@@ -9,12 +9,15 @@ const uri = environment.api;
 export function createApollo(httpLink: HttpLink) {
   return {
     link: httpLink.create({uri}),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache()
   };
 }
 
 @NgModule({
-  exports: [ApolloModule, HttpLinkModule],
+  exports: [
+    ApolloModule,
+    HttpLinkModule
+  ],
   providers: [
     {
       provide: APOLLO_OPTIONS,
