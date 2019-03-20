@@ -1,10 +1,13 @@
 <div class="control">
   <label class="label"
-         *ngIf="label"
          [for]="label"
   >
-    {{label}}
+    <ng-container *ngIf="label">
+      {{label}}<span *ngIf="required">*</span>
+    </ng-container>
+    <ng-content></ng-content>
   </label>
+
   <input class="input"
          [id]="label"
          [type]="type"

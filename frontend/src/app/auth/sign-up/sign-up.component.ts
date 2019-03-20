@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { AuthHelper } from '../helpers/auth.helper';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,16 +18,24 @@ export class SignUpComponent implements OnInit {
     termsAndConditions: new FormControl(false, [Validators.required])
   });
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private authHelper: AuthHelper) {
   }
 
   ngOnInit() {
   }
 
   submit() {
+    if (this.form.invalid) {
+      this.authHelper.invalidateFormControls(this.form);
+      return;
+    }
     const {termsAndConditions, ...rest} = this.form.value;
-    this.authService.signUp(rest).subscribe(res => {
-      console.log(res);
-    });
+    this.authService.signUp(rest).subscribe(() => {
+      },
+      err => {
+        this.authHelper.invalidateFormControls(this.form);
+      }
+    );
   }
 }

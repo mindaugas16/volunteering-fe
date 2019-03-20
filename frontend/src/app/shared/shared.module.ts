@@ -4,12 +4,14 @@ import { DropdownDirective } from './directives/dropdown/dropdown.directive';
 import { DropdownToggleDirective } from './directives/dropdown/dropdown-toggle.directive';
 import { InputComponent } from './components/input/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputLabelDirective } from './components/input/directives/input-label.directive';
 
 @NgModule({
   declarations: [
     DropdownDirective,
     DropdownToggleDirective,
-    InputComponent
+    InputComponent,
+    InputLabelDirective
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     DropdownDirective,
     DropdownToggleDirective,
-    InputComponent
+    InputComponent,
+    InputLabelDirective
   ]
 })
 export class SharedModule { }

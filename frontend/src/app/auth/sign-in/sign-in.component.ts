@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { AuthHelper } from '../helpers/auth.helper';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,10 +11,12 @@ import { AuthService } from '../auth.service';
 export class SignInComponent implements OnInit {
   form: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required])
+    password: new FormControl(null, [Validators.required]),
+    rememberMe: new FormControl(false)
   });
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private authHelper: AuthHelper) {
   }
 
   ngOnInit() {
@@ -21,16 +24,14 @@ export class SignInComponent implements OnInit {
 
   submit() {
     if (this.form.invalid) {
+      this.authHelper.invalidateFormControls(this.form);
       return;
     }
     const {email, password} = this.form.value;
     this.authService.signIn(email, password).subscribe(() => {
       },
       err => {
-        Object.keys(this.form.controls).forEach(field => {
-          const control = this.form.get(field);
-          control.setErrors({incorrect: true});
-        });
+        this.authHelper.invalidateFormControls(this.form);
       });
   }
 

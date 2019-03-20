@@ -1,5 +1,6 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, ContentChild, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { InputLabelDirective } from './directives/input-label.directive';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -16,9 +17,12 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   ]
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
+  @ContentChild(InputLabelDirective, {read: TemplateRef}) inputLabel;
+
   @Input() type = 'text';
   @Input() label: string;
   @Input() placeholder: string;
+  @Input() required: boolean;
   @Input() formControl: FormControl;
 
   // The internal data model
