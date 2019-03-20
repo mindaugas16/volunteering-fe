@@ -6,12 +6,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomepageComponent } from './homepage/homepage.component';
 import { SharedModule } from '../shared/shared.module';
 import { SearchModule } from '../search/search.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     PageNotFoundComponent,
-    HomepageComponent
+    HomepageComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { SearchModule } from '../search/search.module';
     SearchModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ]
 })
 export class CoreModule {
