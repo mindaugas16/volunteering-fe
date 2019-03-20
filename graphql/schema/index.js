@@ -41,6 +41,7 @@ type Event {
     creator: User!
     activities: [Activity!]
     location: Location
+    tags: [String!]
 }
 
 type User {

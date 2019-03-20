@@ -5,13 +5,15 @@ import { DropdownToggleDirective } from './directives/dropdown/dropdown-toggle.d
 import { InputComponent } from './components/input/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputLabelDirective } from './components/input/directives/input-label.directive';
+import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
 
 @NgModule({
   declarations: [
     DropdownDirective,
     DropdownToggleDirective,
     InputComponent,
-    InputLabelDirective
+    InputLabelDirective,
+    CutSentencePipe
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { InputLabelDirective } from './components/input/directives/input-label.d
     DropdownDirective,
     DropdownToggleDirective,
     InputComponent,
-    InputLabelDirective
+    InputLabelDirective,
+    CutSentencePipe
   ]
 })
 export class SharedModule { }

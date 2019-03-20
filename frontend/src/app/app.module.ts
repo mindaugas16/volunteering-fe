@@ -17,7 +17,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
-    GraphQLModule
+    GraphQLModule,
   ],
   providers: [
     {

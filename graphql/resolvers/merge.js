@@ -7,7 +7,7 @@ const transformEvent = event => {
     return {
         ...event._doc,
         _id: event.id,
-        date: dateToString(event._doc.date),
+        date: dateToString(event.date),
         creator: user.bind(this, event.creator),
         activities: activities.bind(this, event.activities)
     }

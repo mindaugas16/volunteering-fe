@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: './profile/profile.module#ProfileModule'
   },
   {
+    path: 'events',
+    loadChildren: './events/events.module#EventsModule'
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

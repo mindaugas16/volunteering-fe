@@ -1,0 +1,9 @@
+<div class="container mt-4 mb-4">
+  <div class="columns is-multiline">
+  <app-event
+    class="column is-one-quarter-desktop is-one-third-tablet"
+    *ngFor="let event of events"
+    [event]="event"
+  ></app-event>
+  </div>
+</div>
