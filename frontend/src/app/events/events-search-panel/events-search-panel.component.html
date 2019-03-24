@@ -1,3 +1,24 @@
-<div class="container">
-  Search panel
+<div class="hero is-white">
+  <div class="hero-body">
+    <div class="container">
+      <form [formGroup]="form">
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input"
+                   type="text"
+                   formGroupName="query"
+                   placeholder="Search events near you"
+            >
+          </div>
+          <div class="control">
+            <a
+              class="button is-info"
+            >
+              Search
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

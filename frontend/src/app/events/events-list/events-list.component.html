@@ -1,7 +1,11 @@
+<app-events-search-panel></app-events-search-panel>
 <div class="mt-4 mb-4">
-  <app-events-search-panel></app-events-search-panel>
-  <div class="container mt-4">
-    <div class="columns is-multiline">
+  <div class="container">
+    <app-sort
+      [sortItems]="sortItems"
+      (sortChange)="onSortChange($event)"
+    ></app-sort>
+    <div class="columns is-multiline mt-4">
       <app-event
         class="column is-one-quarter-desktop is-one-third-tablet"
         *ngFor="let event of events"

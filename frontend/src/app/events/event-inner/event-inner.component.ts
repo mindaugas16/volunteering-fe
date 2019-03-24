@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../events.service';
 import { EventModel } from '../models/event.model';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-inner',
@@ -10,12 +12,18 @@ import { EventModel } from '../models/event.model';
 export class EventInnerComponent implements OnInit {
   event: EventModel;
 
-  constructor(private eventsService: EventsService
+  constructor(
+    private eventsService: EventsService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    this.eventsService.getEvent('5c8cd6ba73fe891b75e50155').subscribe(event => {
+    this.route.params.pipe(
+      switchMap(params => {
+        return this.eventsService.getEvent(params['id']);
+      })
+    ).subscribe(event => {
       this.event = event;
       console.log(this.event);
     });

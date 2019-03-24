@@ -6,6 +6,7 @@ import { InputComponent } from './components/input/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputLabelDirective } from './components/input/directives/input-label.directive';
 import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
+import { SortComponent } from './components/sort/sort.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
     DropdownToggleDirective,
     InputComponent,
     InputLabelDirective,
-    CutSentencePipe
+    CutSentencePipe,
+    SortComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
     DropdownToggleDirective,
     InputComponent,
     InputLabelDirective,
-    CutSentencePipe
+    CutSentencePipe,
+    SortComponent
   ]
 })
 export class SharedModule { }

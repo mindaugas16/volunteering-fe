@@ -7,6 +7,7 @@ import { EventComponent } from './events-list/event/event.component';
 import { SharedModule } from '../shared/shared.module';
 import { EventInnerComponent } from './event-inner/event-inner.component';
 import { EventsSearchPanelComponent } from './events-search-panel/events-search-panel.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,10 @@ import { EventsSearchPanelComponent } from './events-search-panel/events-search-
   imports: [
     CommonModule,
     EventsRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
-export class EventsModule { }
+export class EventsModule {
+}

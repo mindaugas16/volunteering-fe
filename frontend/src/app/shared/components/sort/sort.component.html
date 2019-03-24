@@ -1,0 +1,22 @@
+<div class="is-flex align-items-center">
+  <div class="select">
+    <select [(ngModel)]="selected.sort"
+            (change)="onSortChange()"
+    >
+      <option *ngFor="let item of sortItems"
+              [value]="item.value"
+      >
+        {{item.label}}
+      </option>
+    </select>
+
+  </div>
+
+  <span class="icon is-small ml-2"
+        (click)="onOrderChange()"
+  >
+    <i class="fa"
+       [ngClass]="selected.order === 'asc' ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc'"
+    ></i>
+  </span>
+</div>

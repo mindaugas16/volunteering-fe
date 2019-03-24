@@ -9,6 +9,11 @@ import { EventModel } from '../models/event.model';
 })
 export class EventsListComponent implements OnInit {
   events: EventModel[];
+  sortItems: { label: string, value: string }[] = [
+    {label: 'Date', value: 'date'},
+    {label: 'Name', value: 'name'},
+    {label: 'Popularity', value: 'popularity'},
+  ];
 
   constructor(private eventsService: EventsService) {
   }
@@ -19,4 +24,7 @@ export class EventsListComponent implements OnInit {
     });
   }
 
+  onSortChange(sort) {
+    console.log(sort);
+  }
 }

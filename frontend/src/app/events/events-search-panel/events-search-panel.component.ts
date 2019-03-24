@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-events-search-panel',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./events-search-panel.component.scss']
 })
 export class EventsSearchPanelComponent implements OnInit {
+  form: FormGroup = new FormGroup({
+    query: new FormControl('')
+  });
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
