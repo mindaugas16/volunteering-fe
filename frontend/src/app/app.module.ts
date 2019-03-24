@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     CoreModule,
     HttpClientModule,
     GraphQLModule,
+    NoopAnimationsModule,
   ],
   providers: [
     {

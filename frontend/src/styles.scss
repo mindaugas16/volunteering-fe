@@ -1,11 +1,8 @@
 @import "assets/scss/spacing";
 @import "assets/scss/helpers";
 
-html {
-  height: 100%;
-}
-
 body {
   background-color: #F7F7F7;
-  min-height: 100%;
 }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

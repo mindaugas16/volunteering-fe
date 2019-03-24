@@ -112,7 +112,7 @@ input ParticipationInput {
 
 type RootQuery {
     event(eventId: ID!): Event!
-    events: [Event!]!
+    events(orderBy: String): [Event!]!
     activity(activityId: ID!): Activity!
     activities: [Activity!]!
     bookings: [Booking!]!

@@ -8,3 +8,11 @@ export interface EventModel {
   location: any;
   tags: string[];
 }
+
+export interface CreateEventInterface {
+  title: string;
+  description: string;
+  date: string;
+  image?: File;
+  location?: any;
+}

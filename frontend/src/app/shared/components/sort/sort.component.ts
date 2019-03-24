@@ -13,7 +13,7 @@ export interface SortInterface {
 export class SortComponent implements OnInit {
   @Input() sort: SortInterface;
   @Input() sortItems: {value: string, label: string};
-  @Output() sortChange: EventEmitter<SortInterface> = new EventEmitter();
+  @Output() sortChange: EventEmitter<any> = new EventEmitter();
 
   selected: SortInterface;
 
@@ -21,7 +21,7 @@ export class SortComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selected = this.sort || {sort: this.sortItems[0].value, order: 'desc'};
+    this.selected = this.sort || {sort: this.sortItems[0].value, order: 'asc'};
   }
 
   onOrderChange(): void {
@@ -31,7 +31,8 @@ export class SortComponent implements OnInit {
 
   onSortChange() {
     const {sort, order} = this.selected;
-    this.sortChange.emit({sort, order});
+    const orderBy = `${order === 'asc' ? '+' : '-'}${sort}`;
+    this.sortChange.emit(orderBy);
   }
 
 }

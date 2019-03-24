@@ -4,9 +4,9 @@ const { dateToString } = require('../../helpers/date');
 const { transformEvent } = require('./merge');
 
 module.exports = {
-    events: async () => {
+    events: async (args) => {
         try {
-            const events = await Event.find();
+            const events = await Event.find().sort(args.orderBy);
             return events.map(event => {
                 return transformEvent(event);
             });
