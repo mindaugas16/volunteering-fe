@@ -6,12 +6,14 @@ import { EventsListComponent } from './events-list/events-list.component';
 import { EventComponent } from './events-list/event/event.component';
 import { SharedModule } from '../shared/shared.module';
 import { EventInnerComponent } from './event-inner/event-inner.component';
+import { EventsSearchPanelComponent } from './events-search-panel/events-search-panel.component';
 
 @NgModule({
   declarations: [
     EventsListComponent,
     EventComponent,
-    EventInnerComponent
+    EventInnerComponent,
+    EventsSearchPanelComponent
   ],
   imports: [
     CommonModule,

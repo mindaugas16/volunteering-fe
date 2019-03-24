@@ -9,7 +9,7 @@ const routes: Routes = [
     component: EventsListComponent
   },
   {
-    path: 'event/:id',
+    path: ':id',
     component: EventInnerComponent
   }
 ];
