@@ -3,6 +3,20 @@ const User = require('../../models/user');
 const Activity = require('../../models/activity');
 const { dateToString } = require('../../helpers/date');
 
+const DataLoader = require('dataloader');
+
+const eventLoader = new DataLoader(eventIds => {
+    return events(eventIds);
+});
+
+const activityLoader = new DataLoader(activityIds => {
+    return activities(activityIds);
+});
+
+const userLoader = new DataLoader(userIds => {
+    return User.find({ _id: { $in: userIds } });
+});
+
 const transformEvent = event => {
     return {
         ...event._doc,
@@ -65,11 +79,11 @@ const activities = async activityIds => {
 
 const singleActivity = async activityId => {
     try {
-        const activity = await Activity.findById(activityId);
+        const activity = await activityLoader.load(activityId.toString());
         if (!activity) {
             throw new Error('Activity not found');
         }
-        return transformActivity(activity);
+        return activity;
     } catch (err) {
         throw err;
     }
@@ -77,8 +91,7 @@ const singleActivity = async activityId => {
 
 const singleEvent = async eventId => {
     try {
-        const event = await Event.findById(eventId);
-        return transformEvent(event);
+        return await eventLoader.load(eventId.toString());
     } catch (err) {
         throw err;
     }
@@ -86,12 +99,12 @@ const singleEvent = async eventId => {
 
 const user = async userId => {
     try {
-        const user = await User.findById(userId);
+        const user = await userLoader.load(userId.toString());
         return {
             ...user._doc,
             _id: user.id,
-            createdEvents: events.bind(this, user._doc.createdEvents),
-            createdActivities: activities.bind(this, user._doc.createdActivities)
+            createdEvents: () => eventLoader.loadMany(user._doc.createdEvents),
+            createdActivities: () => activityLoader.loadMany(user._doc.createdActivities)
         }
     } catch (err) {
         throw err;
