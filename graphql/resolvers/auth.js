@@ -56,8 +56,27 @@ module.exports = {
         return {
             userId: user.id,
             token,
-            email: user._doc.email,
             tokenExpiration: 1
+        }
+    },
+    currentUser: async (args, req) => {
+        if (!req.isAuth) {
+            throw new Error('Unauthenticated!');
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            return {
+                ...user._doc,
+                _id: user.id,
+                password: null
+            };
+        } catch (err) {
+            throw err;
         }
     }
 };

@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CreateEventInterface, EventModel } from '../event/models/event.model';
+import { ApiService } from '../api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  constructor(private apollo: Apollo) {
+  constructor(private apiService: ApiService) {
   }
 
   getEvents(orderBy?: string): Observable<EventModel[]> {
-    return this.apollo.query({
-      query: gql`
+    return this.apiService.query({
+      query: `
         query events($orderBy: String) {
           events(orderBy: $orderBy) {
                 _id
@@ -43,8 +42,8 @@ export class EventsService {
   }
 
   getEvent(id: string): Observable<EventModel> {
-    return this.apollo.query({
-      query: gql`
+    return this.apiService.query({
+      query: `
       query event($eventId: ID!) {
           event(eventId: $eventId) {
            _id
@@ -81,8 +80,8 @@ export class EventsService {
   }
 
   createEvent(event: CreateEventInterface): Observable<any> {
-    return this.apollo.mutate({
-      mutation: gql`
+    return this.apiService.mutation({
+      mutation: `
       mutation createEvent($title: String!, $description: String!, $date: String!) {
           createEvent(eventInput: {title: $title, description: $description, date: $date}) {
            _id

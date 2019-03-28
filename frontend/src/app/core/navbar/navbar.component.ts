@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs/internal/observable/of';
 
 @Component({
   selector: 'app-navbar',
@@ -17,12 +19,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription.add(
-      this.authService.authenticatedObservable().subscribe(isAuthenticated => {
-        this.isAuthenticated = isAuthenticated;
-        if (this.isAuthenticated) {
-          this.user = AuthService.getUser();
-        }
-      })
+      this.authService.authenticatedObservable().pipe(
+        switchMap(isAuthenticated => {
+          this.isAuthenticated = isAuthenticated;
+          if (this.isAuthenticated) {
+            return this.authService.getCurrentUser();
+          }
+          return of(null);
+        })
+      ).subscribe(user => this.user = user)
     );
   }
 

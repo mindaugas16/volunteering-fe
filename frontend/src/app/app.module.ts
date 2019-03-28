@@ -5,9 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { GraphQLModule } from './graphql.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ApiService } from './api.service';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
-    GraphQLModule,
-    NoopAnimationsModule,
   ],
   providers: [
     {
@@ -27,6 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
       useClass: AuthInterceptor,
       multi: true
     },
+    ApiService
   ],
   bootstrap: [
     AppComponent

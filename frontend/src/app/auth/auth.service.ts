@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface } from './user.interface';
+import { ApiService } from '../api.service';
 
-const LOCAL_STORAGE_KEY = 'currentUser';
+const LOCAL_STORAGE_TOKEN_KEY = 'token';
+const LOCAL_STORAGE_USER_KEY = 'currentUser';
 
 @Injectable({
   providedIn: 'root'
@@ -14,37 +14,38 @@ const LOCAL_STORAGE_KEY = 'currentUser';
 export class AuthService {
   private authenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private apollo: Apollo,
-              private router: Router) {
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) {
     this.authenticated$.next(this.isAuthenticated());
   }
 
   static getToken() {
-    const user = AuthService.getUser();
+    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) || null;
     return user ? user.token : null;
   }
 
   static getUser() {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || null;
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER_KEY)) || null;
   }
 
   signIn(email: string, password: string): Observable<any> {
     const setSession = (authResponse) => {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(
+      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, JSON.stringify(
         {
           'token': authResponse.login.token,
-          'email': authResponse.login.email
           // 'expiresAt': expiresAt.valueOf()
         }
       ));
     };
-    return this.apollo.query({
-      query: gql`
+    const body = {
+      query: `
         query login($email: String!, $password: String!) {
             login(email: $email, password: $password) {
+              userId
               token
               tokenExpiration
-              email
             }
            }
       `,
@@ -52,7 +53,8 @@ export class AuthService {
         email: email,
         password: password
       }
-    }).pipe(
+    };
+    return this.apiService.query(body).pipe(
       map(({data}) => data),
       tap(res => {
         setSession(res);
@@ -63,9 +65,8 @@ export class AuthService {
   }
 
   signUp(form: CreateUserInterface) {
-    console.log(form);
-    return this.apollo.mutate({
-      mutation: gql`
+    return this.apiService.mutation({
+      mutation: `
         mutation createUser($email: String!, $password: String!, $lastName: String!, $firstName: String!, $postalCode: String!) {
           createUser(userInput: {email: $email, password: $password, lastName: $lastName, firstName: $firstName, postalCode: $postalCode}) {
             email
@@ -78,8 +79,37 @@ export class AuthService {
       variables: form
     }).pipe(
       map(({data}) => data),
-      tap(res => {
+      tap(() => {
         this.router.navigate(['/auth/sign-in']);
+      })
+    );
+  }
+
+  getCurrentUser(): Observable<any> {
+    const localUser = AuthService.getUser();
+    if (localUser) {
+      return new Observable(observer => {
+        observer.next(localUser);
+        observer.complete();
+      });
+    }
+
+    return this.apiService.query({
+      query: `
+      query currentUser {
+          currentUser {
+              email
+              firstName
+              lastName
+              postalCode
+            }
+           }
+      `
+    }).pipe(
+      map(({data}) => data),
+      map(({currentUser}) => currentUser),
+      tap(user => {
+        localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
       })
     );
   }
@@ -93,7 +123,8 @@ export class AuthService {
   }
 
   public logout() {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+    localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
     this.authenticated(false);
     this.router.navigate(['/auth/sign-in']);
   }
