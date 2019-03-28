@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../events/events.service';
-import { EventModel } from '../models/event.model';
+import { EventInterface } from '../models/event.interface';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./event-inner.component.scss']
 })
 export class EventInnerComponent implements OnInit {
-  event: EventModel;
+  event: EventInterface;
 
   constructor(
     private eventsService: EventsService,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { CreateUserInterface } from './user.interface';
+import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
@@ -26,18 +26,19 @@ export class AuthService {
     return user ? user.token : null;
   }
 
-  static getUser() {
+  static getUser(): UserInterface {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER_KEY)) || null;
   }
 
   signIn(email: string, password: string): Observable<any> {
-    const setSession = (authResponse) => {
+    const setSession = authResponse => {
       localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, JSON.stringify(
         {
           'token': authResponse.login.token,
           // 'expiresAt': expiresAt.valueOf()
         }
       ));
+      this.authenticated(true);
     };
     const body = {
       query: `
@@ -58,7 +59,6 @@ export class AuthService {
       map(({data}) => data),
       tap(res => {
         setSession(res);
-        this.authenticated(true);
         this.router.navigate(['/']);
       })
     );
@@ -85,7 +85,7 @@ export class AuthService {
     );
   }
 
-  getCurrentUser(): Observable<any> {
+  getCurrentUser(): Observable<UserInterface> {
     const localUser = AuthService.getUser();
     if (localUser) {
       return new Observable(observer => {

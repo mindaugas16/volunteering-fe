@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../events.service';
-import { EventModel } from '../../event/models/event.model';
+import { EventInterface } from '../../event/models/event.interface';
 
 @Component({
   selector: 'app-events-list',
@@ -8,7 +8,7 @@ import { EventModel } from '../../event/models/event.model';
   styleUrls: ['./events-list.component.scss']
 })
 export class EventsListComponent implements OnInit {
-  events: EventModel[];
+  events: EventInterface[];
   sortItems: { label: string, value: string }[] = [
     {label: 'Date', value: 'date'},
     {label: 'Title', value: 'title'},

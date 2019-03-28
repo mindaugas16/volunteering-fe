@@ -3,6 +3,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
+import { UserInterface } from '../../auth/user.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import { of } from 'rxjs/internal/observable/of';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  user: any;
+  user: UserInterface;
   isAuthenticated: boolean;
 
   constructor(private authService: AuthService) {
