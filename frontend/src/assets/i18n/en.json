@@ -1,0 +1,9 @@
+{
+  "NAVIGATION": {
+    "HOME": "Home",
+    "SIGN_UP": "Sign up",
+    "LOG_IN": "Log in",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout"
+  }
+}

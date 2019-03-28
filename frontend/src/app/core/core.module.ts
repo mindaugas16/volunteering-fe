@@ -7,6 +7,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { SharedModule } from '../shared/shared.module';
 import { SearchModule } from '../search/search.module';
 import { FooterComponent } from './footer/footer.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     RouterModule,
     SharedModule,
-    SearchModule
+    SearchModule,
+    TranslateModule
   ],
   exports: [
     NavbarComponent,
