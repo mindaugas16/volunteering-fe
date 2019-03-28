@@ -1,4 +1,3 @@
-const Event = require('../../models/event');
 const User = require('../../models/user');
 const Activity = require('../../models/activity');
 const { dateToString } = require('../../helpers/date');
@@ -24,6 +23,14 @@ const transformEvent = event => {
         date: dateToString(event.date),
         creator: user.bind(this, event.creator),
         activities: activities.bind(this, event.activities)
+    }
+};
+
+const transformOrganization = organization => {
+    return {
+        ...organization._doc,
+        _id: organization.id,
+        creator: user.bind(this, organization.creator),
     }
 };
 
@@ -127,3 +134,4 @@ exports.transformBooking = transformBooking;
 exports.transformActivity = transformActivity;
 exports.transformParticipation = transformParticipation;
 exports.transformDateRange = transformDateRange;
+exports.transformOrganization = transformOrganization;

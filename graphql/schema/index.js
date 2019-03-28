@@ -1,10 +1,11 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
-type Booking {
+type Organization {
     _id: ID!
-    event: Event!
-    user: User!
+    creator: User!
+    name: String!
+    location: Location
     createdAt: String!
     updatedAt: String!
 }
@@ -76,6 +77,12 @@ input ActivityInput {
     eventId: ID!
 }
 
+input OrganizationInput {
+    creatorId: ID
+    name: String!
+    location: LocationInput
+}
+
 input DateRangeInput {
     start: String!
     end: String
@@ -114,7 +121,8 @@ type RootQuery {
     events(orderBy: String): [Event!]!
     activity(activityId: ID!): Activity!
     activities: [Activity!]!
-    bookings: [Booking!]!
+    organization(organizationId: ID!): Organization!
+    organizations: [Organization!]!
     login(email: String!, password: String!): AuthData!
     participations: [Participation!]!
     currentUser: User!
@@ -123,10 +131,10 @@ type RootQuery {
 type RootMutation {
     createEvent(eventInput: EventInput): Event
     createUser(userInput: UserInput): User
-    bookEvent(eventId: ID!): Booking!
-    cancelBooking(bookingId: ID!): Event!
+    createVolunteer(userInput: UserInput): User
     createActivity(activityInput: ActivityInput): Activity
     participate(participationInput: ParticipationInput): Participation
+    createOrganization(organizationInput: OrganizationInput): Organization
 }
 
 schema {

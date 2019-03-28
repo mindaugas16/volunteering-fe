@@ -2,8 +2,35 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user');
+const Volunteer = require('../../models/Volunteer');
 
 module.exports = {
+    createVolunteer: async args => {
+        try {
+            const user = await Volunteer.findOne({ email: args.userInput.email });
+
+            if (user) {
+                throw new Error('User already exist!');
+            }
+            const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
+            const createdUser = new Volunteer({
+                email: args.userInput.email,
+                firstName: args.userInput.firstName,
+                lastName: args.userInput.lastName,
+                postalCode: args.userInput.postalCode,
+                password: hashedPassword,
+            });
+            const result = await createdUser.save();
+            return {
+                ...result._doc,
+                _id: result.id,
+                password: null
+            }
+
+        } catch (error) {
+            throw error;
+        }
+    },
     createUser: async args => {
         try {
             const user = await User.findOne({ email: args.userInput.email });

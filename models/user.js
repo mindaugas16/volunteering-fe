@@ -41,40 +41,12 @@ const userSchema = new Schema({
             ref: 'Activity'
         }
     ],
-    participations: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Participation'
-        }
-    ],
-    skills: [
-        {
-            type: String
-        }
-    ],
-    interests: [
-        {
-            type: String
-        }
-    ],
     organizations: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Organization'
         }
     ],
-    achievements: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Achievement'
-        }
-    ],
-    favorites: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Participation'
-        }
-    ]
 });
 
 module.exports = mongoose.model('User', userSchema);
