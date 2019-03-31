@@ -79,11 +79,11 @@ export class EventsService {
     );
   }
 
-  createEvent(event: CreateEventInterface): Observable<any> {
+  createEvent(event: CreateEventInterface, organizationId: string): Observable<any> {
     return this.apiService.query({
       query: `
-        mutation createEvent($title: String!, $description: String!, $date: String!) {
-            createEvent(eventInput: {title: $title, description: $description, date: $date}) {
+        mutation createEvent($title: String!, $description: String!, $date: String!, $organizationId: ID!) {
+            createEvent(eventInput: {title: $title, description: $description, date: $date, organizationId: $organizationId}) {
              _id
              title
              }
@@ -93,6 +93,7 @@ export class EventsService {
         title: event.title,
         description: event.description,
         date: event.date,
+        organizationId
       }
     });
   }

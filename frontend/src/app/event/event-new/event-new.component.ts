@@ -32,7 +32,7 @@ export class EventNewComponent implements OnInit {
       throw new Error('Form is invalid');
     }
 
-    this.eventsService.createEvent(this.form.value).subscribe(event => {
+    this.eventsService.createEvent(this.form.value, this.organization._id).subscribe(event => {
       // this.router.navigate(['/events']);
     });
   }

@@ -1,5 +1,7 @@
 const User = require('../../models/user');
+const Event = require('../../models/event');
 const Activity = require('../../models/activity');
+const Organization = require('../../models/organization');
 const { dateToString } = require('../../helpers/date');
 
 const DataLoader = require('dataloader');
@@ -16,13 +18,18 @@ const userLoader = new DataLoader(userIds => {
     return users(userIds);
 });
 
+const organizationLoader = new DataLoader(ids => {
+    return organizations(ids);
+});
+
 const transformEvent = event => {
     return {
         ...event._doc,
         _id: event.id,
         date: dateToString(event.date),
         creator: user.bind(this, event.creator),
-        activities: activities.bind(this, event.activities)
+        activities: activities.bind(this, event.activities),
+        organization: organization.bind(this, event.organization)
     }
 };
 
@@ -138,6 +145,26 @@ const events = async eventIds => {
         throw err;
     }
 };
+
+const organization = async organizationId => {
+    try {
+        return await organizationLoader.load(organizationId.toString());
+    } catch (err) {
+        throw err;
+    }
+};
+
+const organizations = async organizationIds => {
+    try {
+        const organizations = await Organization.find({ _id: { $in: organizationIds } });
+        return organizations.map(organization => {
+            return transformOrganization(organization);
+        });
+    } catch (err) {
+        throw err;
+    }
+};
+
 
 exports.transformEvent = transformEvent;
 exports.transformBooking = transformBooking;
