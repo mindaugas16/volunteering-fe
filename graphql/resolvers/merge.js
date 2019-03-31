@@ -29,7 +29,7 @@ const transformEvent = event => {
 const transformOrganization = organization => {
     return {
         ...organization._doc,
-        _id: organization.id,
+        _id: organization._id,
         creator: user.bind(this, organization.creator),
         members: users.bind(this, organization.members),
     }

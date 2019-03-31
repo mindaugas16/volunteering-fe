@@ -5,6 +5,7 @@ import { OrganizationService } from '../organization.service';
 import { OrganizationInterface } from '../organization.interface';
 import { AuthService } from '../../auth/auth.service';
 import { zip } from 'rxjs/internal/observable/zip';
+import { UserInterface } from '../../auth/user.interface';
 
 @Component({
   selector: 'app-organization-inner',
@@ -14,6 +15,8 @@ import { zip } from 'rxjs/internal/observable/zip';
 export class OrganizationInnerComponent implements OnInit {
   organization: OrganizationInterface;
   isUserJoinedOrganization: boolean;
+  isOwner: boolean;
+  user: UserInterface;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +33,8 @@ export class OrganizationInnerComponent implements OnInit {
     ).subscribe(([organization, user]) => {
       this.organization = organization;
       this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
+      this.isOwner = this.organization.creator._id === user._id;
+      this.user = user;
     });
   }
 
@@ -37,11 +42,13 @@ export class OrganizationInnerComponent implements OnInit {
     if (this.isUserJoinedOrganization) {
       this.organizationService.leaveOrganization(this.organization._id).subscribe(() => {
         this.isUserJoinedOrganization = false;
+        this.organization.members.splice(this.organization.members.findIndex(member => member._id === this.user._id), 1);
       });
       return;
     }
     this.organizationService.joinOrganization(this.organization._id).subscribe(() => {
       this.isUserJoinedOrganization = true;
+      this.organization.members.push(this.user);
     });
   }
 }

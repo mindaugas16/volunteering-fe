@@ -65,7 +65,9 @@ module.exports = {
             if (!organization) {
                 throw new Error('Organization not found.');
             }
-            if (user.organizations.indexOf(organization._id) > -1 || organization.members.indexOf(user._id) > -1) {
+
+            if (user.organizations.indexOf(organization._id) > -1 || organization.members.indexOf(user._id) > -1 ||
+                organization.creator._id.equals(user._id)) {
                 throw new Error('You already joined this group');
             }
 
@@ -99,8 +101,12 @@ module.exports = {
                 throw new Error('Organization not found');
             }
 
+            if (organization.creator._id.equals(user._id)) {
+                throw new Error('You can\'t leave your own organization');
+            }
+
             if (user.organizations.indexOf(organization._id) === -1 || organization.members.indexOf(user._id) === -1) {
-                throw new Error('You already left this group');
+                throw new Error('You already left this organization');
             }
 
             organization.members.pull(user._id);
