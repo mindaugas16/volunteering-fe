@@ -30,10 +30,7 @@ export class EventNewComponent implements OnInit {
       return '';
     }
 
-    console.log(this.form.value);
-
     this.eventsService.createEvent(this.form.value).subscribe(event => {
-      console.log(event);
       this.router.navigate(['/events']);
     });
   }
