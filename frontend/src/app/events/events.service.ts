@@ -80,14 +80,14 @@ export class EventsService {
   }
 
   createEvent(event: CreateEventInterface): Observable<any> {
-    return this.apiService.mutation({
-      mutation: `
-      mutation createEvent($title: String!, $description: String!, $date: String!) {
-          createEvent(eventInput: {title: $title, description: $description, date: $date}) {
-           _id
-           title
-           }
-        }`
+    return this.apiService.query({
+      query: `
+        mutation createEvent($title: String!, $description: String!, $date: String!) {
+            createEvent(eventInput: {title: $title, description: $description, date: $date}) {
+             _id
+             title
+             }
+          }`
       ,
       variables: {
         title: event.title,

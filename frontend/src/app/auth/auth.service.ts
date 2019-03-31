@@ -65,8 +65,8 @@ export class AuthService {
   }
 
   signUp(form: CreateUserInterface) {
-    return this.apiService.mutation({
-      mutation: `
+    return this.apiService.query({
+      query: `
         mutation createUser($email: String!, $password: String!, $lastName: String!, $firstName: String!, $postalCode: String!) {
           createUser(userInput: {email: $email, password: $password, lastName: $lastName, firstName: $firstName, postalCode: $postalCode}) {
             email

@@ -1,0 +1,39 @@
+<div *ngIf="organization">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="is-flex justify-content-between align-items-center">
+          <div>
+            <h1 class="title">
+              {{organization.name}}
+            </h1>
+            <h2 class="subtitle">
+              {{'Address should be here'}}
+            </h2>
+          </div>
+          <div>
+            <button
+              class="button"
+              [class.is-primary]="!isUserJoinedOrganization"
+              (click)="toggleOrganizationJoin()"
+            >
+              {{ isUserJoinedOrganization ? 'Leave group' : 'Join organization'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <hr/>
+    <div class="columns">
+      <div class="column is-three-fifths">
+        Left side information
+      </div>
+      <div class="column">
+        Right side information
+      </div>
+    </div>
+  </div>
+</div>

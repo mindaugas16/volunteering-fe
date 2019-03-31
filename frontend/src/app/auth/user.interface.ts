@@ -1,4 +1,5 @@
 import { EventInterface } from '../event/models/event.interface';
+import { OrganizationInterface } from '../organizations/organization.interface';
 
 export interface UserInterface {
   email: string;
@@ -6,6 +7,7 @@ export interface UserInterface {
   lastName: string;
   postalCode: string;
   password: string;
+  organizations: OrganizationInterface[];
   createdEvents: EventInterface[];
   createdActivities: any[];
 }

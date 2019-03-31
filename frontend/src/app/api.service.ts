@@ -13,12 +13,7 @@ export class ApiService {
   ) {
   }
 
-  query(body: {query: string, variables?: Object}): Observable<any> {
+  query(body: { query: string, variables?: Object }): Observable<any> {
     return this.http.post(environment.api, body);
-  }
-
-  mutation(body: {mutation: string, variables?: Object}): Observable<any> {
-    return this.http.post(environment.api, body);
-
   }
 }

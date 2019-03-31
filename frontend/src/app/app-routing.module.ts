@@ -29,6 +29,10 @@ const routes: Routes = [
     loadChildren: './event/event.module#EventModule'
   },
   {
+    path: 'organizations',
+    loadChildren: './organizations/organizations.module#OrganizationsModule'
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

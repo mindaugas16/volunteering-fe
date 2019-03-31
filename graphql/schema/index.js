@@ -52,6 +52,7 @@ type User {
     lastName: String!
     postalCode: String!
     password: String
+    organizations: [Organization!]!
     createdEvents: [Event!]!
     createdActivities: [Activity!]!
 }
@@ -135,6 +136,8 @@ type RootMutation {
     createActivity(activityInput: ActivityInput): Activity
     participate(participationInput: ParticipationInput): Participation
     createOrganization(organizationInput: OrganizationInput): Organization
+    joinOrganization(organizationId: ID): Boolean
+    leaveOrganization(organizationId: ID): Boolean
 }
 
 schema {

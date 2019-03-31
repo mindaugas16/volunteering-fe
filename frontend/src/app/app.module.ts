@@ -9,6 +9,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { ApiService } from './api.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ErrorInterceptor, ERRORS_INTERCEPTOR } from './core/services/error.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -39,6 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       useClass: AuthInterceptor,
       multi: true
     },
+    ERRORS_INTERCEPTOR,
     ApiService,
   ],
   bootstrap: [

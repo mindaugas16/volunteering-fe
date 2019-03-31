@@ -47,4 +47,70 @@ module.exports = {
             throw err;
         }
     },
+    joinOrganization: async (args, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 400;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const organization = await Organization.findById(args.organizationId);
+
+            if (!organization) {
+                throw new Error('Organization not found.');
+            }
+            if (user.organizations.indexOf(organization._id) > -1 || organization.members.indexOf(user._id) > -1) {
+                throw new Error('You already joined this group');
+            }
+
+            organization.members.push(user._id);
+            await organization.save();
+
+            user.organizations.push(args.organizationId);
+            await user.save();
+
+            return true;
+        } catch (err) {
+            throw err;
+        }
+    },
+    leaveOrganization: async (args, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 400;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const organization = await Organization.findById(args.organizationId);
+
+            if (!organization) {
+                throw new Error('Organization not found');
+            }
+            if (user.organizations.indexOf(organization._id) === -1 || organization.members.indexOf(user._id) === -1) {
+                throw new Error('You already left this group');
+            }
+
+            organization.members.pull(user._id);
+            await organization.save();
+
+            user.organizations.pull(args.organizationId);
+            await user.save();
+
+            return true;
+        } catch (err) {
+            throw err;
+        }
+    }
 };
