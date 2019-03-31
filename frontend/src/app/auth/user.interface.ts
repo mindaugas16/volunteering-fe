@@ -2,6 +2,7 @@ import { EventInterface } from '../event/models/event.interface';
 import { OrganizationInterface } from '../organizations/organization.interface';
 
 export interface UserInterface {
+  _id: string;
   email: string;
   firstName: string;
   lastName: string;

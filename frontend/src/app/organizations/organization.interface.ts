@@ -5,4 +5,5 @@ export interface OrganizationInterface {
   name: string;
   creator: UserInterface;
   location: any;
+  members: UserInterface[];
 }

@@ -49,6 +49,10 @@ export class OrganizationService {
               location {
                 address
               }
+              members {
+                _id
+                firstName
+              }
            }
         }
       `,

@@ -3,6 +3,8 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../organization.service';
 import { OrganizationInterface } from '../organization.interface';
+import { AuthService } from '../../auth/auth.service';
+import { zip } from 'rxjs/internal/observable/zip';
 
 @Component({
   selector: 'app-organization-inner',
@@ -15,29 +17,31 @@ export class OrganizationInnerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private authService: AuthService
   ) {
   }
 
   ngOnInit() {
     this.route.params.pipe(
       switchMap(params => {
-        return this.organizationService.getOrganization(params['id']);
+        return zip(this.organizationService.getOrganization(params['id']), this.authService.getCurrentUser());
       })
-    ).subscribe(organization => {
+    ).subscribe(([organization, user]) => {
       this.organization = organization;
-      // const user = AuthService.getUser();
-      // if (user) {
-      //   this.isUserJoinedOrganization = !!user.organizations.find(o => o._id === this.organization._id);
-      // }
+      this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
     });
   }
 
   toggleOrganizationJoin() {
-    let observable = this.organizationService.joinOrganization(this.organization._id);
     if (this.isUserJoinedOrganization) {
-      observable = this.organizationService.leaveOrganization(this.organization._id);
+      this.organizationService.leaveOrganization(this.organization._id).subscribe(() => {
+        this.isUserJoinedOrganization = false;
+      });
+      return;
     }
-    observable.subscribe();
+    this.organizationService.joinOrganization(this.organization._id).subscribe(() => {
+      this.isUserJoinedOrganization = true;
+    });
   }
 }

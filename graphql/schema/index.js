@@ -4,6 +4,7 @@ module.exports = buildSchema(`
 type Organization {
     _id: ID!
     creator: User!
+    members: [User!]!
     name: String!
     location: Location
     createdAt: String!

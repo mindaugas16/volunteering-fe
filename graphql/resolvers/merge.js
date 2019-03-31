@@ -13,7 +13,7 @@ const activityLoader = new DataLoader(activityIds => {
 });
 
 const userLoader = new DataLoader(userIds => {
-    return User.find({ _id: { $in: userIds } });
+    return users(userIds);
 });
 
 const transformEvent = event => {
@@ -31,6 +31,7 @@ const transformOrganization = organization => {
         ...organization._doc,
         _id: organization.id,
         creator: user.bind(this, organization.creator),
+        members: users.bind(this, organization.members),
     }
 };
 
@@ -96,9 +97,9 @@ const singleActivity = async activityId => {
     }
 };
 
-const singleEvent = async eventId => {
+const users = async userIds => {
     try {
-        return await eventLoader.load(eventId.toString());
+        return await User.find({ _id: { $in: userIds } });
     } catch (err) {
         throw err;
     }
@@ -118,9 +119,17 @@ const user = async userId => {
     }
 };
 
+const singleEvent = async eventId => {
+    try {
+        return await eventLoader.load(eventId.toString());
+    } catch (err) {
+        throw err;
+    }
+};
+
 const events = async eventIds => {
     try {
-        const events = await User.find({ _id: { $in: eventIds } });
+        const events = await Event.find({ _id: { $in: eventIds } });
         return events.map(event => {
             return transformEvent(event);
         });

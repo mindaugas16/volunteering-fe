@@ -50,7 +50,7 @@ module.exports = {
     joinOrganization: async (args, req) => {
         if (!req.isAuth) {
             const error = new Error('Unauthenticated');
-            error.code = 400;
+            error.code = 401;
             throw error;
         }
 
@@ -98,6 +98,7 @@ module.exports = {
             if (!organization) {
                 throw new Error('Organization not found');
             }
+
             if (user.organizations.indexOf(organization._id) === -1 || organization.members.indexOf(user._id) === -1) {
                 throw new Error('You already left this group');
             }
@@ -105,7 +106,7 @@ module.exports = {
             organization.members.pull(user._id);
             await organization.save();
 
-            user.organizations.pull(args.organizationId);
+            user.organizations.pull(organization._id);
             await user.save();
 
             return true;

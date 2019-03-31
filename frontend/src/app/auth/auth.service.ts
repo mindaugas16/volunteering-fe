@@ -98,6 +98,7 @@ export class AuthService {
       query: `
       query currentUser {
           currentUser {
+              _id
               email
               firstName
               lastName
