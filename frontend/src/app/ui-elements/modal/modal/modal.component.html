@@ -1,0 +1,15 @@
+<div
+  class="modal is-active"
+  [ngClass]="extraClasses"
+>
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <ng-content></ng-content>
+    <button
+      *ngIf="closeable"
+      class="modal-close is-large"
+      aria-label="close"
+      (click)="onClose()"
+    ></button>
+  </div>
+</div>

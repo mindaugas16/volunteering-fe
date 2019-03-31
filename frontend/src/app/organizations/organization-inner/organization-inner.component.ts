@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../organization.service';
@@ -6,6 +6,7 @@ import { OrganizationInterface } from '../organization.interface';
 import { AuthService } from '../../auth/auth.service';
 import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
+import { ModalService } from '../../core/services/modal/modal.service';
 
 @Component({
   selector: 'app-organization-inner',
@@ -21,7 +22,9 @@ export class OrganizationInnerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private organizationService: OrganizationService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: ModalService,
+    private viewContainerRef: ViewContainerRef
   ) {
   }
 
@@ -50,5 +53,9 @@ export class OrganizationInnerComponent implements OnInit {
       this.isUserJoinedOrganization = true;
       this.organization.members.push(this.user);
     });
+  }
+
+  onEventAdd() {
+    const modalRef = this.modalService.open(this.viewContainerRef);
   }
 }

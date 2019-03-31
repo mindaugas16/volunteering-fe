@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SearchModule } from '../search/search.module';
 import { FooterComponent } from './footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ModalService } from './services/modal/modal.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,9 @@ import { TranslateModule } from '@ngx-translate/core';
   exports: [
     NavbarComponent,
     FooterComponent
+  ],
+  providers: [
+    ModalService
   ]
 })
 export class CoreModule {

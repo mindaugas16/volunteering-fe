@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EventInnerComponent,
     EventNewComponent
   ],
+  exports: [
+    EventNewComponent
+  ],
   imports: [
     CommonModule,
     EventRoutingModule,

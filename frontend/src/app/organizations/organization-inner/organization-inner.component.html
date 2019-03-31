@@ -57,9 +57,12 @@
               {{'Events'}} ({{0}}):
             </h4>
             <div *ngIf="isOwner">
-              <span class="icon">
+              <a
+                class="icon"
+                (click)="onEventAdd()"
+              >
                 <i class="fa fa-plus"></i>
-              </span>
+              </a>
             </div>
           </div>
         </div>
