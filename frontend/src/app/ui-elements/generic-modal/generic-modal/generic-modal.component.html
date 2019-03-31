@@ -4,7 +4,7 @@
 >
   <div class="modal-background"></div>
   <div class="modal-content">
-    <ng-content></ng-content>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     <button
       *ngIf="closeable"
       class="modal-close is-large"

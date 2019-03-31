@@ -55,6 +55,9 @@ export class OrganizationService {
                 _id
                 firstName
               }
+              events {
+                title
+              }
            }
         }
       `,

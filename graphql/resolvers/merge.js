@@ -32,6 +32,7 @@ const transformOrganization = organization => {
         _id: organization._id,
         creator: user.bind(this, organization.creator),
         members: users.bind(this, organization.members),
+        events: () => eventLoader.loadMany(organization._doc.events),
     }
 };
 

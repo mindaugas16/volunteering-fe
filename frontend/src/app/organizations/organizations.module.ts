@@ -5,7 +5,7 @@ import { OrganizationsRoutingModule } from './organizations-routing.module';
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 import { OrganizationInnerComponent } from './organization-inner/organization-inner.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { ModalModule } from '../ui-elements/modal/modal.module';
+import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { EventModule } from '../event/event.module';
 
 @NgModule({
@@ -14,8 +14,9 @@ import { EventModule } from '../event/event.module';
     CommonModule,
     OrganizationsRoutingModule,
     TranslateModule,
-    ModalModule,
+    GenericModalModule,
     EventModule
   ]
 })
-export class OrganizationsModule { }
+export class OrganizationsModule {
+}

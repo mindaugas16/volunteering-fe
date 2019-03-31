@@ -1,7 +1,7 @@
 import { ComponentFactoryResolver, ComponentRef, Inject, Injectable, Injector, Type } from '@angular/core';
-import { ModalComponent } from '../../../ui-elements/modal/modal/modal.component';
+import { GenericModalComponent } from '../../../ui-elements/generic-modal/generic-modal/generic-modal.component';
 import { DOCUMENT } from '@angular/common';
-import { ModalOptions } from '../../../ui-elements/modal/modal/modal.interface';
+import { ModalOptions } from '../../../ui-elements/generic-modal/generic-modal/modal.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,40 +16,28 @@ export class ModalService {
   ) {
   }
 
-  open<T>(content: Type<T>, options?: ModalOptions): ComponentRef<T> {
-    const factory = this.factoryResolver.resolveComponentFactory(ModalComponent);
-    const ngContent = this.resolveNgContent(content);
-    const componentRef = factory.create(this.injector, ngContent.resolvedContent);
+  open<T>(component: Type<T>, options?: ModalOptions): ComponentRef<T> {
+    const factory = this.factoryResolver.resolveComponentFactory(component);
+    const componentRef = factory.create(this.injector);
 
     if (!!options) {
       this.setOptions(componentRef, options);
     }
-    componentRef.instance.close.subscribe(() => {
-      this.close();
-    });
 
     componentRef.hostView.detectChanges();
 
-    const {nativeElement} = componentRef.location;
-    this.nativeElement = nativeElement;
-    this.document.body.appendChild(nativeElement);
-
-    return ngContent.component;
+    this.nativeElement = componentRef.location.nativeElement;
+    this.document.body.appendChild(this.nativeElement);
+    return componentRef;
   }
 
-  private resolveNgContent<T>(content: Type<T>): { resolvedContent: any[][], component?: ComponentRef<T> } {
-    const factory = this.factoryResolver.resolveComponentFactory(content);
-    const componentRef = factory.create(this.injector);
-    return {component: componentRef, resolvedContent: [[componentRef.location.nativeElement]]};
-  }
-
-  private setOptions(modalRef: ComponentRef<ModalComponent>, options: ModalOptions) {
-    const instance = modalRef.instance;
+  private setOptions(modalRef: ComponentRef<any>, options: ModalOptions) {
+    const instance = modalRef.instance as GenericModalComponent;
     instance.closeable = options.closeable;
     instance.extraClasses = options.extraClasses;
   }
 
-  private close() {
+  close() {
     this.document.body.removeChild(this.nativeElement);
   }
 }

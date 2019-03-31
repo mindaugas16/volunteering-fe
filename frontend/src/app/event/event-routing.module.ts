@@ -7,10 +7,6 @@ const routes: Routes = [
   {
     path: 'details/:id',
     component: EventInnerComponent
-  },
-  {
-    path: 'new',
-    component: EventNewComponent
   }
 ];
 

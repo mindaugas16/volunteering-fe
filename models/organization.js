@@ -20,6 +20,12 @@ const organizationSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
+    ],
+    events: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Event'
+        }
     ]
 }, { timestamps: true });
 

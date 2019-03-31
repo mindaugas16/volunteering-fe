@@ -10,7 +10,6 @@ import { ApiService } from './api.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ERRORS_INTERCEPTOR } from './core/services/error/error.interceptor';
-import { ModalModule } from './ui-elements/modal/modal.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -21,7 +20,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent
   ],
   imports: [
-    ModalModule,
     BrowserModule,
     AppRoutingModule,
     CoreModule,

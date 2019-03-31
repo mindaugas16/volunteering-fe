@@ -57,5 +57,6 @@ export class OrganizationInnerComponent implements OnInit {
 
   onEventAdd() {
     const modalRef = this.modalService.open(EventNewComponent);
+    modalRef.instance.organization = this.organization;
   }
 }

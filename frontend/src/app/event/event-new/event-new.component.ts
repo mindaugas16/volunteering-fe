@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventsService } from '../../events/events.service';
-import { Router } from '@angular/router';
+import { OrganizationInterface } from '../../organizations/organization.interface';
 
 @Component({
   selector: 'app-event-new',
@@ -9,29 +9,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./event-new.component.scss']
 })
 export class EventNewComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    title: new FormControl(null, Validators.required),
-    description: new FormControl(null),
-    date: new FormControl(null)
-  });
+  @Input() organization: OrganizationInterface;
+
+  form: FormGroup;
 
   constructor(
-    private eventsService: EventsService,
-    private router: Router
+    private eventsService: EventsService
   ) {
+    this.form = new FormGroup({
+      title: new FormControl(null, Validators.required),
+      description: new FormControl(null),
+      date: new FormControl(null)
+    });
   }
 
   ngOnInit() {
   }
 
   onSubmit() {
+    console.log(this.form.value);
     if (this.form.invalid) {
-      console.log('Form is invalid');
-      return '';
+      throw new Error('Form is invalid');
     }
 
     this.eventsService.createEvent(this.form.value).subscribe(event => {
-      this.router.navigate(['/events']);
+      // this.router.navigate(['/events']);
     });
   }
 

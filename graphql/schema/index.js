@@ -9,6 +9,7 @@ type Organization {
     location: Location
     createdAt: String!
     updatedAt: String!
+    events: [Event!]
 }
 
 type Activity {
@@ -44,6 +45,7 @@ type Event {
     activities: [Activity!]
     location: Location
     tags: [String!]
+    Organization: ID!
 }
 
 type User {
@@ -95,6 +97,7 @@ input EventInput {
     description: String!
     date: String!
     location: LocationInput
+    organizationID: ID!
 }
 
 input UserInput {

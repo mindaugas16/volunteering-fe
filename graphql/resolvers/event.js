@@ -1,5 +1,6 @@
 const Event = require('../../models/event');
 const User = require('../../models/user');
+const Organization = require('../../models/organization');
 const { dateToString } = require('../../helpers/date');
 const { transformEvent } = require('./merge');
 
@@ -32,17 +33,28 @@ module.exports = {
                 throw new Error('User not found.');
             }
 
+            const organization = await Organization.findById(args.eventInput.organizationId);
+
+            if (!organization) {
+                throw new Error('Organization not found.');
+            }
+
             const event = new Event({
                 title: args.eventInput.title,
                 description: args.eventInput.description,
                 date: dateToString(args.eventInput.date),
                 location: args.eventInput.location,
-                creator: req.userId
+                creator: req.userId,
+                organization: organization._id
             });
             const result = await event.save();
 
             user.createdEvents.push(event);
             await user.save();
+
+            organization.events.push(event);
+            await organization.save();
+
             return transformEvent(result);
         } catch (err) {
             throw err;

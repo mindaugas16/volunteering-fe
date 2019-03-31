@@ -18,6 +18,10 @@ const eventSchema = new Schema({
     location: {
         type: Schema.Types.Mixed
     },
+    organization: {
+        type: Schema.Types.ObjectId,
+        ref: 'Organization'
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
