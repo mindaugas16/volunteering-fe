@@ -130,7 +130,7 @@ type RootQuery {
     organizations: [Organization!]!
     login(email: String!, password: String!): AuthData!
     participations: [Participation!]!
-    currentUser: User!
+    currentUser: User
 }
 
 type RootMutation {

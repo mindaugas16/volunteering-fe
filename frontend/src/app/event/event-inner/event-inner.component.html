@@ -59,6 +59,12 @@
       </div>
     </div>
     <div class="column">
+      <div class="box">
+        Organization:
+        <a [routerLink]="['/organizations', 'details', event.organization._id]">
+          {{event.organization.name}}
+        </a>
+      </div>
       <div class="box" *ngIf="event.location">
         Location: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
       </div>

@@ -60,13 +60,17 @@ export class EventsService {
            }
            tags
            activities {
-            name
-            description
-            date {
-              start
-              end
+              name
+              description
+              date {
+                start
+                end
+              }
             }
-           }
+            organization {
+              _id
+              name
+            }
            }
         }`
       ,

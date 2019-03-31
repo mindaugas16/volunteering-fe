@@ -1,3 +1,5 @@
+import { OrganizationInterface } from '../../organizations/organization.interface';
+
 export interface EventInterface {
   _id: string;
   title: string;
@@ -7,6 +9,7 @@ export interface EventInterface {
   activities: any[];
   location: any;
   tags: string[];
+  organization: OrganizationInterface;
 }
 
 export interface CreateEventInterface {

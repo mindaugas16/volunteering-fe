@@ -21,7 +21,6 @@ export class GenericModalComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   onClose() {

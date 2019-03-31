@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationService } from '../organization.service';
 import { OrganizationInterface } from '../organization.interface';
 import { AuthService } from '../../auth/auth.service';
@@ -26,7 +26,8 @@ export class OrganizationInnerComponent implements OnInit {
     private route: ActivatedRoute,
     private organizationService: OrganizationService,
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router
   ) {
   }
 
@@ -37,14 +38,21 @@ export class OrganizationInnerComponent implements OnInit {
       })
     ).subscribe(([organization, user]) => {
       this.organization = organization;
-      this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
-      this.isOwner = this.organization.creator._id === user._id;
-      this.isMember = !!this.organization.members.find(member => member._id === user._id);
-      this.user = user;
+      if (user) {
+        this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
+        this.isOwner = this.organization.creator._id === user._id;
+        this.isMember = !!this.organization.members.find(member => member._id === user._id);
+        this.user = user;
+      }
     });
   }
 
   toggleOrganizationJoin() {
+    if (!this.user) {
+      this.router.navigate(['/auth']);
+      return;
+    }
+
     if (this.isUserJoinedOrganization) {
       this.organizationService.leaveOrganization(this.organization._id).subscribe(() => {
         this.isUserJoinedOrganization = false;

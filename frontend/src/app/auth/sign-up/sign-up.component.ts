@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { AuthHelper } from '../helpers/auth.helper';
+import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -26,14 +26,14 @@ export class SignUpComponent implements OnInit {
 
   submit() {
     if (this.form.invalid) {
-      AuthHelper.invalidateFormControls(this.form);
+      FormControlsHelperService.invalidateFormControls(this.form);
       return;
     }
     const {termsAndConditions, ...rest} = this.form.value;
     this.authService.signUp(rest).subscribe(() => {
       },
       err => {
-        AuthHelper.invalidateFormControls(this.form);
+        FormControlsHelperService.invalidateFormControls(this.form);
       }
     );
   }

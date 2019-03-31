@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthHelper } from '../../auth/helpers/auth.helper';
+import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 
 @Component({
   selector: 'app-invite-user-modal',
@@ -20,7 +20,7 @@ export class InviteUserModalComponent implements OnInit {
 
   onSubmit() {
     if (!this.form.valid) {
-      AuthHelper.invalidateFormControls(this.form);
+      FormControlsHelperService.invalidateFormControls(this.form);
       return;
     }
 

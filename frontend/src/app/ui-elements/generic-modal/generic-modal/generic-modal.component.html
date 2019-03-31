@@ -2,7 +2,10 @@
   class="modal is-active"
   [ngClass]="extraClasses"
 >
-  <div class="modal-background"></div>
+  <div
+    class="modal-background"
+    (click)="onClose()"
+  ></div>
   <div class="modal-content">
     <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     <button

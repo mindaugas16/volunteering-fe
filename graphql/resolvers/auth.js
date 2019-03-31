@@ -88,7 +88,7 @@ module.exports = {
     },
     currentUser: async (args, req) => {
         if (!req.isAuth) {
-            throw new Error('Unauthenticated!');
+            return null;
         }
 
         try {
