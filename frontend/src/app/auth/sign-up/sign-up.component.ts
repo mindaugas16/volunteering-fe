@@ -18,8 +18,7 @@ export class SignUpComponent implements OnInit {
     termsAndConditions: new FormControl(false, [Validators.required])
   });
 
-  constructor(private authService: AuthService,
-              private authHelper: AuthHelper) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -27,14 +26,14 @@ export class SignUpComponent implements OnInit {
 
   submit() {
     if (this.form.invalid) {
-      this.authHelper.invalidateFormControls(this.form);
+      AuthHelper.invalidateFormControls(this.form);
       return;
     }
     const {termsAndConditions, ...rest} = this.form.value;
     this.authService.signUp(rest).subscribe(() => {
       },
       err => {
-        this.authHelper.invalidateFormControls(this.form);
+        AuthHelper.invalidateFormControls(this.form);
       }
     );
   }

@@ -9,7 +9,6 @@ import { SearchModule } from '../search/search.module';
 import { FooterComponent } from './footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ModalService } from './services/modal/modal.service';
-import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 
 @NgModule({
   declarations: [
@@ -24,14 +23,12 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
     SharedModule,
     SearchModule,
     TranslateModule,
-    GenericModalModule
   ],
   exports: [
     NavbarComponent,
     FooterComponent
   ],
   providers: [
-    ModalService
   ]
 })
 export class CoreModule {

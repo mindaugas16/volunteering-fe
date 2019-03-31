@@ -8,6 +8,7 @@ import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
 import { ModalService } from '../../core/services/modal/modal.service';
 import { EventNewComponent } from '../../event/event-new/event-new.component';
+import { InviteUserModalComponent } from '../../ui-elements/invite-user-modal/invite-user-modal.component';
 
 @Component({
   selector: 'app-organization-inner',
@@ -18,6 +19,7 @@ export class OrganizationInnerComponent implements OnInit {
   organization: OrganizationInterface;
   isUserJoinedOrganization: boolean;
   isOwner: boolean;
+  isMember: boolean;
   user: UserInterface;
 
   constructor(
@@ -37,6 +39,7 @@ export class OrganizationInnerComponent implements OnInit {
       this.organization = organization;
       this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
       this.isOwner = this.organization.creator._id === user._id;
+      this.isMember = !!this.organization.members.find(member => member._id === user._id);
       this.user = user;
     });
   }
@@ -58,5 +61,9 @@ export class OrganizationInnerComponent implements OnInit {
   onEventAdd() {
     const modalRef = this.modalService.open(EventNewComponent);
     modalRef.instance.organization = this.organization;
+  }
+
+  onUserInvite() {
+    const modalRef = this.modalService.open(InviteUserModalComponent);
   }
 }

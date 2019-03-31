@@ -1,27 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GenericModalComponent } from './generic-modal/generic-modal.component';
-import { EventNewComponent } from '../../event/event-new/event-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalContentDirective } from './modal-content.directive';
 
 @NgModule({
   declarations: [
     GenericModalComponent,
-    EventNewComponent,
-    ModalContentDirective,
+    ModalContentDirective
   ],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
-    GenericModalComponent
+    GenericModalComponent,
+    ModalContentDirective
   ],
   entryComponents: [
-    GenericModalComponent,
-    EventNewComponent
+    GenericModalComponent
   ]
 })
 export class GenericModalModule {

@@ -56,7 +56,7 @@
             <h4 class="title is-4">
               {{'Events'}} ({{organization.events.length}}):
             </h4>
-            <div *ngIf="isOwner">
+            <div *ngIf="isMember || isOwner">
               <a
                 class="icon"
                 (click)="onEventAdd()"
@@ -107,9 +107,12 @@
               {{'Members'}} ({{organization.members.length}}):
             </h4>
             <div *ngIf="isOwner">
-              <span class="icon">
+              <a
+                class="icon"
+                (click)="onUserInvite()"
+              >
                 <i class="fa fa-plus"></i>
-              </span>
+              </a>
             </div>
           </div>
           <ul>

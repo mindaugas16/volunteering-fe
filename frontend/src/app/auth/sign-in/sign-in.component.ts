@@ -15,8 +15,9 @@ export class SignInComponent implements OnInit {
     rememberMe: new FormControl(false)
   });
 
-  constructor(private authService: AuthService,
-              private authHelper: AuthHelper) {
+  constructor(
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit() {
@@ -24,14 +25,14 @@ export class SignInComponent implements OnInit {
 
   submit() {
     if (this.form.invalid) {
-      this.authHelper.invalidateFormControls(this.form);
+      AuthHelper.invalidateFormControls(this.form);
       return;
     }
     const {email, password} = this.form.value;
     this.authService.signIn(email, password).subscribe(() => {
       },
       err => {
-        this.authHelper.invalidateFormControls(this.form);
+        AuthHelper.invalidateFormControls(this.form);
       });
   }
 

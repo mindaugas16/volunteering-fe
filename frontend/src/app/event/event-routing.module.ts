@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventInnerComponent } from './event-inner/event-inner.component';
-import { EventNewComponent } from './event-new/event-new.component';
 
 const routes: Routes = [
   {

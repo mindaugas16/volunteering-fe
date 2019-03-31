@@ -32,7 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
         }
       }
-    )
+    ),
   ],
   providers: [
     {

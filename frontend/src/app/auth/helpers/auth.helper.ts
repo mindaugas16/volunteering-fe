@@ -9,7 +9,7 @@ export class AuthHelper {
   constructor() {
   }
 
-  invalidateFormControls(form: FormGroup) {
+  static invalidateFormControls(form: FormGroup) {
     Object.keys(form.controls).forEach(field => {
       const control = form.get(field) as FormControl;
       control.markAsDirty();
