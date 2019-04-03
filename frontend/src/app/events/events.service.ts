@@ -30,6 +30,10 @@ export class EventsService {
                   firstName
                 }
                 tags
+                organization {
+                  name
+                  _id
+                }
            }
         }`,
       variables: {

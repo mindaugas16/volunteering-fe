@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrganizationInterface } from './organization.interface';
+import { OrganizationInterface, UpdateOrganizationInterface } from './organization.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +43,7 @@ export class OrganizationService {
            organization(organizationId: $organizationId) {
               _id
               name
+              description
               creator {
                 _id
                 email
@@ -50,6 +51,9 @@ export class OrganizationService {
               }
               location {
                 address
+                city
+                country
+                postalCode
               }
               members {
                 _id
@@ -94,6 +98,22 @@ export class OrganizationService {
       `,
       variables: {
         organizationId: id
+      }
+    });
+  }
+
+  update(id: string, updatedOrganization: UpdateOrganizationInterface): Observable<OrganizationInterface> {
+    return this.apiService.query({
+      query: `
+        mutation updateOrganization($id: ID!, $organizationInput: OrganizationInput!) {
+          updateOrganization(id: $id, organizationInput: $organizationInput) {
+            name
+          }
+        }
+      `,
+      variables: {
+        id,
+        organizationInput: updatedOrganization
       }
     });
   }

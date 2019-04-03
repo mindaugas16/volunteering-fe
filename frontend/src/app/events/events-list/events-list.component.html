@@ -18,14 +18,6 @@
         <span class="icon mr-2">
           <i class="fa fa-list"></i>
         </span>
-        <button class="button is-rounded"
-                [routerLink]="['/event', 'new']"
-        >
-          Create new
-          <span class="icon ml-1 has-text-success">
-            <i class="fa fa-plus"></i>
-          </span>
-        </button>
       </div>
     </div>
     <div class="columns is-multiline mt-4">
@@ -42,9 +34,18 @@
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <p class="title is-4">
+                <h4 class="title is-4">
                   {{ event.title }}
-                </p>
+                </h4>
+                <span class="is-6">
+                  {{'Hosted by'}}:
+                  <a
+                    [routerLink]="['/organizations', 'details', event.organization._id]"
+                    appClickStopPropagation
+                  >
+                    {{ event.organization.name }}
+                  </a>
+                </span>
               </div>
             </div>
 

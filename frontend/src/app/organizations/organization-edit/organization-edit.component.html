@@ -1,0 +1,81 @@
+<div
+  class="container pb-4 pt-4"
+  *ngIf="organization"
+>
+  <div class="title">
+    Edit {{organization.name}} details
+  </div>
+  <form [formGroup]="form">
+    <div formGroupName="general">
+      <h4 class="is-6 has-text-weight-semibold">
+        {{'General'}}
+      </h4>
+      <app-input class="field"
+                 type="text"
+                 formControlName="name"
+                 [formControl]="form.get('general').get('name')"
+                 placeholder="Name"
+                 label="Name"
+      ></app-input>
+
+      <app-input class="field"
+                 fieldType="textarea"
+                 type="text"
+                 formControlName="description"
+                 [formControl]="form.get('general').get('description')"
+                 placeholder="Description"
+                 label="Description"
+      ></app-input>
+    </div>
+    <hr/>
+    <div formGroupName="location">
+      <h4 class="is-6 has-text-weight-semibold">
+        {{'Location'}}
+      </h4>
+      <app-input class="field"
+                 type="text"
+                 formControlName="address"
+                 [formControl]="form.get('location').get('address')"
+                 placeholder="Address"
+                 label="Address"
+      ></app-input>
+      <app-input class="field"
+                 type="text"
+                 formControlName="city"
+                 [formControl]="form.get('location').get('city')"
+                 placeholder="City"
+                 label="City"
+      ></app-input>
+      <app-input class="field"
+                 type="text"
+                 formControlName="postalCode"
+                 [formControl]="form.get('location').get('postalCode')"
+                 placeholder="Postal Code"
+                 label="Postal Code"
+      ></app-input>
+      <app-input class="field"
+                 type="text"
+                 formControlName="country"
+                 [formControl]="form.get('location').get('country')"
+                 placeholder="Country"
+                 label="Country"
+      ></app-input>
+
+    </div>
+    <div class="field is-grouped mt-4">
+      <div class="control">
+        <a class="button is-link"
+           (click)="onSave()"
+        >
+          Save
+        </a>
+      </div>
+      <div class="control">
+        <a class="button is-text"
+           (click)="onReset()">
+          Cancel
+        </a>
+      </div>
+    </div>
+  </form>
+</div>

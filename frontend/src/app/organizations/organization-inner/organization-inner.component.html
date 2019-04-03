@@ -1,5 +1,4 @@
 <div
-  *ngIf="organization"
   class="mb-4"
 >
   <section class="hero">
@@ -14,10 +13,10 @@
             </figure>
             <div>
               <h1 class="title">
-                {{organization.name}}
+                {{organization?.name}}
               </h1>
               <h2 class="subtitle">
-                {{'Address should be here'}}
+                {{'Motivation'}}
               </h2>
             </div>
           </div>
@@ -42,23 +41,18 @@
       <div class="column is-three-fifths">
         <div class="box is-shadowless">
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-            sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+           {{organization?.description}}
           </p>
         </div>
         <div class="box is-shadowless">
           <div class="is-flex justify-content-between">
             <h4 class="title is-4">
-              {{'Events'}} ({{organization.events.length}}):
+              {{'Events'}} ({{organization?.events.length}}):
             </h4>
-            <div *ngIf="isMember || isOwner">
+            <div>
               <a
                 class="icon"
+                *ngIf="isMember || isOwner"
                 (click)="onEventAdd()"
               >
                 <i class="fa fa-plus"></i>
@@ -68,14 +62,14 @@
           <div>
             <a
               class="box"
-              *ngFor="let event of organization.events"
-              [routerLink]="['/event', 'details', event._id]"
+              *ngFor="let event of organization?.events"
+              [routerLink]="['/event', 'details', event?._id]"
             >
               <span class="is-6 title">
-                {{event.title}}
+                {{event?.title}}
               </span>
               <p>
-                {{event.date | date}}
+                {{event?.date | date}}
               </p>
             </a>
           </div>
@@ -88,23 +82,28 @@
               {{'Details'}}:
             </h4>
             <div *ngIf="isOwner">
-              <span class="icon">
+              <a class="icon"
+                 [routerLink]="['edit']">
                 <i class="fa fa-pencil"></i>
-              </span>
+              </a>
             </div>
           </div>
           <span>
-            {{'Creator'}}: {{organization.creator.firstName}}
+            <span class="has-text-weight-semibold">{{'Creator'}}:</span>
+            {{organization?.creator.firstName}}
           </span>
           <hr/>
           <span>
-            {{'Address'}}: {{organization.location?.address}}
+            <span class="has-text-weight-semibold">{{'Address'}}:</span>
+            {{organization?.location?.address}}
+            , {{organization?.location?.city}}
+            {{organization?.location?.country}} {{organization?.location?.postalCode}}
           </span>
         </div>
         <div class="box is-shadowless">
           <div class="is-flex justify-content-between">
             <h4 class="title is-4">
-              {{'Members'}} ({{organization.members.length}}):
+              {{'Members'}} ({{organization?.members.length}}):
             </h4>
             <div *ngIf="isOwner">
               <a
@@ -116,8 +115,8 @@
             </div>
           </div>
           <ul>
-            <li *ngFor="let member of organization.members">
-              {{member.firstName}}
+            <li *ngFor="let member of organization?.members">
+              {{member?.firstName}}
             </li>
           </ul>
         </div>

@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputLabelDirective } from './components/input/directives/input-label.directive';
 import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
 import { SortComponent } from './components/sort/sort.component';
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SortComponent } from './components/sort/sort.component';
     InputComponent,
     InputLabelDirective,
     CutSentencePipe,
-    SortComponent
+    SortComponent,
+    ClickStopPropagationDirective
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { SortComponent } from './components/sort/sort.component';
     InputComponent,
     InputLabelDirective,
     CutSentencePipe,
-    SortComponent
+    SortComponent,
+    ClickStopPropagationDirective
   ]
 })
 export class SharedModule { }

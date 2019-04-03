@@ -13,12 +13,14 @@ import { EventNewComponent } from '../event/event-new/event-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { ModalService } from '../core/services/modal/modal.service';
+import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
 
 @NgModule({
   declarations: [
     OrganizationsListComponent,
     OrganizationInnerComponent,
-    EventNewComponent
+    EventNewComponent,
+    OrganizationEditComponent
   ],
   imports: [
     CommonModule,

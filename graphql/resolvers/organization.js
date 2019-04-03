@@ -17,6 +17,7 @@ module.exports = {
 
             const organization = new Organization({
                 name: args.organizationInput.name,
+                description: args.organizationInput.description,
                 location: args.organizationInput.location,
                 creator: creatorId
             });
@@ -116,6 +117,40 @@ module.exports = {
             await user.save();
 
             return true;
+        } catch (err) {
+            throw err;
+        }
+    },
+    updateOrganization: async ({ id, organizationInput }, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 400;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const organization = await Organization.findById(id);
+
+            if (!organization) {
+                throw new Error('Organization not found');
+            }
+
+            if (!organization.creator._id.equals(user._id)) {
+                throw new Error('You can\'t update organization details');
+            }
+
+            organization.name = organizationInput.name;
+            organization.description = organizationInput.description;
+            organization.location = { ...organizationInput.location };
+
+            const updatedOrganization = await organization.save();
+
+            return transformOrganization(updatedOrganization);
         } catch (err) {
             throw err;
         }

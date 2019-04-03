@@ -12,6 +12,9 @@ const organizationSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String
+    },
     location: {
         type: Schema.Types.Mixed
     },

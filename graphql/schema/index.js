@@ -6,6 +6,7 @@ type Organization {
     creator: User!
     members: [User!]!
     name: String!
+    description: String
     location: Location
     createdAt: String!
     updatedAt: String!
@@ -84,6 +85,7 @@ input ActivityInput {
 input OrganizationInput {
     creatorId: ID
     name: String!
+    description: String
     location: LocationInput
 }
 
@@ -142,6 +144,7 @@ type RootMutation {
     createOrganization(organizationInput: OrganizationInput): Organization
     joinOrganization(organizationId: ID): Boolean
     leaveOrganization(organizationId: ID): Boolean
+    updateOrganization(id: ID!, organizationInput: OrganizationInput!): Organization!
 }
 
 schema {
