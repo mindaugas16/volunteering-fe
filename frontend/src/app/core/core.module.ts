@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SearchModule } from '../search/search.module';
 import { FooterComponent } from './footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
     SharedModule,
     SearchModule,
     TranslateModule,
+    DropdownModule
   ],
   exports: [
     NavbarComponent,

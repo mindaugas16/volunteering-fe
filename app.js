@@ -19,13 +19,14 @@ app.use('/graphql', graphqlHttp({
     schema: graphqlSchema,
     rootValue: graphqlResolvers,
     graphiql: true,
-    formatError(err) {
-        if (!err.originalError) {
-            return err;
+    formatError(error) {
+        if (!error.originalError) {
+            return error;
         }
-        const data = err.originalError.data;
-        const message = err.message || 'An error occurred.';
-        const code = err.originalError.code || 500;
+        const data = error.originalError.data;
+        const code = error.originalError.code || 500;
+
+        const message = error.message || 'An error occurred.';
         return { message, status: code, data };
     }
 }));

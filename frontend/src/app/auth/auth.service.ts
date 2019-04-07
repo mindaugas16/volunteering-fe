@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
+import { errorHandler } from '@angular/platform-browser/src/browser';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';

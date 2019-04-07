@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 const Volunteer = require('../../models/Volunteer');
 
+const isEmail = require('validator/lib/isEmail');
+
 module.exports = {
     createVolunteer: async args => {
         try {
@@ -57,16 +59,31 @@ module.exports = {
             throw error;
         }
     },
-    login: async args => {
-        const user = await User.findOne({ email: args.email });
-
-        if (!user) {
-            throw new Error('User does not exist!');
+    login: async (args, req) => {
+        const errors = [];
+        if (req.isAuth) {
+            throw new Error('You\'re already logged in!');
         }
+
+        if (!isEmail(args.email)) {
+            const error = {
+                message: 'Invalid email address',
+            };
+            errors.push(error);
+        }
+
+        if (errors.length) {
+            const error = new Error('Invalid input');
+            error.data = errors;
+            error.code = 422;
+            throw error;
+        }
+
+        const user = await User.findOne({ email: args.email });
         const isEqual = await bcrypt.compare(args.password, user.password);
 
-        if (!isEqual) {
-            throw new Error('Password is incorrect');
+        if (!user || !isEqual) {
+            throw new Error('Invalid credentials.');
         }
 
         const token = jwt.sign(

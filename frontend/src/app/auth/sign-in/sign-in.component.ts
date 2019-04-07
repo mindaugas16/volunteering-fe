@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,6 +13,8 @@ export class SignInComponent implements OnInit {
     password: new FormControl(null, [Validators.required]),
     rememberMe: new FormControl(false)
   });
+  loading: boolean;
+  isInvalid: boolean;
 
   constructor(
     private authService: AuthService
@@ -21,24 +22,24 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe(() => this.isInvalid = false);
   }
 
   submit() {
+    this.loading = true;
+
     if (this.form.invalid) {
-      FormControlsHelperService.invalidateFormControls(this.form);
+      this.loading = false;
+      this.isInvalid = true;
       return;
     }
     const {email, password} = this.form.value;
     this.authService.signIn(email, password).subscribe(() => {
+        this.loading = false;
       },
-      err => {
-        FormControlsHelperService.invalidateFormControls(this.form);
+      error => {
+        this.loading = false;
+        this.isInvalid = true;
       });
   }
-
-  isInvalid(formControlName: string) {
-    const formControl = this.form.get(formControlName);
-    return formControl.invalid && (formControl.dirty || formControl.touched);
-  }
-
 }

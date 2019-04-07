@@ -26,6 +26,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() formControl: FormControl;
   @Input() fieldType: 'input' | 'textarea' = 'input';
   @Input() min: number;
+  @Input() showValidations = true;
 
   // The internal data model
   private innerValue: any = '';
@@ -55,7 +56,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   }
 
   isInvalid() {
-    return this.formControl.invalid && (this.formControl.dirty || this.formControl.touched);
+    return this.showValidations && this.formControl.invalid && (this.formControl.dirty || this.formControl.touched);
   }
 
   writeValue(value: any) {

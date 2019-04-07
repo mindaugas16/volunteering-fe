@@ -28,11 +28,21 @@
     ></textarea>
   </ng-container>
 
-  <p class="help is-danger"
-     *ngIf="isInvalid()"
+  <div class="help is-danger"
+       *ngIf="isInvalid()"
   >
-    Custom error
-  </p>
+    <span *ngIf="formControl.errors.invalidEmail">
+      {{'Email address is invalid'}}
+    </span>
+
+    <span *ngIf="formControl.errors.invalid">
+      {{'Invalid value'}}
+    </span>
+
+    <span *ngIf="formControl.errors.invalidCredentials">
+      {{'Username or password is invalid value'}}
+    </span>
+  </div>
 
 </div>
 

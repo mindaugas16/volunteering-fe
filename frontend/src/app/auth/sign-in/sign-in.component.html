@@ -1,24 +1,26 @@
-<div class="container">
-  <div class="columns is-mobile mt-4">
+<div class="container mt-4 mb-4">
+  <div class="columns is-mobile">
     <div class="column is-one-third is-offset-one-third">
       <h3 class="has-text-weight-semibold is-size-3">
-        Sign in
+        Login in
       </h3>
-      <article class="message is-danger" *ngIf="isInvalid('email') || isInvalid('password')">
+      <article class="message is-danger" *ngIf="isInvalid">
         <div class="message-header">
           <p>
-            {{'Email or password not valid!'}}
+            {{'Please provide a valid username and password.'}}
           </p>
-          <button class="delete" aria-label="delete"></button>
         </div>
       </article>
-      <form [formGroup]="form">
+      <form [formGroup]="form"
+            (ngSubmit)="submit()"
+      >
         <app-input class="field"
                    type="email"
                    formControlName="email"
                    [formControl]="form.get('email')"
                    placeholder="Email"
                    label="Email"
+                   [showValidations]="false"
         ></app-input>
 
         <app-input class="field"
@@ -26,6 +28,7 @@
                    formControlName="password"
                    [formControl]="form.get('password')"
                    placeholder="Password"
+                   [showValidations]="false"
         >
           <div class="level">
             <span class='level-left'>
@@ -48,12 +51,13 @@
         </div>
 
         <div class="field">
-          <p class="control">
-            <a class="button is-fullwidth mt-3 is-link"
-               (click)="submit()">
+          <div class="control">
+            <button class="button is-fullwidth mt-3 is-link"
+                    [class.is-loading]="loading"
+                    type="submit">
               Login
-            </a>
-          </p>
+            </button>
+          </div>
         </div>
 
         <div class="field">

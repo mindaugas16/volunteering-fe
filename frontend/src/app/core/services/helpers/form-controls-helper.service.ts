@@ -9,11 +9,11 @@ export class FormControlsHelperService {
   constructor() {
   }
 
-  static invalidateFormControls(form: FormGroup) {
+  static invalidateFormControls(form: FormGroup, key = 'incorrect') {
     Object.keys(form.controls).forEach(field => {
       const control = form.get(field) as FormControl;
       control.markAsDirty();
-      control.setErrors({incorrect: true});
+      control.setErrors({[key]: true});
     });
   }
 }
