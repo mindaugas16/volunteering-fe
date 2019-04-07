@@ -40,10 +40,6 @@ module.exports = {
             throw new Error('End date should be greater then start date.');
         }
 
-        if (activityInput.volunteersNeeded > 0) {
-            throw new Error('Volunteers needed number should be greater then 0');
-        }
-
         const fetchedEvent = await Event.findById(activityInput.eventId);
 
         const activity = new Activity({

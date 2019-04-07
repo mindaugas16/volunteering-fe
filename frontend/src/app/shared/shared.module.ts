@@ -7,6 +7,7 @@ import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
 import { SortComponent } from './components/sort/sort.component';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive';
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
+import { StickyDirective } from './directives/sticky/sticky.directive';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
     InputLabelDirective,
     CutSentencePipe,
     SortComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    StickyDirective
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
     InputLabelDirective,
     CutSentencePipe,
     SortComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    StickyDirective
   ]
 })
 export class SharedModule {

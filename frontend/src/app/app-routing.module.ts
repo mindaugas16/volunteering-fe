@@ -8,6 +8,11 @@ import { UserGuard } from './auth/guards/user/user.guard';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/homepage',
+    pathMatch: 'full'
+  },
+  {
+    path: 'homepage',
     component: HomepageComponent
   },
   {
