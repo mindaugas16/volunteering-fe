@@ -70,6 +70,8 @@ export class EventsService {
                 start
                 end
               }
+              volunteersNeeded
+              volunteers
             }
             organization {
               _id

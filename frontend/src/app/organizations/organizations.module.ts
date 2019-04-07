@@ -33,9 +33,6 @@ import { OrganizationEditComponent } from './organization-edit/organization-edit
     FormsModule,
     GenericModalModule
   ],
-  providers: [
-    ModalService
-  ],
   entryComponents: [
     InviteUserModalComponent,
     EventNewComponent

@@ -124,7 +124,7 @@ module.exports = {
     updateOrganization: async ({ id, organizationInput }, req) => {
         if (!req.isAuth) {
             const error = new Error('Unauthenticated');
-            error.code = 400;
+            error.code = 401;
             throw error;
         }
 

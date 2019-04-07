@@ -8,8 +8,7 @@ const activitySchema = new Schema({
         required: true
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     date: {
         type: Schema.Types.Mixed
@@ -20,7 +19,7 @@ const activitySchema = new Schema({
     },
     volunteersNeeded: {
         type: Number,
-        default: 1
+        required: true
     },
     event: {
         type: Schema.Types.ObjectId,
@@ -36,6 +35,12 @@ const activitySchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: 'Participation'
+        }
+    ],
+    volunteers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
         }
     ],
     requirements: {

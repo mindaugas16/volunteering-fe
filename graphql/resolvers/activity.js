@@ -2,6 +2,7 @@ const Activity = require('../../models/activity');
 const User = require('../../models/user');
 const Event = require('../../models/event');
 const { transformActivity, transformDateRange } = require('./merge');
+const { compareDates, toDate } = require('../../helpers/date');
 
 module.exports = {
     activities: async () => {
@@ -22,18 +23,36 @@ module.exports = {
             throw err;
         }
     },
-    createActivity: async (args, req) => {
+    createActivity: async ({ activityInput }, req) => {
         if (!req.isAuth) {
-            throw new Error('Unauthenticated!');
+            const error = new Error('Unauthenticated');
+            error.code = 401;
+            throw error;
         }
-        const fetchedEvent = await Event.findById(args.activityInput.eventId);
+
+        const transformedDate = transformDateRange(activityInput.date);
+
+        if (compareDates(toDate(transformedDate.start), new Date()) === -1) {
+            throw new Error('Start date should be greater or equal today date.');
+        }
+
+        if (transformedDate.end && compareDates(toDate(transformedDate.start), toDate(transformedDate.end)) === 1) {
+            throw new Error('End date should be greater then start date.');
+        }
+
+        if (activityInput.volunteersNeeded > 0) {
+            throw new Error('Volunteers needed number should be greater then 0');
+        }
+
+        const fetchedEvent = await Event.findById(activityInput.eventId);
 
         const activity = new Activity({
-            name: args.activityInput.name,
-            description: args.activityInput.description,
-            date: transformDateRange(args.activityInput.date),
+            name: activityInput.name,
+            description: activityInput.description,
+            date: transformedDate,
             creator: req.userId,
-            event: fetchedEvent
+            event: fetchedEvent,
+            volunteersNeeded: activityInput.volunteersNeeded
         });
         let createdActivity;
         try {

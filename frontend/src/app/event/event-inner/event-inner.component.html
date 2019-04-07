@@ -10,10 +10,19 @@
       <hr/>
 
       <div>
-        <h4 class="title is-4">
-          Activities
-        </h4>
-        <div class="box">
+        <div class="is-flex align-items-center justify-content-between">
+          <h4 class="title is-4">
+            {{'Activities'}}
+          </h4>
+          <a class="icon"
+             [routerLink]="['/activities', event._id]"
+          >
+            <i class="fa fa-plus"></i>
+          </a>
+        </div>
+        <div class="box"
+             *ngFor="let activity of event.activities"
+        >
           <article class="media">
             <div class="media-left">
               <figure class="image is-64x64">
@@ -24,14 +33,14 @@
               <div class="content">
                 <div class="is-flex justify-content-between">
                   <h4 class="title is-5 mb-0">
-                    Vandens dalinimas
+                    {{activity.name}}
                   </h4>
                   <time class="is-italic">
                     {{'2019-03-24T08:35:00.466Z' | date}}
                   </time>
                 </div>
                 <p>
-                  Short description
+                  {{activity.description}}
                 </p>
               </div>
               <nav class="level is-mobile">

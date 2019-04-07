@@ -1,0 +1,7 @@
+.dropdown {
+  &.is-active {
+    .fa-angle-down {
+      transform: rotate(180deg);
+    }
+  }
+}

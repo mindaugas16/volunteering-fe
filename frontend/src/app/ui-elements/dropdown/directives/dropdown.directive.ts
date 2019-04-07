@@ -1,13 +1,19 @@
-import { ContentChild, Directive, ElementRef, HostBinding, HostListener, OnInit } from '@angular/core';
+import { ContentChild, Directive, ElementRef, EventEmitter, HostBinding, HostListener, OnInit, Output } from '@angular/core';
 import { DropdownToggleDirective } from './dropdown-toggle.directive';
 
 @Directive({
   selector: '[appDropdown]'
 })
 export class DropdownDirective implements OnInit {
+
+  constructor(private elRef: ElementRef) {
+  }
+
   @ContentChild(DropdownToggleDirective, {read: ElementRef}) toggleRef;
 
   @HostBinding('class.is-active') isOpen: boolean;
+
+  @Output() dropdownOpen: EventEmitter<boolean> = new EventEmitter();
 
   @HostListener('click', ['$event'])
   private onToggle() {
@@ -20,9 +26,6 @@ export class DropdownDirective implements OnInit {
     if (this.isOpen && !this.elRef.nativeElement.contains(event.target)) {
       this.isOpen = false;
     }
-  }
-
-  constructor(private elRef: ElementRef) {
   }
 
   ngOnInit(): void {

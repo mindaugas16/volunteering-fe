@@ -55,7 +55,7 @@ const transformParticipation = participation => {
 const transformDateRange = date => {
     return {
         start: dateToString(date.start),
-        end: dateToString(date.end)
+        end: date.end ? dateToString(date.end) : null
     }
 };
 

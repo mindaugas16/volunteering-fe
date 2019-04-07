@@ -25,6 +25,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() required: boolean;
   @Input() formControl: FormControl;
   @Input() fieldType: 'input' | 'textarea' = 'input';
+  @Input() min: number;
 
   // The internal data model
   private innerValue: any = '';

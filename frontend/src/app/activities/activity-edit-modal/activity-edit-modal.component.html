@@ -1,0 +1,78 @@
+<app-generic-modal>
+  <ng-template appModalContent>
+    <div class="box">
+      <h3 class="title">
+        {{'Add activity to event'}}
+      </h3>
+      <form [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+      >
+        <app-input class="field"
+                   label="Name"
+                   formControlName="name"
+                   [formControl]="form.get('name')"
+                   placeholder="Name"
+                   required="true"
+        ></app-input>
+
+        <app-input class="field"
+                   [fieldType]="'textarea'"
+                   label="Description"
+                   formControlName="description"
+                   [formControl]="form.get('description')"
+                   placeholder="Description"
+        ></app-input>
+
+        <app-input class="field"
+                   label="Volunteers needed"
+                   formControlName="volunteersNeeded"
+                   [formControl]="form.get('volunteersNeeded')"
+                   placeholder="Volunteers needed"
+                   required="true"
+                   type="number"
+                   [min]="1"
+        ></app-input>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <label for="startDate">
+              {{'Start date'}}
+            </label>
+            <input class="input"
+                   id="startDate"
+                   type="date"
+                   formControlName="startDate"
+            >
+          </div>
+
+          <div class="control">
+            <label for="endDate">
+              {{'End date'}}
+            </label>
+            <input class="input"
+                   id="endDate"
+                   type="date"
+                   formControlName="endDate"
+            >
+          </div>
+        </div>
+
+        <div class="field is-grouped">
+          <button
+            class="button is-primary"
+            type="submit"
+          >
+            Save
+          </button>
+          <button
+            class="button is-text"
+            type="reset"
+            (click)="onClose()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</app-generic-modal>

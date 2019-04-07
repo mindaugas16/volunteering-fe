@@ -12,6 +12,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators/tap';
+import { AuthService } from '../../../auth/auth.service';
 
 export const ERRORS_INTERCEPTOR = {
   provide: HTTP_INTERCEPTORS,
@@ -24,7 +25,9 @@ export const ERRORS_INTERCEPTOR = {
 })
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor() {
+  constructor(
+    private authService: AuthService
+  ) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
@@ -34,7 +37,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (res instanceof HttpResponse) {
           const errors = res.body.errors;
           if (errors && errors.length) {
-            throw new Error(errors[0].message);
+            const [error] = errors;
+            if (error.status === 401) {
+              this.authService.logout();
+            }
+            throw new Error(error.message);
           }
         }
       })

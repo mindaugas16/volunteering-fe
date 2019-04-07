@@ -33,6 +33,10 @@ const routes: Routes = [
     loadChildren: './organizations/organizations.module#OrganizationsModule'
   },
   {
+    path: 'activities',
+    loadChildren: './activities/activities.module#ActivitiesModule'
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }

@@ -16,12 +16,14 @@ type Organization {
 type Activity {
     _id: ID!
     name: String!
-    description: String!
+    description: String
     date: DateRange!
     creator: User!
     createdAt: String!
     updatedAt: String!
     event: Event!
+    volunteers: [ID!]
+    volunteersNeeded: Int!
 }
 
 type DateRange {
@@ -77,9 +79,10 @@ type Participation {
 
 input ActivityInput {
     name: String!
-    description: String!
+    description: String
     date: DateRangeInput!
     eventId: ID!
+    volunteersNeeded: Int!
 }
 
 input OrganizationInput {
