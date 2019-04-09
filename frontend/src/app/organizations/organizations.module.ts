@@ -9,17 +9,14 @@ import { EventModule } from '../event/event.module';
 import { SharedModule } from '../shared/shared.module';
 import { InviteUserModalModule } from '../ui-elements/invite-user-modal/invite-user-modal.module';
 import { InviteUserModalComponent } from '../ui-elements/invite-user-modal/invite-user-modal.component';
-import { EventNewComponent } from '../event/event-new/event-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
-import { ModalService } from '../core/services/modal/modal.service';
 import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
 
 @NgModule({
   declarations: [
     OrganizationsListComponent,
     OrganizationInnerComponent,
-    EventNewComponent,
     OrganizationEditComponent
   ],
   imports: [
@@ -27,15 +24,14 @@ import { OrganizationEditComponent } from './organization-edit/organization-edit
     OrganizationsRoutingModule,
     TranslateModule,
     InviteUserModalModule,
-    EventModule,
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    GenericModalModule
+    GenericModalModule,
+    EventModule
   ],
   entryComponents: [
-    InviteUserModalComponent,
-    EventNewComponent
+    InviteUserModalComponent
   ]
 })
 export class OrganizationsModule {

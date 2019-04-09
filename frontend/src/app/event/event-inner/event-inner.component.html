@@ -37,7 +37,7 @@
                       {{activity.name}}
                     </h4>
                     <time class="is-italic">
-                      {{'2019-03-24T08:35:00.466Z' | date}}
+                      {{event.date.start | date}} - {{event.date.end| date}}
                     </time>
                   </div>
                   <p>
@@ -70,6 +70,14 @@
       </div>
     </div>
     <div class="column">
+      <div class="box is-shadowless">
+        <a [routerLink]="['edit']">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <span>
+            {{'Edit details'}}
+          </span>
+        </a>
+      </div>
       <div class="box">
         Organization:
         <a [routerLink]="['/organizations', 'details', event.organization._id]">

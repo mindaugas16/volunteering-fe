@@ -20,7 +20,10 @@ export class EventsService {
                 _id
                 title
                 description
-                date
+                date {
+                  start
+                  end
+                }
                 location {
                   address
                   city
@@ -34,6 +37,7 @@ export class EventsService {
                   name
                   _id
                 }
+                imagePath
            }
         }`,
       variables: {
@@ -51,9 +55,13 @@ export class EventsService {
       query event($eventId: ID!) {
           event(eventId: $eventId) {
            _id
+           imagePath
            title
            description
-           date
+           date {
+              start
+              end
+            }
            location {
             address
             city
@@ -92,8 +100,10 @@ export class EventsService {
   createEvent(event: CreateEventInterface, organizationId: string): Observable<any> {
     return this.apiService.query({
       query: `
-        mutation createEvent($title: String!, $description: String!, $date: String!, $organizationId: ID!) {
-            createEvent(eventInput: {title: $title, description: $description, date: $date, organizationId: $organizationId}) {
+        mutation createEvent($title: String!, $description: String!, $date: DateRangeInput!, $organizationId: ID!, $imagePath: String) {
+            createEvent(eventInput:
+            {title: $title, description: $description, date: $date, organizationId: $organizationId, imagePath: $imagePath}
+            ) {
              _id
              title
              }
@@ -103,7 +113,8 @@ export class EventsService {
         title: event.title,
         description: event.description,
         date: event.date,
-        organizationId
+        organizationId,
+        imagePath: event.imagePath
       }
     });
   }

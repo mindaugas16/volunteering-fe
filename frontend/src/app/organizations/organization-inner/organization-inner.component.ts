@@ -7,8 +7,8 @@ import { AuthService } from '../../auth/auth.service';
 import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
 import { ModalService } from '../../core/services/modal/modal.service';
-import { EventNewComponent } from '../../event/event-new/event-new.component';
 import { InviteUserModalComponent } from '../../ui-elements/invite-user-modal/invite-user-modal.component';
+import { EventEditComponent } from '../../event/event-edit/event-edit.component';
 
 @Component({
   selector: 'app-organization-inner',
@@ -67,7 +67,8 @@ export class OrganizationInnerComponent implements OnInit {
   }
 
   onEventAdd() {
-    const modalRef = this.modalService.open(EventNewComponent);
+    const modalRef = this.modalService.open(EventEditComponent);
+    console.log(modalRef);
     modalRef.instance.organization = this.organization;
   }
 

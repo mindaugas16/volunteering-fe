@@ -1,0 +1,89 @@
+<app-generic-modal>
+  <ng-template appModalContent>
+    <div class="box">
+
+      <form [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+      >
+        <app-input class="field"
+                   type="text"
+                   formControlName="title"
+                   [formControl]="form.get('title')"
+                   placeholder="Title"
+                   label="Title"
+        ></app-input>
+
+        <app-input class="field"
+                   type="text"
+                   formControlName="description"
+                   fieldType="textarea"
+                   [formControl]="form.get('description')"
+                   placeholder="Description"
+                   label="Description"
+        ></app-input>
+
+
+        <div class="field">
+          <div class="control">
+            <div class="file has-name is-fullwidth">
+              <label class="file-label">
+                <input class="file-input"
+                       type="file"
+                       (change)="onFileChange($event)"
+                >
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fa fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Choose a file…
+                  </span>
+                </span>
+                <span class="file-name">
+                  Screen Shot 2017-07-29 at 15.54.25.png
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <label for="startDate">
+              {{'Start date'}}
+            </label>
+            <input class="input"
+                   id="startDate"
+                   type="date"
+                   formControlName="startDate"
+            >
+          </div>
+
+          <div class="control">
+            <label for="endDate">
+              {{'End date'}}
+            </label>
+            <input class="input"
+                   id="endDate"
+                   type="date"
+                   formControlName="endDate"
+            >
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-link"
+                    type="submit"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="control">
+            <button class="button is-text">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</app-generic-modal>

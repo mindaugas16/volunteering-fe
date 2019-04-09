@@ -26,7 +26,7 @@ const transformEvent = event => {
     return {
         ...event._doc,
         _id: event.id,
-        date: dateToString(event.date),
+        date: transformDateRange(event.date),
         creator: user.bind(this, event.creator),
         activities: activities.bind(this, event.activities),
         organization: organization.bind(this, event.organization)
@@ -164,7 +164,6 @@ const organizations = async organizationIds => {
         throw err;
     }
 };
-
 
 exports.transformEvent = transformEvent;
 exports.transformBooking = transformBooking;

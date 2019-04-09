@@ -43,12 +43,13 @@ type Event {
     _id: ID!
     title: String!
     description: String!
-    date: String!
+    date: DateRange!
     creator: User!
     activities: [Activity!]
     location: Location
     tags: [String!]
     organization: Organization!
+    imagePath: String
 }
 
 type User {
@@ -100,9 +101,10 @@ input DateRangeInput {
 input EventInput {
     title: String!
     description: String!
-    date: String!
+    date: DateRangeInput!
     location: LocationInput
     organizationId: ID!
+    imagePath: String
 }
 
 input UserInput {
@@ -140,6 +142,7 @@ type RootQuery {
 
 type RootMutation {
     createEvent(eventInput: EventInput): Event
+    updateEvent(id: ID!, eventInput: EventInput!): Event!
     createUser(userInput: UserInput): User
     createVolunteer(userInput: UserInput): User
     createActivity(activityInput: ActivityInput): Activity

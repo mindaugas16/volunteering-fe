@@ -62,7 +62,11 @@ export class OrganizationService {
               events {
                 _id
                 title
-                date
+                date {
+                  start
+                  end
+                }
+                imagePath
               }
            }
         }

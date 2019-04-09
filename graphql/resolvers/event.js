@@ -1,8 +1,7 @@
 const Event = require('../../models/event');
 const User = require('../../models/user');
 const Organization = require('../../models/organization');
-const { dateToString } = require('../../helpers/date');
-const { transformEvent } = require('./merge');
+const { transformEvent, transformDateRange } = require('./merge');
 
 module.exports = {
     events: async (args) => {
@@ -23,7 +22,7 @@ module.exports = {
             throw err;
         }
     },
-    createEvent: async (args, req) => {
+    createEvent: async ({ eventInput }, req) => {
         if (!req.isAuth) {
             throw new Error('Unauthenticated!');
         }
@@ -33,19 +32,20 @@ module.exports = {
                 throw new Error('User not found.');
             }
 
-            const organization = await Organization.findById(args.eventInput.organizationId);
+            const organization = await Organization.findById(eventInput.organizationId);
 
             if (!organization) {
                 throw new Error('Organization not found.');
             }
 
             const event = new Event({
-                title: args.eventInput.title,
-                description: args.eventInput.description,
-                date: dateToString(args.eventInput.date),
-                location: args.eventInput.location,
+                title: eventInput.title,
+                description: eventInput.description,
+                date: transformDateRange(eventInput.date),
+                location: eventInput.location,
                 creator: req.userId,
-                organization: organization._id
+                organization: organization._id,
+                imagePath: eventInput.imagePath
             });
             const result = await event.save();
 
@@ -56,6 +56,41 @@ module.exports = {
             await organization.save();
 
             return transformEvent(result);
+        } catch (err) {
+            throw err;
+        }
+    },
+    updateEvent: async ({ id, eventInput }, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 401;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const event = await Event.findById(id);
+
+            if (!event) {
+                throw new Error('Event not found');
+            }
+
+            if (!event.creator._id.equals(user._id)) {
+                throw new Error('You can\'t update event details');
+            }
+
+            event.name = eventInput.name;
+            event.description = eventInput.description;
+            event.date = eventInput.date;
+            event.location = { ...eventInput.location };
+
+            const updatedEvent = await event.save();
+
+            return transformEvent(updatedEvent);
         } catch (err) {
             throw err;
         }

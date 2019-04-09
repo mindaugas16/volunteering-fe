@@ -69,7 +69,7 @@
                 {{event?.title}}
               </span>
               <p>
-                {{event?.date | date}}
+                {{event?.date?.start | date}} - {{event?.date?.end | date}}
               </p>
             </a>
           </div>

@@ -16,4 +16,8 @@ export class ApiService {
   query(body: { query: string, variables?: Object }): Observable<any> {
     return this.http.post(environment.api, body);
   }
+
+  upload(body: FormData) {
+    return this.http.post(`${environment.apiRest}upload`, body);
+  }
 }

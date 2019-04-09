@@ -4,17 +4,28 @@ import { CommonModule } from '@angular/common';
 import { EventRoutingModule } from './event-routing.module';
 import { EventInnerComponent } from './event-inner/event-inner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EventEditComponent } from './event-edit/event-edit.component';
+import { SharedModule } from '../shared/shared.module';
+import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 
 @NgModule({
   declarations: [
-    EventInnerComponent
+    EventInnerComponent,
+    EventEditComponent
   ],
-  exports: [],
+  exports: [
+    EventEditComponent
+  ],
   imports: [
     CommonModule,
     EventRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule,
+    GenericModalModule
+  ],
+  entryComponents: [
+    EventEditComponent
   ]
 })
 export class EventModule {

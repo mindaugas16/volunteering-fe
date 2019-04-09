@@ -12,8 +12,7 @@ const eventSchema = new Schema({
         required: true
     },
     date: {
-        type: Date,
-        required: true
+        type: Schema.Types.Mixed
     },
     location: {
         type: Schema.Types.Mixed
@@ -46,7 +45,10 @@ const eventSchema = new Schema({
         {
             type: String,
         }
-    ]
+    ],
+    imagePath: {
+        type: String
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Event', eventSchema);

@@ -16,7 +16,7 @@ import { StickyDirective } from './directives/sticky/sticky.directive';
     CutSentencePipe,
     SortComponent,
     ClickStopPropagationDirective,
-    StickyDirective
+    StickyDirective,
   ],
   imports: [
     CommonModule,
@@ -30,7 +30,7 @@ import { StickyDirective } from './directives/sticky/sticky.directive';
     CutSentencePipe,
     SortComponent,
     ClickStopPropagationDirective,
-    StickyDirective
+    StickyDirective,
   ]
 })
 export class SharedModule {
