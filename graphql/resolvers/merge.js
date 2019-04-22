@@ -29,7 +29,9 @@ const transformEvent = event => {
         date: transformDateRange(event.date),
         creator: user.bind(this, event.creator),
         activities: activities.bind(this, event.activities),
-        organization: organization.bind(this, event.organization)
+        organization: organization.bind(this, event.organization),
+        createdAt: dateToString(event._doc.createdAt),
+        updatedAt: dateToString(event._doc.updatedAt)
     }
 };
 

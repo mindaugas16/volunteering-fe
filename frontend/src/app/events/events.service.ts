@@ -106,6 +106,12 @@ export class EventsService {
             ) {
              _id
              title
+             description
+             date {
+              start
+              end
+             }
+             imagePath
              }
           }`
       ,
@@ -116,6 +122,9 @@ export class EventsService {
         organizationId,
         imagePath: event.imagePath
       }
-    });
+    }).pipe(
+      map(({data}) => data),
+      map(({createEvent}) => createEvent),
+    );
   }
 }

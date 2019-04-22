@@ -28,7 +28,6 @@ export class EventInnerComponent implements OnInit {
       })
     ).subscribe(event => {
       this.event = event;
-      console.log(this.event);
     });
   }
 

@@ -1,5 +1,6 @@
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { ActivityInterface, DateRangeInterface } from '../../activities/models/activity.interface';
+import { Timestamp } from 'rxjs';
 
 export interface EventInterface {
   _id: string;
@@ -12,6 +13,8 @@ export interface EventInterface {
   tags: string[];
   organization: OrganizationInterface;
   imagePath?: string;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export interface CreateEventInterface {

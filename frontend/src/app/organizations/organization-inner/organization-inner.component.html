@@ -63,7 +63,7 @@
             <a
               class="box"
               *ngFor="let event of organization?.events"
-              [routerLink]="['/event', 'details', event?._id]"
+              [routerLink]="['/event', event?._id]"
             >
               <span class="is-6 title">
                 {{event?.title}}

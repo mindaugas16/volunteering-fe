@@ -50,6 +50,8 @@ type Event {
     tags: [String!]
     organization: Organization!
     imagePath: String
+    createdAt: String!
+    updatedAt: String!
 }
 
 type User {

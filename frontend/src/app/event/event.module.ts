@@ -8,6 +8,7 @@ import { EventEditComponent } from './event-edit/event-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     NgbModule,
     GenericModalModule,
-    SharedModule
+    SharedModule,
+    DateRangePickerModule
   ],
   entryComponents: [
     EventEditComponent

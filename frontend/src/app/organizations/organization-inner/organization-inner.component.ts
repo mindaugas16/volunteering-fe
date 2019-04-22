@@ -6,6 +6,8 @@ import { OrganizationInterface } from '../organization.interface';
 import { AuthService } from '../../auth/auth.service';
 import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EventEditComponent } from '../../event/event-edit/event-edit.component';
 
 @Component({
   selector: 'app-organization-inner',
@@ -23,7 +25,8 @@ export class OrganizationInnerComponent implements OnInit {
     private route: ActivatedRoute,
     private organizationService: OrganizationService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
   }
 
@@ -33,7 +36,11 @@ export class OrganizationInnerComponent implements OnInit {
         return zip(this.organizationService.getOrganization(params['id']), this.authService.getCurrentUser());
       })
     ).subscribe(([organization, user]) => {
+      console.log(organization);
       this.organization = organization;
+      this.organization.events.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
       if (user) {
         this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
         this.isOwner = this.organization.creator._id === user._id;
@@ -63,6 +70,11 @@ export class OrganizationInnerComponent implements OnInit {
   }
 
   onEventAdd() {
+    const modalRef = this.modalService.open(EventEditComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.organization = this.organization;
+    modalRef.componentInstance.eventChange.subscribe(event => {
+      this.organization.events = [event, ...this.organization.events];
+    });
   }
 
   onUserInvite() {

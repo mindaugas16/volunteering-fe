@@ -66,6 +66,8 @@ export class OrganizationService {
                   start
                   end
                 }
+                createdAt
+                updatedAt
                 imagePath
               }
            }

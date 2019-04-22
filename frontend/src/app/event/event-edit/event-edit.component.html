@@ -1,5 +1,10 @@
 <app-generic-modal>
   <ng-template appModalContent>
+
+    <h2 class="title">
+      {{event ? 'Edit event' : 'Create new event'}}
+    </h2>
+    <hr/>
     <form [formGroup]="form"
           (ngSubmit)="onSubmit()"
     >
@@ -45,27 +50,9 @@
         </div>
       </div>
       <div class="field is-grouped">
-        <div class="control">
-          <label for="startDate">
-            {{'Start date'}}
-          </label>
-          <input class="input"
-                 id="startDate"
-                 type="date"
-                 formControlName="startDate"
-          >
-        </div>
-
-        <div class="control">
-          <label for="endDate">
-            {{'End date'}}
-          </label>
-          <input class="input"
-                 id="endDate"
-                 type="date"
-                 formControlName="endDate"
-          >
-        </div>
+        <app-date-range-picker [dateRange]="event?.date"
+                               (dateSelect)="onDateSelect($event)"
+        ></app-date-range-picker>
       </div>
       <div class="field is-grouped">
         <div class="control">
