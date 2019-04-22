@@ -8,6 +8,7 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
+import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    DropdownModule
+    DropdownModule,
+    BreadcrumbModule
   ],
   entryComponents: [
     ActivityEditModalComponent

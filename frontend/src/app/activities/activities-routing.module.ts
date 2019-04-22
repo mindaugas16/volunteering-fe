@@ -4,7 +4,7 @@ import { ActivitiesListComponent } from './activities-list/activities-list.compo
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: ActivitiesListComponent
   }
 ];

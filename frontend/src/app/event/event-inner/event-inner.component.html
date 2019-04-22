@@ -15,7 +15,7 @@
             {{'Activities'}}
           </h4>
           <a class="icon"
-             [routerLink]="['/activities', event._id]"
+             [routerLink]="['activities']"
           >
             <i class="fa fa-plus"></i>
           </a>
@@ -71,7 +71,7 @@
     </div>
     <div class="column">
       <div class="box is-shadowless">
-        <a [routerLink]="['edit']">
+        <a (click)="onEditDetails()">
           <i class="fa fa-pencil" aria-hidden="true"></i>
           <span>
             {{'Edit details'}}

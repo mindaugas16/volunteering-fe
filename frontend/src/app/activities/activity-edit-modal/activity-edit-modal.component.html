@@ -4,9 +4,7 @@
       <h3 class="title">
         {{'Add activity to event'}}
       </h3>
-      <form [formGroup]="form"
-            (ngSubmit)="onSubmit()"
-      >
+      <form [formGroup]="form">
         <app-input class="field"
                    label="Name"
                    formControlName="name"
@@ -61,6 +59,7 @@
           <button
             class="button is-primary"
             type="submit"
+            (click)="onSubmit()"
           >
             Save
           </button>

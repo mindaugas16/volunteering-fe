@@ -39,8 +39,6 @@ export class ActivityEditModalComponent implements OnInit {
     }
 
     const values = this.form.value;
-    console.log(values);
-
     const activityInput: ActivityInterface = {
       name: values.name,
       description: values.description,
@@ -55,7 +53,7 @@ export class ActivityEditModalComponent implements OnInit {
     this.activitiesService.createActivity(activityInput).subscribe(activity => {
       this.create.emit(activity);
       this.onClose();
-    }, error => this.onClose());
+    }, error => FormControlsHelperService.invalidateFormControls(this.form));
   }
 
   onClose() {

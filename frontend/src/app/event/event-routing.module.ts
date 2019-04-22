@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventInnerComponent } from './event-inner/event-inner.component';
-import { EventEditComponent } from './event-edit/event-edit.component';
 
 const routes: Routes = [
   {
-    path: 'details/:id',
+    path: '',
     component: EventInnerComponent
   },
   {
-    path: 'details/:id/edit',
-    component: EventEditComponent
-  }
+    path: 'activities',
+    loadChildren: '../activities/activities.module#ActivitiesModule'
+  },
 ];
 
 @NgModule({

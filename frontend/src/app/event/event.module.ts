@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventEditComponent } from './event-edit/event-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,8 +22,9 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
     EventRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule,
-    GenericModalModule
+    NgbModule,
+    GenericModalModule,
+    SharedModule
   ],
   entryComponents: [
     EventEditComponent

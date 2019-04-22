@@ -24,6 +24,7 @@ export class ActivitiesService {
               end
             }
             volunteersNeeded
+            volunteers
           }
         }
         `,

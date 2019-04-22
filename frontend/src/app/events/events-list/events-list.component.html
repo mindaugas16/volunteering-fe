@@ -23,7 +23,7 @@
     <div class="columns is-multiline mt-4">
       <a class="column is-one-quarter-desktop is-one-third-tablet"
          *ngFor="let event of events"
-         [routerLink]="['/event', 'details', event._id]"
+         [routerLink]="['/event', event._id]"
       >
         <div class="card is-shadowless">
           <div class="card-image">

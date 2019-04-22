@@ -49,6 +49,7 @@ export class ActivitiesListComponent implements OnInit {
     const modalRef = this.modalService.open(ActivityEditModalComponent);
     modalRef.instance.event = this.event;
     modalRef.instance.create.subscribe(activity => {
+      console.log(activity);
       this.event.activities.push(activity);
     });
   }

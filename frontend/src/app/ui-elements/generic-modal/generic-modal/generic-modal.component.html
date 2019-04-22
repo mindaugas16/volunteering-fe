@@ -1,18 +1,9 @@
-<div
-  class="modal is-active"
-  [ngClass]="extraClasses"
->
-  <div
-    class="modal-background"
-    (click)="onClose()"
-  ></div>
-  <div class="modal-content">
-    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    <button
-      *ngIf="closeable"
-      class="modal-close is-large"
-      aria-label="close"
-      (click)="onClose()"
-    ></button>
-  </div>
+<button
+  *ngIf="closeable"
+  class="modal-close is-large"
+  aria-label="close"
+  (click)="onClose()"
+></button>
+<div class="box">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </div>

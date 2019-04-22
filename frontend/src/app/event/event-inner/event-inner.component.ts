@@ -3,6 +3,8 @@ import { EventsService } from '../../events/events.service';
 import { EventInterface } from '../models/event.interface';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { EventEditComponent } from '../event-edit/event-edit.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-event-inner',
@@ -14,7 +16,8 @@ export class EventInnerComponent implements OnInit {
 
   constructor(
     private eventsService: EventsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal
   ) {
   }
 
@@ -29,4 +32,8 @@ export class EventInnerComponent implements OnInit {
     });
   }
 
+  onEditDetails() {
+    const modalRef = this.modalService.open(EventEditComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.event = this.event;
+  }
 }

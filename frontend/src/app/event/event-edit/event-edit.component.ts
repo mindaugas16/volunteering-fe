@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventInterface } from '../models/event.interface';
 import { ApiService } from '../../api.service';
@@ -11,7 +11,7 @@ import { OrganizationInterface } from '../../organizations/organization.interfac
   templateUrl: './event-edit.component.html',
   styleUrls: ['./event-edit.component.scss']
 })
-export class EventEditComponent implements OnInit {
+export class EventEditComponent implements OnInit, OnChanges {
   @Input() event: EventInterface;
   @Input() organization: OrganizationInterface;
 
@@ -31,6 +31,10 @@ export class EventEditComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.event);
   }
 
   onSubmit() {

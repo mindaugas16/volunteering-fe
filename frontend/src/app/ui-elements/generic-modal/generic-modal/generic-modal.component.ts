@@ -1,6 +1,7 @@
 import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { ModalContentDirective } from '../modal-content.directive';
 import { ModalService } from '../../../core/services/modal/modal.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-generic-modal',
@@ -11,12 +12,10 @@ export class GenericModalComponent implements OnInit {
   @Input() closeable = true;
   @Input() extraClasses: string;
 
-  @Output() close: EventEmitter<any> = new EventEmitter();
-
   @ContentChild(ModalContentDirective, {read: TemplateRef}) contentTemplate;
 
   constructor(
-    private modalService: ModalService
+    private activeModal: NgbActiveModal
   ) {
   }
 
@@ -24,8 +23,7 @@ export class GenericModalComponent implements OnInit {
   }
 
   onClose() {
-    this.modalService.close();
-    this.close.emit();
+    this.activeModal.close();
   }
 
 }
