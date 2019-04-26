@@ -27,6 +27,10 @@ export class EventEditComponent implements OnInit {
     image: new FormControl(null)
   });
 
+  image;
+
+  date;
+
   constructor(
     private apiService: ApiService,
     private cd: ChangeDetectorRef,
@@ -44,6 +48,7 @@ export class EventEditComponent implements OnInit {
         endDate: date.end,
       });
     }
+    console.log(this.form.value);
   }
 
   onDateSelect({start, end}: DateRangeInterface) {
@@ -99,6 +104,8 @@ export class EventEditComponent implements OnInit {
         this.form.patchValue({
           image: file
         });
+        this.image = reader.result;
+        console.log(this.image);
         this.cd.markForCheck();
       };
     }

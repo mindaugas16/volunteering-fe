@@ -1,12 +1,21 @@
 <div class="container" *ngIf="event">
   <div class="columns mt-4 mb-4">
     <div class="column is-two-thirds">
-      <h3 class="title is-3">
-        About {{event.title}}
-      </h3>
-      <p>
-        {{event.description}}
-      </p>
+      <div class="is-flex align-items-center">
+        <figure
+          class="image event-logo mr-4"
+          [style.background-image]="'url('+('http://localhost:3000/' + event.imagePath ) + ')'"
+        >
+        </figure>
+        <div>
+          <h1 class="title">
+            About {{event.title}}
+          </h1>
+          <h2>
+            {{event.description}}
+          </h2>
+        </div>
+      </div>
       <hr/>
 
       <div>
@@ -83,6 +92,10 @@
         <a [routerLink]="['/organizations', 'details', event.organization._id]">
           {{event.organization.name}}
         </a>
+      </div>
+      <div class="box">
+        Start: {{event.date?.start | date}}<br/>
+        End: {{event.date?.end | date}}
       </div>
       <div class="box" *ngIf="event.location">
         Location: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}

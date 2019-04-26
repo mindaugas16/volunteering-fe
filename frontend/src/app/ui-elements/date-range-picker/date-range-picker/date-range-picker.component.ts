@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DateRangeInterface } from '../../../activities/models/activity.interface';
 
 @Component({
   selector: 'app-date-range-picker',
   templateUrl: './date-range-picker.component.html',
-  styleUrls: ['./date-range-picker.component.scss']
+  styleUrls: ['./date-range-picker.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DateRangePickerComponent implements OnInit {
   @ViewChild('dp') dp;
@@ -17,6 +18,10 @@ export class DateRangePickerComponent implements OnInit {
 
   fromDate: NgbDate;
   toDate: NgbDate;
+
+  dateRangeTransformed: DateRangeInterface;
+
+  isOpen: boolean;
 
   constructor(public calendar: NgbCalendar) {
   }
@@ -38,11 +43,12 @@ export class DateRangePickerComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
-    const dateRange: DateRangeInterface = {
+    this.dateRangeTransformed = {
       start: this.toModel(this.fromDate),
       end: this.toModel(this.toDate),
     };
-    this.dateSelect.emit(dateRange);
+    console.log(this.dateRangeTransformed);
+    this.dateSelect.emit(this.dateRangeTransformed);
   }
 
   isHovered(date: NgbDate) {

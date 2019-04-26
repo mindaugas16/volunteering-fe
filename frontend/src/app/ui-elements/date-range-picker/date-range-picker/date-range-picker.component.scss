@@ -18,3 +18,10 @@
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
 }
+
+
+.disabled {
+  color: lightgray!important;
+  pointer-events: none;
+}
+

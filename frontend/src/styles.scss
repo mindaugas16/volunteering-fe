@@ -22,3 +22,23 @@ body {
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.separated-items {
+  display: inline-block;
+  word-break: break-all;
+  &--slash {
+    span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
+      content: ' / ';
+    }
+  }
+  &--line {
+    span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
+      content: ' | ';
+    }
+  }
+  &--minus {
+    span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
+      content: ' - ';
+    }
+  }
+}

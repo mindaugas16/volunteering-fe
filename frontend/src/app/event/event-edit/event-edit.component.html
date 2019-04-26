@@ -5,9 +5,7 @@
       {{event ? 'Edit event' : 'Create new event'}}
     </h2>
     <hr/>
-    <form [formGroup]="form"
-          (ngSubmit)="onSubmit()"
-    >
+    <form [formGroup]="form">
       <app-input class="field"
                  type="text"
                  formControlName="title"
@@ -27,7 +25,7 @@
 
 
       <div class="field">
-        <div class="control">
+        <div class="control" *ngIf="!image; else imagePreview">
           <div class="file has-name is-fullwidth">
             <label class="file-label">
               <input class="file-input"
@@ -48,6 +46,9 @@
             </label>
           </div>
         </div>
+        <ng-template #imagePreview>
+          <img class="is-3by4 is-rounded" [src]="image"/>
+        </ng-template>
       </div>
       <div class="field is-grouped">
         <app-date-range-picker [dateRange]="event?.date"
@@ -58,12 +59,15 @@
         <div class="control">
           <button class="button is-link"
                   type="submit"
+                  (click)="onSubmit()"
           >
             Submit
           </button>
         </div>
         <div class="control">
-          <button class="button is-text">
+          <button class="button is-text"
+                  (click)="onCloseModal()"
+          >
             Cancel
           </button>
         </div>
