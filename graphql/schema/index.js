@@ -32,11 +32,12 @@ type DateRange {
 }
 
 type Location {
-    place: String
+    title: String
     address: String
+    address2: String
     city: String
     country: String
-    postalCode: String
+    zipCode: String
 }
 
 type Event {
@@ -105,7 +106,7 @@ input EventInput {
     description: String!
     date: DateRangeInput!
     location: LocationInput
-    organizationId: ID!
+    organizationId: ID
     imagePath: String
 }
 
@@ -118,11 +119,12 @@ input UserInput {
 }
 
 input LocationInput {
-    place: String
-    address: String!
-    city: String!
-    country: String!
-    postalCode: String!
+    title: String
+    address: String
+    address2: String
+    city: String
+    country: String
+    zipCode: String
 }
 
 input ParticipationInput {

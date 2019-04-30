@@ -8,6 +8,7 @@ import { SortComponent } from './components/sort/sort.component';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive';
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 import { StickyDirective } from './directives/sticky/sticky.directive';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { StickyDirective } from './directives/sticky/sticky.directive';
     SortComponent,
     ClickStopPropagationDirective,
     StickyDirective,
+    LogoComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { StickyDirective } from './directives/sticky/sticky.directive';
     SortComponent,
     ClickStopPropagationDirective,
     StickyDirective,
+    LogoComponent
   ]
 })
 export class SharedModule {

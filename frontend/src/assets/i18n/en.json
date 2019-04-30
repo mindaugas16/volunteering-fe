@@ -1,4 +1,8 @@
 {
+  "COMMON": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
   "NAVIGATION": {
     "HOME": "Home",
     "ORGANIZATIONS": "Organizations",

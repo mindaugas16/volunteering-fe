@@ -1,5 +1,5 @@
 import { Component, ContentChild, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputLabelDirective } from './directives/input-label.directive';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -23,7 +23,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() label: string;
   @Input() placeholder: string;
   @Input() required: boolean;
-  @Input() formControl: FormControl;
+  @Input() formControl: AbstractControl;
   @Input() fieldType: 'input' | 'textarea' = 'input';
   @Input() min: number;
   @Input() showValidations = true;

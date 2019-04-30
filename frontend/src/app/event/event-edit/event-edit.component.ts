@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EventInterface } from '../models/event.interface';
+import { CreateEventInterface, EventInterface } from '../models/event.interface';
 import { ApiService } from '../../api.service';
 import { EventsService } from '../../events/events.service';
-import { switchMap } from 'rxjs/operators';
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { DateRangeInterface } from '../../activities/models/activity.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
@@ -24,7 +23,15 @@ export class EventEditComponent implements OnInit {
     description: new FormControl(null),
     startDate: new FormControl(null, []),
     endDate: new FormControl(0, []),
-    image: new FormControl(null)
+    image: new FormControl(null),
+    location: new FormGroup({
+      title: new FormControl(null),
+      address: new FormControl(null),
+      address2: new FormControl(null),
+      city: new FormControl(null),
+      country: new FormControl(null),
+      zipCode: new FormControl(null)
+    })
   });
 
   image;
@@ -40,12 +47,13 @@ export class EventEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.event);
     if (this.event) {
       const {date, ...rest} = this.event;
       this.form.patchValue({
         ...rest,
         startDate: date.start,
-        endDate: date.end,
+        endDate: date.end
       });
     }
     console.log(this.form.value);
@@ -68,25 +76,44 @@ export class EventEditComponent implements OnInit {
       FormControlsHelperService.invalidateFormControls(this.form);
     }
 
-    if (image) {
-      const formData = new FormData();
-      formData.append('image', image);
-      this.apiService.upload(formData).pipe(
-        switchMap((r) => {
-          console.log(r);
-          // @ts-ignore
-          return this.eventsService.createEvent({...eventInput, imagePath: r.filePath}, this.organization._id);
-        })
-      ).subscribe(event => {
-        this.eventChange.emit(event);
-        this.onCloseModal();
-      }, error => FormControlsHelperService.invalidateFormControls(this.form));
-    } else {
-      this.eventsService.createEvent({...eventInput, imagePath: null}, this.organization._id).subscribe(event => {
-        this.eventChange.emit(event);
-        this.onCloseModal();
-      }, error => FormControlsHelperService.invalidateFormControls(this.form));
+    console.log(eventInput);
+
+    if (this.event) {
+      this.updateEvent(eventInput, null);
     }
+
+    // let actionObservable = res => this.eventsService.createEvent({...eventInput, imagePath: res.filePath}, this.organization._id);
+    //
+    // if (this.event) {
+    // actionObservable = this.eventsService.update(this.event.id, {...eventInput, imagePath: res.filePath}, this.organization._id)
+    // }
+
+    // if (image) {
+    //   const formData = new FormData();
+    //   formData.append('image', image);
+    //   this.apiService.upload(formData).pipe(
+    //     switchMap((r) => {
+    //       console.log(r);
+    //       // @ts-ignore
+    //       return actionObservable(r);
+    //     })
+    //   ).subscribe(event => {
+    //     this.eventChange.emit(event);
+    //     this.onCloseModal();
+    //   }, error => FormControlsHelperService.invalidateFormControls(this.form));
+    // } else {
+    //   actionObservable().subscribe(event => {
+    //     this.eventChange.emit(event);
+    //     this.onCloseModal();
+    //   }, error => FormControlsHelperService.invalidateFormControls(this.form));
+    // }
+  }
+
+  updateEvent(eventInput: CreateEventInterface, filePath: string) {
+    this.eventsService.update(this.event._id, {...eventInput, imagePath: filePath}).subscribe(event => {
+      this.eventChange.emit(event);
+      this.onCloseModal();
+    }, error => FormControlsHelperService.invalidateFormControls(this.form));
   }
 
   onCloseModal() {

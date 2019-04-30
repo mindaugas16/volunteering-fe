@@ -35,5 +35,8 @@ export class EventInnerComponent implements OnInit {
   onEditDetails() {
     const modalRef = this.modalService.open(EventEditComponent, {windowClass: 'modal is-active'});
     modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.eventChange.subscribe(event => {
+      this.event = {...this.event, ...event};
+    });
   }
 }

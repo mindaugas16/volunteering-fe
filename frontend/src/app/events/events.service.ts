@@ -25,9 +25,12 @@ export class EventsService {
                   end
                 }
                 location {
+                  title
                   address
+                  address2
                   city
                   country
+                  zipCode
                 }
                 creator {
                   firstName
@@ -63,9 +66,12 @@ export class EventsService {
               end
             }
            location {
-            address
-            city
-            country
+              title
+              address
+              address2
+              city
+              country
+              zipCode
            }
            creator {
             firstName
@@ -97,6 +103,47 @@ export class EventsService {
     );
   }
 
+  update(id: string, event: CreateEventInterface): Observable<any> {
+    return this.apiService.query({
+      query: `
+        mutation updateEvent($id: ID!, $title: String!, $description: String!, $date: DateRangeInput!,
+        $imagePath: String, $locationInput: LocationInput) {
+            updateEvent(id: $id, eventInput:
+            {title: $title, description: $description, date: $date, imagePath: $imagePath, location: $locationInput}
+            ) {
+               _id
+               title
+               description
+               date {
+                start
+                end
+               }
+               imagePath
+               location {
+                title
+                address
+                address2
+                city
+                country
+                zipCode
+               }
+             }
+          }`
+      ,
+      variables: {
+        id,
+        title: event.title,
+        description: event.description,
+        date: event.date,
+        imagePath: event.imagePath,
+        locationInput: event.location
+      }
+    }).pipe(
+      map(({data}) => data),
+      map(({updateEvent}) => updateEvent),
+    );
+  }
+
   createEvent(event: CreateEventInterface, organizationId: string): Observable<any> {
     return this.apiService.query({
       query: `
@@ -104,14 +151,22 @@ export class EventsService {
             createEvent(eventInput:
             {title: $title, description: $description, date: $date, organizationId: $organizationId, imagePath: $imagePath}
             ) {
-             _id
-             title
-             description
-             date {
-              start
-              end
-             }
-             imagePath
+               _id
+               title
+               description
+               date {
+                start
+                end
+               }
+               imagePath
+               location {
+                title
+                address
+                address2
+                city
+                country
+                zipCode
+               }
              }
           }`
       ,

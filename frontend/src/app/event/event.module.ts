@@ -9,6 +9,8 @@ import { SharedModule } from '../shared/shared.module';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { MapModule } from '../ui-elements/map/map.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-ran
     NgbModule,
     GenericModalModule,
     SharedModule,
-    DateRangePickerModule
+    DateRangePickerModule,
+    TranslateModule,
+    MapModule
   ],
   entryComponents: [
     EventEditComponent

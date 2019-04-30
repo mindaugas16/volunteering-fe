@@ -2,11 +2,7 @@
   <div class="columns mt-4 mb-4">
     <div class="column is-two-thirds">
       <div class="is-flex align-items-center">
-        <figure
-          class="image event-logo mr-4"
-          [style.background-image]="'url('+('http://localhost:3000/' + event.imagePath ) + ')'"
-        >
-        </figure>
+        <app-logo [imagePath]="event.imagePath"></app-logo>
         <div>
           <h1 class="title">
             About {{event.title}}
@@ -88,17 +84,37 @@
         </a>
       </div>
       <div class="box">
-        Organization:
+        <h4 class="title is-4">
+          <span class="icon mr-2">
+            <i class="fa fa-info"></i>
+          </span>
+          About organization
+        </h4>
         <a [routerLink]="['/organizations', 'details', event.organization._id]">
           {{event.organization.name}}
         </a>
       </div>
       <div class="box">
+        <h4 class="title is-4">
+          <span class="icon mr-2">
+            <i class="fa fa-calendar"></i>
+          </span>
+          Event date
+        </h4>
         Start: {{event.date?.start | date}}<br/>
         End: {{event.date?.end | date}}
       </div>
-      <div class="box" *ngIf="event.location">
-        Location: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
+
+      <div class="box">
+        <h4 class="title is-4">
+          <span class="icon mr-2">
+            <i class="fa fa-location-arrow"></i>
+          </span>
+          Location
+        </h4>
+        <span>
+        {{'Address'}}: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
+        </span>
       </div>
     </div>
   </div>
