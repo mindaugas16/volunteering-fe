@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateEventInterface, EventInterface } from '../models/event.interface';
+import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../models/event.interface';
 import { ApiService } from '../../api.service';
 import { EventsService } from '../../events/events.service';
 import { OrganizationInterface } from '../../organizations/organization.interface';
@@ -47,7 +47,6 @@ export class EventEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.event);
     if (this.event) {
       const {date, ...rest} = this.event;
       this.form.patchValue({
@@ -75,8 +74,6 @@ export class EventEditComponent implements OnInit {
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
     }
-
-    console.log(eventInput);
 
     if (this.event) {
       this.updateEvent(eventInput, null);
@@ -109,7 +106,7 @@ export class EventEditComponent implements OnInit {
     // }
   }
 
-  updateEvent(eventInput: CreateEventInterface, filePath: string) {
+  updateEvent(eventInput: UpdateEventInterface, filePath: string) {
     this.eventsService.update(this.event._id, {...eventInput, imagePath: filePath}).subscribe(event => {
       this.eventChange.emit(event);
       this.onCloseModal();

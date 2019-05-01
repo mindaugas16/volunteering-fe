@@ -2,6 +2,7 @@ import { OrganizationInterface } from '../../organizations/organization.interfac
 import { ActivityInterface, DateRangeInterface } from '../../activities/models/activity.interface';
 import { Timestamp } from 'rxjs';
 import { LocationInterface } from '../../shared/models/location.interface';
+import { TagInterface } from '../../ui-elements/tag/tag.interface';
 
 export interface EventInterface {
   _id: string;
@@ -11,7 +12,7 @@ export interface EventInterface {
   creator: any;
   activities: ActivityInterface[];
   location: any;
-  tags: any[];
+  tags: TagInterface[];
   organization: OrganizationInterface;
   imagePath?: string;
   createdAt: number;
@@ -22,6 +23,16 @@ export interface CreateEventInterface {
   title: string;
   description: string;
   date: string;
+  image?: File;
+  location?: LocationInterface;
+  imagePath?: string;
+}
+
+export interface UpdateEventInterface {
+  title: string;
+  description: string;
+  date: DateRangeInterface;
+  tags?: TagInterface[];
   image?: File;
   location?: LocationInterface;
   imagePath?: string;

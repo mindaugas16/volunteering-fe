@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface } from '../event/models/event.interface';
+import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../event/models/event.interface';
 import { ApiService } from '../api.service';
 
 @Injectable({
@@ -35,7 +35,6 @@ export class EventsService {
                 creator {
                   firstName
                 }
-                tags
                 organization {
                   name
                   _id
@@ -76,7 +75,10 @@ export class EventsService {
            creator {
             firstName
            }
-           tags
+           tags {
+            _id
+            label
+           }
            activities {
               name
               description
@@ -103,13 +105,13 @@ export class EventsService {
     );
   }
 
-  update(id: string, event: CreateEventInterface): Observable<any> {
+  update(id: string, event: UpdateEventInterface): Observable<any> {
     return this.apiService.query({
       query: `
         mutation updateEvent($id: ID!, $title: String!, $description: String!, $date: DateRangeInput!,
-        $imagePath: String, $locationInput: LocationInput) {
+        $imagePath: String, $locationInput: LocationInput, $tagsInput: [TagInput]) {
             updateEvent(id: $id, eventInput:
-            {title: $title, description: $description, date: $date, imagePath: $imagePath, location: $locationInput}
+            {title: $title, description: $description, date: $date, imagePath: $imagePath, location: $locationInput, tags: $tagsInput}
             ) {
                _id
                title
@@ -127,6 +129,10 @@ export class EventsService {
                 country
                 zipCode
                }
+               tags {
+                _id
+                label
+               }
              }
           }`
       ,
@@ -136,7 +142,10 @@ export class EventsService {
         description: event.description,
         date: event.date,
         imagePath: event.imagePath,
-        locationInput: event.location
+        locationInput: event.location,
+        tagsInput: event.tags.map(tag => {
+          return {label: tag.label};
+        })
       }
     }).pipe(
       map(({data}) => data),

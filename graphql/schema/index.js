@@ -1,6 +1,11 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
+type Tag {
+    _id: ID!
+    label: String!
+}
+
 type Organization {
     _id: ID!
     creator: User!
@@ -48,7 +53,7 @@ type Event {
     creator: User!
     activities: [Activity!]
     location: Location
-    tags: [String!]
+    tags: [Tag]
     organization: Organization!
     imagePath: String
     createdAt: String!
@@ -101,6 +106,10 @@ input DateRangeInput {
     end: String
 }
 
+input TagInput {
+    label: String!
+}
+
 input EventInput {
     title: String!
     description: String!
@@ -108,6 +117,7 @@ input EventInput {
     location: LocationInput
     organizationId: ID
     imagePath: String
+    tags: [TagInput]
 }
 
 input UserInput {

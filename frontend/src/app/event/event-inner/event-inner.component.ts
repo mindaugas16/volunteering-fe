@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { EventEditComponent } from '../event-edit/event-edit.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TagInterface } from '../../ui-elements/tag/tag.interface';
 
 @Component({
   selector: 'app-event-inner',
@@ -29,13 +30,6 @@ export class EventInnerComponent implements OnInit {
       })
     ).subscribe(event => {
       this.event = event;
-      this.event.tags = [
-        {id: 0, label: 'volunteer'},
-        {id: 1, label: 'su_image'},
-        {id: 2, label: 'kazkas'},
-        {id: 3, label: 'dar_vienas'},
-        {id: 4, label: 'organization_kul'},
-      ];
       console.log(this.event);
     });
   }
@@ -53,5 +47,27 @@ export class EventInnerComponent implements OnInit {
     if (foundIndex > -1) {
       this.event.tags.splice(foundIndex, 1);
     }
+  }
+
+  onRenameTag(tag: TagInterface) {
+    if (tag.label) {
+      const found = this.event.tags.find(({id}) => id === tag.id);
+      if (found) {
+        found.label = tag.label;
+      }
+      return;
+    }
+    this.onDeleteTag(tag.id);
+  }
+
+  onAddTag() {
+    this.isTagsEditEnabled = true;
+    this.event.tags.push({id: this.event.tags[this.event.tags.length - 1].id + 1, label: null});
+  }
+
+  onSaveTags() {
+    this.eventsService.update(this.event._id, this.event).subscribe(r => {
+      console.log(r);
+    });
   }
 }

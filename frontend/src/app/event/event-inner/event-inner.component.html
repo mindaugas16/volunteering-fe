@@ -125,25 +125,42 @@
             </span>
             Tags
           </h4>
-          <span class="icon"
-                *ngIf="event.tags && event.tags.length"
-                (click)="isTagsEditEnabled = !isTagsEditEnabled"
-          >
-            <i class="fa fa-pencil"></i>
-          </span>
+          <div>
+            <span class="icon"
+                  *ngIf="event.tags && event.tags.length"
+                  (click)="isTagsEditEnabled ? onSaveTags() : null; isTagsEditEnabled = !isTagsEditEnabled"
+            >
+              <i class="fa"
+                 [ngClass]="[isTagsEditEnabled ? 'fa-check has-text-success' : 'fa-pencil']"
+              ></i>
+            </span>
+            <span class="icon ml-2"
+                  *ngIf="isTagsEditEnabled"
+            >
+              <i class="fa fa-undo"></i>
+            </span>
+          </div>
         </div>
         <div class="is-flex flex-wrap">
           <div class="tags is-medium" *ngIf="event.tags && event.tags.length; else noTags">
-           <app-tag *ngFor="let tag of event.tags"
-                    [tag]="tag"
-                    [isTagsEditEnabled]="isTagsEditEnabled"
-                    (delete)="onDeleteTag($event)"
-           ></app-tag>
+            <app-tag *ngFor="let tag of event.tags"
+                     [tag]="tag"
+                     [isTagsEditEnabled]="isTagsEditEnabled"
+                     (delete)="onDeleteTag($event)"
+                     (rename)="onRenameTag($event)"
+            ></app-tag>
+            <span class="tag is-primary"
+                  (click)="onAddTag()"
+            >
+              <span class="icon">
+                <i class="fa fa-plus"></i>
+              </span>
+            </span>
           </div>
 
           <ng-template #noTags>
             <a class="is-link" [routerLink]="'/'">
-              Add new tag
+              {{'Add new tag'}}
             </a>
           </ng-template>
         </div>

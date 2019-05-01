@@ -33,7 +33,7 @@ const eventSchema = new Schema({
     ],
     tags: [
         {
-            type: String
+            type: Schema.Types.Mixed
         }
     ],
     sponsors: [

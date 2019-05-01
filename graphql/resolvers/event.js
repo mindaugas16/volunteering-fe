@@ -1,5 +1,6 @@
 const Event = require('../../models/event');
 const User = require('../../models/user');
+const Tag = require('../../models/tag');
 const Organization = require('../../models/organization');
 const { transformEvent, transformDateRange } = require('./merge');
 
@@ -87,7 +88,9 @@ module.exports = {
             event.description = eventInput.description;
             event.date = eventInput.date;
             event.location = { ...eventInput.location };
-
+            event.tags = eventInput.tags.filter(({ _id }) => !event.tags.find(tag => tag._id === _id)).map(({ label }) => {
+                return new Tag({ label })
+            });
             const updatedEvent = await event.save();
 
             return transformEvent(updatedEvent);
