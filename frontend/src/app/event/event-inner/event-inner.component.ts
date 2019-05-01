@@ -62,12 +62,14 @@ export class EventInnerComponent implements OnInit {
 
   onAddTag() {
     this.isTagsEditEnabled = true;
-    this.event.tags.push({id: this.event.tags[this.event.tags.length - 1].id + 1, label: null});
+    this.event.tags.push({
+      id:
+        (this.event.tags && this.event.tags.length ? (this.event.tags[this.event.tags.length - 1].id + 1) : 0),
+      label: null
+    });
   }
 
   onSaveTags() {
-    this.eventsService.update(this.event._id, this.event).subscribe(r => {
-      console.log(r);
-    });
+    this.eventsService.addTags(this.event._id, this.event.tags).subscribe();
   }
 }

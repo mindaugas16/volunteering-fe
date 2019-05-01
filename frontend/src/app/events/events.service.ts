@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../event/models/event.interface';
 import { ApiService } from '../api.service';
+import { TagInterface } from '../ui-elements/tag/tag.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -189,6 +190,28 @@ export class EventsService {
     }).pipe(
       map(({data}) => data),
       map(({createEvent}) => createEvent),
+    );
+  }
+
+  addTags(id: string, tags: TagInterface[]): Observable<any> {
+    return this.apiService.query({
+      query: `
+        mutation addEventTags($id: ID!, $tagsInput: [TagInput]) {
+            addEventTags(id: $id, tags: $tagsInput) {
+               _id
+               label
+             }
+          }`
+      ,
+      variables: {
+        id,
+        tagsInput: tags.map(tag => {
+          return {label: tag.label};
+        })
+      }
+    }).pipe(
+      map(({data}) => data),
+      map(({addEventTags}) => addEventTags),
     );
   }
 }

@@ -159,9 +159,11 @@
           </div>
 
           <ng-template #noTags>
-            <a class="is-link" [routerLink]="'/'">
+            <button class="button is-text"
+                    (click)="onAddTag()"
+            >
               {{'Add new tag'}}
-            </a>
+            </button>
           </ng-template>
         </div>
       </div>

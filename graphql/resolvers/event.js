@@ -88,12 +88,46 @@ module.exports = {
             event.description = eventInput.description;
             event.date = eventInput.date;
             event.location = { ...eventInput.location };
-            event.tags = eventInput.tags.filter(({ _id }) => !event.tags.find(tag => tag._id === _id)).map(({ label }) => {
-                return new Tag({ label })
-            });
+
             const updatedEvent = await event.save();
 
             return transformEvent(updatedEvent);
+        } catch (err) {
+            throw err;
+        }
+    },
+    addEventTags: async ({ id, tags }, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 401;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const event = await Event.findById(id);
+
+            if (!event) {
+                throw new Error('Event not found');
+            }
+
+            if (!event.creator._id.equals(user._id)) {
+                throw new Error('You can\'t add tags');
+            }
+
+            event.tags.push(
+                ...tags
+                    .filter(({ label }) => !event.tags.find(tag => tag.label === label))
+                    .map(({ label }) => {
+                        return new Tag({ label })
+                    })
+            );
+            await event.save();
+            return event.tags;
         } catch (err) {
             throw err;
         }

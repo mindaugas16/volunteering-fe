@@ -157,6 +157,7 @@ type RootQuery {
 type RootMutation {
     createEvent(eventInput: EventInput): Event
     updateEvent(id: ID!, eventInput: EventInput!): Event!
+    addEventTags(id: ID!, tags: [TagInput]): [Tag!]
     createUser(userInput: UserInput): User
     createVolunteer(userInput: UserInput): User
     createActivity(activityInput: ActivityInput): Activity
