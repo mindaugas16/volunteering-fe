@@ -128,7 +128,7 @@
           <div>
             <span class="icon"
                   *ngIf="event.tags && event.tags.length"
-                  (click)="isTagsEditEnabled ? onSaveTags() : null; isTagsEditEnabled = !isTagsEditEnabled"
+                  (click)="isTagsEditEnabled = !isTagsEditEnabled"
             >
               <i class="fa"
                  [ngClass]="[isTagsEditEnabled ? 'fa-check has-text-success' : 'fa-pencil']"
@@ -148,6 +148,7 @@
                      [isTagsEditEnabled]="isTagsEditEnabled"
                      (delete)="onDeleteTag($event)"
                      (rename)="onRenameTag($event)"
+                     (create)="onSaveTags($event)"
             ></app-tag>
             <span class="tag is-primary"
                   (click)="onAddTag()"

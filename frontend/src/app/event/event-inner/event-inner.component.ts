@@ -30,7 +30,6 @@ export class EventInnerComponent implements OnInit {
       })
     ).subscribe(event => {
       this.event = event;
-      console.log(this.event);
     });
   }
 
@@ -54,14 +53,15 @@ export class EventInnerComponent implements OnInit {
       const found = this.event.tags.find(({id}) => id === tag.id);
       if (found) {
         found.label = tag.label;
+        found.action = null;
       }
+      this.eventsService.updateTag(this.event._id, tag).subscribe();
       return;
     }
     this.onDeleteTag(tag.id);
   }
 
   onAddTag() {
-    this.isTagsEditEnabled = true;
     this.event.tags.push({
       id:
         (this.event.tags && this.event.tags.length ? (this.event.tags[this.event.tags.length - 1].id + 1) : 0),
@@ -69,7 +69,7 @@ export class EventInnerComponent implements OnInit {
     });
   }
 
-  onSaveTags() {
-    this.eventsService.addTags(this.event._id, this.event.tags).subscribe();
+  onSaveTags(tag: TagInterface) {
+    this.eventsService.addTags(this.event._id, [tag]).subscribe();
   }
 }

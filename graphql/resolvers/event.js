@@ -131,5 +131,40 @@ module.exports = {
         } catch (err) {
             throw err;
         }
+    },
+    updateEventTag: async ({ id, tag }, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 401;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const event = await Event.findById(id);
+
+            if (!event) {
+                throw new Error('Event not found');
+            }
+
+            if (!event.creator._id.equals(user._id)) {
+                throw new Error('You can\'t update tag');
+            }
+            const foundTagIndex = event.tags.findIndex(({ _id }) => _id.equals(tag._id));
+            if (foundTagIndex < 0) {
+                throw new Error('Tag not found');
+            }
+            event.tags[foundTagIndex] = tag;
+
+            event.markModified('tags');
+            await event.save();
+            return event.tags[foundTagIndex];
+        } catch (err) {
+            throw err;
+        }
     }
 };

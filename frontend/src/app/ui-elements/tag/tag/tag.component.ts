@@ -9,7 +9,9 @@ import { TagInterface } from '../tag.interface';
 export class TagComponent implements OnInit {
   @Input() tag: TagInterface;
   @Input() isTagsEditEnabled: boolean;
+  @Input() actionType: 'add' | 'edit' = 'edit';
 
+  @Output() create: EventEmitter<TagInterface> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() rename: EventEmitter<TagInterface> = new EventEmitter();
 
@@ -20,8 +22,7 @@ export class TagComponent implements OnInit {
 
   @HostListener('keydown.enter')
   onSubmit() {
-    this.tagLabel = this.tag.label;
-    this.onRename();
+    this.inputElement.nativeElement.blur();
   }
 
   @HostListener('keydown.escape')
@@ -62,8 +63,9 @@ export class TagComponent implements OnInit {
   }
 
   onRename() {
+    this.tagLabel = this.tag.label;
     this.tag.label = this.tag.label.replace(/[^a-zA-Z0-9_]/g, '').replace(/\s+/g, '_');
-    this.rename.emit(this.tag);
+    this.actionType === 'edit' ? this.rename.emit(this.tag) : this.create.emit(this.tag);
     this.isRenameEnabled = false;
   }
 }

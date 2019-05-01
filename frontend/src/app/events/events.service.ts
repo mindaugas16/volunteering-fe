@@ -214,4 +214,24 @@ export class EventsService {
       map(({addEventTags}) => addEventTags),
     );
   }
+
+  updateTag(id: string, tag: TagInterface): Observable<any> {
+    return this.apiService.query({
+      query: `
+        mutation updateEventTag($id: ID!, $tag: TagUpdateInput!) {
+            updateEventTag(id: $id, tag: $tag) {
+               _id
+               label
+             }
+          }`
+      ,
+      variables: {
+        id,
+        tag
+      }
+    }).pipe(
+      map(({data}) => data),
+      map(({updateEventTag}) => updateEventTag),
+    );
+  }
 }

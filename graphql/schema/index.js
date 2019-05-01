@@ -110,6 +110,11 @@ input TagInput {
     label: String!
 }
 
+input TagUpdateInput {
+    _id: ID!
+    label: String!
+}
+
 input EventInput {
     title: String!
     description: String!
@@ -158,6 +163,7 @@ type RootMutation {
     createEvent(eventInput: EventInput): Event
     updateEvent(id: ID!, eventInput: EventInput!): Event!
     addEventTags(id: ID!, tags: [TagInput]): [Tag!]
+    updateEventTag(id: ID!, tag: TagUpdateInput!): Tag!
     createUser(userInput: UserInput): User
     createVolunteer(userInput: UserInput): User
     createActivity(activityInput: ActivityInput): Activity
