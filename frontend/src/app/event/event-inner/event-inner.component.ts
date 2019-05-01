@@ -13,6 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class EventInnerComponent implements OnInit {
   event: EventInterface;
+  isTagsEditEnabled: boolean;
 
   constructor(
     private eventsService: EventsService,
@@ -28,6 +29,13 @@ export class EventInnerComponent implements OnInit {
       })
     ).subscribe(event => {
       this.event = event;
+      this.event.tags = [
+        {id: 0, label: 'volunteer'},
+        {id: 1, label: 'su_image'},
+        {id: 2, label: 'kazkas'},
+        {id: 3, label: 'dar_vienas'},
+        {id: 4, label: 'organization_kul'},
+      ];
       console.log(this.event);
     });
   }
@@ -38,5 +46,12 @@ export class EventInnerComponent implements OnInit {
     modalRef.componentInstance.eventChange.subscribe(event => {
       this.event = {...this.event, ...event};
     });
+  }
+
+  onDeleteTag(id: number) {
+    const foundIndex = this.event.tags.findIndex(tag => tag.id === id);
+    if (foundIndex > -1) {
+      this.event.tags.splice(foundIndex, 1);
+    }
   }
 }

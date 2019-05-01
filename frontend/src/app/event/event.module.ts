@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MapModule } from '../ui-elements/map/map.module';
+import { TagModule } from '../ui-elements/tag/tag.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MapModule } from '../ui-elements/map/map.module';
     SharedModule,
     DateRangePickerModule,
     TranslateModule,
-    MapModule
+    MapModule,
+    TagModule
   ],
   entryComponents: [
     EventEditComponent

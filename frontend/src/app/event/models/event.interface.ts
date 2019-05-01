@@ -11,7 +11,7 @@ export interface EventInterface {
   creator: any;
   activities: ActivityInterface[];
   location: any;
-  tags: string[];
+  tags: any[];
   organization: OrganizationInterface;
   imagePath?: string;
   createdAt: number;

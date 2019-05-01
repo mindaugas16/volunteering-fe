@@ -1,0 +1,11 @@
+<div class="hash-tag"
+     (click)="onSearch()"
+>
+  {{tag.label}}
+  <span class="icon is-1"
+        *ngIf="isTagsEditEnabled"
+        (click)="onDeleteTag()"
+  >
+    <i class="fa fa-times"></i>
+  </span>
+</div>

@@ -113,8 +113,40 @@
           Location
         </h4>
         <span>
-        {{'Address'}}: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
+          {{'Address'}}: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
         </span>
+      </div>
+
+      <div class="box">
+        <div class="is-flex justify-content-between">
+          <h4 class="title is-4">
+            <span class="icon mr-2">
+              <i class="fa fa-hashtag"></i>
+            </span>
+            Tags
+          </h4>
+          <span class="icon"
+                *ngIf="event.tags && event.tags.length"
+                (click)="isTagsEditEnabled = !isTagsEditEnabled"
+          >
+            <i class="fa fa-pencil"></i>
+          </span>
+        </div>
+        <div class="is-flex flex-wrap">
+          <div class="tags is-medium" *ngIf="event.tags && event.tags.length; else noTags">
+           <app-tag *ngFor="let tag of event.tags"
+                    [tag]="tag"
+                    [isTagsEditEnabled]="isTagsEditEnabled"
+                    (delete)="onDeleteTag($event)"
+           ></app-tag>
+          </div>
+
+          <ng-template #noTags>
+            <a class="is-link" [routerLink]="'/'">
+              Add new tag
+            </a>
+          </ng-template>
+        </div>
       </div>
     </div>
   </div>
