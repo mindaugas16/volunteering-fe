@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-panel',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-panel.component.scss']
 })
 export class SearchPanelComponent implements OnInit {
+  form: FormGroup = new FormGroup({
+    query: new FormControl(null),
+    location: new FormControl(null),
+    type: new FormControl(1)
+  });
 
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
+  }
+
+  onFind() {
+    console.log(this.form.value);
+    this.router.navigate(['events'], {queryParams: {...this.form.value}});
   }
 
 }

@@ -18,7 +18,7 @@ export class EventsSearchService {
 
   search(query: string) {
     this.query.next(query);
-    this.router.navigate([], {queryParams: {query}, relativeTo: this.route});
+    this.router.navigate([], {queryParams: {query}, relativeTo: this.route, queryParamsHandling: 'merge'});
   }
 
   getSearchQueryAsObservable(): Observable<string> {

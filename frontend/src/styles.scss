@@ -46,15 +46,17 @@ body {
   }
 }
 
-// Set your brand colors
-$purple: #8E51C7;
-$light-purple: #998DA0;
-
-// Update Bulma's global variables
-$primary: $purple;
-$link: $light-purple;
-$link-hover: $purple;
-
-
-// Import only what you need from Bulma
-@import "../node_modules/bulma/bulma";
+//// Set your brand colors
+//$purple: #8E51C7;
+//$purple-dark: #463853;
+//$light-purple: #998DA0;
+//
+//// Update Bulma's global variables
+//$primary: $purple;
+//$dark: $purple-dark;
+//$link: $light-purple;
+//$link-hover: $purple;
+//
+//
+//// Import only what you need from Bulma
+//@import "../node_modules/bulma/bulma";
