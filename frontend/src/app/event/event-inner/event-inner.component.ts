@@ -41,35 +41,18 @@ export class EventInnerComponent implements OnInit {
     });
   }
 
-  onDeleteTag(id: number) {
-    const foundIndex = this.event.tags.findIndex(tag => tag.id === id);
-    if (foundIndex > -1) {
-      this.event.tags.splice(foundIndex, 1);
-    }
-  }
-
-  onRenameTag(tag: TagInterface) {
-    if (tag.label) {
-      const found = this.event.tags.find(({id}) => id === tag.id);
-      if (found) {
-        found.label = tag.label;
-        found.action = null;
-      }
-      this.eventsService.updateTag(this.event._id, tag).subscribe();
-      return;
-    }
-    this.onDeleteTag(tag.id);
-  }
-
-  onAddTag() {
-    this.event.tags.push({
-      id:
-        (this.event.tags && this.event.tags.length ? (this.event.tags[this.event.tags.length - 1].id + 1) : 0),
-      label: null
+  onAddNewTag(tag: TagInterface) {
+    this.eventsService.addTags(this.event._id, tag).subscribe(newTag => {
+      this.event.tags = this.event.tags.filter(({_id}) => !!_id);
+      this.event.tags.push(newTag);
     });
   }
 
-  onSaveTags(tag: TagInterface) {
-    this.eventsService.addTags(this.event._id, [tag]).subscribe();
+  onUpdateTag(tag: TagInterface) {
+    this.eventsService.updateTag(this.event._id, tag).subscribe();
+  }
+
+  onDeleteTag(id: number) {
+    this.eventsService.deleteTag(this.event._id, `${id}`).subscribe();
   }
 }

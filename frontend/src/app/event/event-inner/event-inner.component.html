@@ -137,35 +137,17 @@
             <span class="icon ml-2"
                   *ngIf="isTagsEditEnabled"
             >
-              <i class="fa fa-undo"></i>
+              <i class="fa fa-times"></i>
             </span>
           </div>
         </div>
         <div class="is-flex flex-wrap">
-          <div class="tags is-medium" *ngIf="event.tags && event.tags.length; else noTags">
-            <app-tag *ngFor="let tag of event.tags"
-                     [tag]="tag"
-                     [isTagsEditEnabled]="isTagsEditEnabled"
-                     (delete)="onDeleteTag($event)"
-                     (rename)="onRenameTag($event)"
-                     (create)="onSaveTags($event)"
-            ></app-tag>
-            <span class="tag is-primary"
-                  (click)="onAddTag()"
-            >
-              <span class="icon">
-                <i class="fa fa-plus"></i>
-              </span>
-            </span>
-          </div>
-
-          <ng-template #noTags>
-            <button class="button is-text"
-                    (click)="onAddTag()"
-            >
-              {{'Add new tag'}}
-            </button>
-          </ng-template>
+          <app-tags [tags]="event.tags"
+                    [isTagsEditEnabled]="isTagsEditEnabled"
+                    (createTag)="onAddNewTag($event)"
+                    (updateTag)="onUpdateTag($event)"
+                    (deleteTag)="onDeleteTag($event)"
+          ></app-tags>
         </div>
       </div>
     </div>

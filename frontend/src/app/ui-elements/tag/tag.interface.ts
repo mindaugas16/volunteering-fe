@@ -1,4 +1,4 @@
 export interface TagInterface {
-  id: number;
+  _id: number;
   label: string;
 }

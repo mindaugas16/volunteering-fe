@@ -39,7 +39,7 @@ export class TagComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.tag.label) {
+    if (this.tag && this.tag.label) {
       this.tagLabel = this.tag.label;
     } else {
       this.isRenameEnabled = true;
@@ -50,7 +50,7 @@ export class TagComponent implements OnInit {
   }
 
   onDeleteTag() {
-    this.delete.emit(this.tag.id);
+    this.delete.emit(this.tag._id);
   }
 
   onClick() {
@@ -64,8 +64,10 @@ export class TagComponent implements OnInit {
 
   onRename() {
     this.tagLabel = this.tag.label;
-    this.tag.label = this.tag.label.replace(/[^a-zA-Z0-9_]/g, '').replace(/\s+/g, '_');
-    this.actionType === 'edit' ? this.rename.emit(this.tag) : this.create.emit(this.tag);
+    if (this.tag.label) {
+      this.tag.label = this.tag.label.replace(/[^a-zA-Z0-9_]/g, '').replace(/\s+/g, '_');
+      this.tag._id !== null ? this.rename.emit(this.tag) : this.create.emit(this.tag);
+    }
     this.isRenameEnabled = false;
   }
 }

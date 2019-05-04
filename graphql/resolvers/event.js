@@ -96,7 +96,7 @@ module.exports = {
             throw err;
         }
     },
-    addEventTags: async ({ id, tags }, req) => {
+    addEventTag: async ({ id, tagLabel }, req) => {
         if (!req.isAuth) {
             const error = new Error('Unauthenticated');
             error.code = 401;
@@ -119,15 +119,11 @@ module.exports = {
                 throw new Error('You can\'t add tags');
             }
 
-            event.tags.push(
-                ...tags
-                    .filter(({ label }) => !event.tags.find(tag => tag.label === label))
-                    .map(({ label }) => {
-                        return new Tag({ label })
-                    })
-            );
+
+            const newTag = new Tag({ label: tagLabel });
+            event.tags.push(newTag);
             await event.save();
-            return event.tags;
+            return newTag;
         } catch (err) {
             throw err;
         }
@@ -158,11 +154,47 @@ module.exports = {
             if (foundTagIndex < 0) {
                 throw new Error('Tag not found');
             }
-            event.tags[foundTagIndex] = tag;
+            event.tags[foundTagIndex].label = tag.label;
 
             event.markModified('tags');
             await event.save();
             return event.tags[foundTagIndex];
+        } catch (err) {
+            throw err;
+        }
+    },
+    deleteEventTag: async ({ id, tagId }, req) => {
+        if (!req.isAuth) {
+            const error = new Error('Unauthenticated');
+            error.code = 401;
+            throw error;
+        }
+
+        try {
+            const user = await User.findById(req.userId);
+            if (!user) {
+                throw new Error('User not found.');
+            }
+
+            const event = await Event.findById(id);
+
+            if (!event) {
+                throw new Error('Event not found');
+            }
+
+            if (!event.creator._id.equals(user._id)) {
+                throw new Error('You can\'t delete tag');
+            }
+            const foundTagIndex = event.tags.findIndex(tag => tag._id.equals(tagId));
+            if (foundTagIndex < 0) {
+                throw new Error('Tag not found');
+            }
+            const tempTag = event.tags[foundTagIndex];
+            event.tags.splice(foundTagIndex, 1);
+
+            event.markModified('tags');
+            await event.save();
+            return tempTag;
         } catch (err) {
             throw err;
         }

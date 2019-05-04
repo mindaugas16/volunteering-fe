@@ -193,11 +193,11 @@ export class EventsService {
     );
   }
 
-  addTags(id: string, tags: TagInterface[]): Observable<any> {
+  addTags(id: string, {label}: TagInterface): Observable<any> {
     return this.apiService.query({
       query: `
-        mutation addEventTags($id: ID!, $tagsInput: [TagInput]) {
-            addEventTags(id: $id, tags: $tagsInput) {
+        mutation addEventTag($id: ID!, $tagLabel: String!) {
+            addEventTag(id: $id, tagLabel: $tagLabel) {
                _id
                label
              }
@@ -205,13 +205,11 @@ export class EventsService {
       ,
       variables: {
         id,
-        tagsInput: tags.map(tag => {
-          return {label: tag.label};
-        })
+        tagLabel: label
       }
     }).pipe(
       map(({data}) => data),
-      map(({addEventTags}) => addEventTags),
+      map(({addEventTag}) => addEventTag),
     );
   }
 
@@ -232,6 +230,26 @@ export class EventsService {
     }).pipe(
       map(({data}) => data),
       map(({updateEventTag}) => updateEventTag),
+    );
+  }
+
+  deleteTag(id: string, tagId: string): Observable<any> {
+    return this.apiService.query({
+      query: `
+        mutation deleteEventTag($id: ID!, $tagId: ID!) {
+            deleteEventTag(id: $id, tagId: $tagId) {
+               _id
+               label
+             }
+          }`
+      ,
+      variables: {
+        id,
+        tagId
+      }
+    }).pipe(
+      map(({data}) => data),
+      map(({deleteEventTag}) => deleteEventTag),
     );
   }
 }

@@ -1,0 +1,25 @@
+<div class="tags is-medium" *ngIf="tags && tags.length; else noTags">
+  <app-tag *ngFor="let tag of tags"
+           [tag]="tag"
+           [isTagsEditEnabled]="isTagsEditEnabled"
+           (delete)="onDeleteTag($event)"
+           (rename)="onRenameTag($event)"
+           (create)="onSaveTags($event)"
+  ></app-tag>
+  <span class="tag is-primary"
+        (click)="onAddTag()"
+  >
+    <span class="icon">
+      <i class="fa fa-plus"></i>
+    </span>
+  </span>
+</div>
+
+<ng-template #noTags>
+  <button class="button is-text"
+          (click)="onAddTag()"
+  >
+    {{'Add new tag'}}
+  </button>
+</ng-template>
+
