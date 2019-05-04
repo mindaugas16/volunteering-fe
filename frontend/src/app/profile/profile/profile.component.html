@@ -3,9 +3,18 @@
     {{user.firstName}} {{user.lastName}}
   </h2>
   <hr/>
-  <div class="columns">
-    <div class="column is-two-fifths">
-      <div class="box">
+  <app-tabs [tabs]="tabs"
+            (select)="selectedTab = $event"
+  >
+    <div [ngSwitch]="selectedTab?.id" class="mb-4">
+      <div *ngSwitchCase="tabs[0].id">
+        <div class="columns">
+        <app-edit-profile-form class="column is-three-fifths is-offset-one-fifth"
+                               [user]="user"
+        ></app-edit-profile-form>
+        </div>
+      </div>
+      <div *ngSwitchCase="tabs[1].id">
         <h4 class="title is-4">
           {{'Organizations'}}
         </h4>
@@ -24,8 +33,6 @@
         </div>
       </div>
     </div>
-    <div class="column">
-      <app-edit-profile-form [user]="user"></app-edit-profile-form>
-    </div>
-  </div>
+  </app-tabs>
+
 </div>

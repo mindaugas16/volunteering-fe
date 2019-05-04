@@ -1,0 +1,15 @@
+<div class="tabs is-boxed">
+  <ul>
+    <li *ngFor="let tab of tabs"
+        [class.is-active]="selected.id === tab.id">
+      <a (click)="onTabSelect(tab)">
+        <span class="icon is-small" *ngIf="tab.icon">
+          <i class="fa" [ngClass]="tab.icon" aria-hidden="true"></i>
+        </span>
+        <span>{{tab.title}}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<ng-content></ng-content>

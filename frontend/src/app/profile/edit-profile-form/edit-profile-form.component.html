@@ -1,6 +1,9 @@
 <form [formGroup]="form"
       (submit)="onSaveChanges()"
 >
+  <h3 class="title is-3">
+    {{'Edit profile'}}
+  </h3>
   <app-form-message *ngIf="failureMessage"
                     [message]="failureMessage"
                     status="danger"

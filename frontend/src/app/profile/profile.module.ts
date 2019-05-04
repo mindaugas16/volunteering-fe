@@ -7,6 +7,7 @@ import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormMessageModule } from '../ui-elements/form-message/form-message.module';
+import { TabsModule } from '../ui-elements/tabs/tabs.module';
 
 @NgModule({
   declarations: [ProfileComponent, EditProfileFormComponent],
@@ -17,7 +18,8 @@ import { FormMessageModule } from '../ui-elements/form-message/form-message.modu
     ReactiveFormsModule,
     FormsModule,
     TranslateModule,
-    FormMessageModule
+    FormMessageModule,
+    TabsModule,
   ]
 })
 export class ProfileModule { }
