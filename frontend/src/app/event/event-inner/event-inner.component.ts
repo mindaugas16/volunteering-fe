@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../../events/events.service';
+import { EventsService } from '../../events/services/events.service';
 import { EventInterface } from '../models/event.interface';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';

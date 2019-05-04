@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { EventsSearchService } from '../services/events-search/events-search.service';
 
 @Component({
   selector: 'app-events-search-panel',
@@ -11,10 +12,17 @@ export class EventsSearchPanelComponent implements OnInit {
     query: new FormControl('')
   });
 
-  constructor() {
+  constructor(private eventsSearchService: EventsSearchService) {
   }
 
   ngOnInit() {
+    this.eventsSearchService.getSearchQueryAsObservable().subscribe(query => {
+      this.form.patchValue({query});
+    });
+  }
+
+  onSearch() {
+    this.eventsSearchService.search(this.form.value.query);
   }
 
 }

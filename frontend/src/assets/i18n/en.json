@@ -2,7 +2,8 @@
   "COMMON": {
     "SAVE": "Save",
     "CANCEL": "Cancel",
-    "RESET": "Reset"
+    "RESET": "Reset",
+    "SEARCH": "Search"
   },
   "NAVIGATION": {
     "HOME": "Home",

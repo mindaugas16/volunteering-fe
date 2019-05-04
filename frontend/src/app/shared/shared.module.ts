@@ -9,6 +9,7 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 import { StickyDirective } from './directives/sticky/sticky.directive';
 import { LogoComponent } from './components/logo/logo.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LogoComponent } from './components/logo/logo.component';
     ClickStopPropagationDirective,
     StickyDirective,
     LogoComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { LogoComponent } from './components/logo/logo.component';
     SortComponent,
     ClickStopPropagationDirective,
     StickyDirective,
-    LogoComponent
+    LogoComponent,
+    LoaderComponent
   ]
 })
 export class SharedModule {

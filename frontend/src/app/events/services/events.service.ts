@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../event/models/event.interface';
-import { ApiService } from '../api.service';
-import { TagInterface } from '../ui-elements/tag/tag.interface';
+import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../../event/models/event.interface';
+import { ApiService } from '../../api.service';
+import { TagInterface } from '../../ui-elements/tag/tag.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class EventsService {
   constructor(private apiService: ApiService) {
   }
 
-  getEvents(orderBy?: string): Observable<EventInterface[]> {
+  getEvents(query?: string, orderBy?: string): Observable<EventInterface[]> {
     return this.apiService.query({
       query: `
-        query events($orderBy: String) {
-          events(orderBy: $orderBy) {
+        query events($query: String, $orderBy: String) {
+          events(query: $query, orderBy: $orderBy) {
                 _id
                 title
                 description
@@ -44,7 +44,8 @@ export class EventsService {
            }
         }`,
       variables: {
-        orderBy: orderBy
+        query,
+        orderBy
       }
     }).pipe(
       map(({data}) => data),

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../models/event.interface';
 import { ApiService } from '../../api.service';
-import { EventsService } from '../../events/events.service';
+import { EventsService } from '../../events/services/events.service';
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { DateRangeInterface } from '../../activities/models/activity.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';

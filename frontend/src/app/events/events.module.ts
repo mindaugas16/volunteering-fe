@@ -6,6 +6,7 @@ import { EventsListComponent } from './events-list/events-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { EventsSearchPanelComponent } from './events-search-panel/events-search-panel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EventsRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class EventsModule {

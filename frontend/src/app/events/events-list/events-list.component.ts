@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../events.service';
+import { EventsService } from '../services/events.service';
 import { EventInterface } from '../../event/models/event.interface';
+import { EventsSearchService } from '../services/events-search/events-search.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-events-list',
@@ -9,6 +11,7 @@ import { EventInterface } from '../../event/models/event.interface';
 })
 export class EventsListComponent implements OnInit {
   events: EventInterface[];
+  loading: boolean;
   sortItems: { label: string, value: string }[] = [
     {label: 'Date', value: 'date'},
     {label: 'Title', value: 'title'},
@@ -16,11 +19,21 @@ export class EventsListComponent implements OnInit {
     {label: 'Updated', value: 'updatedAt'},
   ];
 
-  constructor(private eventsService: EventsService) {
+  constructor(private eventsService: EventsService,
+              private eventsSearchService: EventsSearchService
+  ) {
   }
 
   ngOnInit() {
-    this.fetch();
+    this.eventsSearchService.getSearchQueryAsObservable().pipe(
+      switchMap(query => {
+        this.loading = true;
+        return this.eventsService.getEvents(query);
+      })
+    ).subscribe(events => {
+      this.events = events;
+      this.loading = false;
+    }, () => this.loading = false);
   }
 
   onSortChange(orderBy) {

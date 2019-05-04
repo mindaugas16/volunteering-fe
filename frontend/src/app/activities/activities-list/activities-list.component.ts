@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { EventsService } from '../../events/events.service';
+import { EventsService } from '../../events/services/events.service';
 import { EventInterface } from '../../event/models/event.interface';
 import { ActivitiesService } from '../activities.service';
 import { ModalService } from '../../core/services/modal/modal.service';

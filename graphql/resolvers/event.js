@@ -5,9 +5,9 @@ const Organization = require('../../models/organization');
 const { transformEvent, transformDateRange } = require('./merge');
 
 module.exports = {
-    events: async (args) => {
+    events: async ({ query, orderBy }) => {
         try {
-            const events = await Event.find().sort(args.orderBy);
+            const events = await Event.find({ title: { "$regex": query, "$options": "i" } }).sort(orderBy);
             return events.map(event => {
                 return transformEvent(event);
             });

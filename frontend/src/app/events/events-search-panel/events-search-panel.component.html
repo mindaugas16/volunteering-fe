@@ -1,21 +1,24 @@
 <div class="hero is-white">
   <div class="hero-body">
     <div class="container">
-      <form [formGroup]="form">
-        <div class="field has-addons">
-          <div class="control">
-            <input class="input"
+      <form [formGroup]="form"
+            class="columns"
+            (submit)="onSearch()"
+      >
+        <div class="field is-grouped column is-6">
+          <div class="control is-expanded">
+            <input placeholder="Search events near you"
+                   class="input"
+                   formControlName="query"
                    type="text"
-                   formGroupName="query"
-                   placeholder="Search events near you"
             >
           </div>
           <div class="control">
-            <a
-              class="button is-info"
+            <button class="button is-primary"
+                    type="submit"
             >
-              Search
-            </a>
+              {{'COMMON.SEARCH' | translate}}
+            </button>
           </div>
         </div>
       </form>
