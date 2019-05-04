@@ -144,10 +144,7 @@ export class EventsService {
         description: event.description,
         date: event.date,
         imagePath: event.imagePath,
-        locationInput: event.location,
-        tagsInput: event.tags.map(tag => {
-          return {label: tag.label};
-        })
+        locationInput: event.location
       }
     }).pipe(
       map(({data}) => data),

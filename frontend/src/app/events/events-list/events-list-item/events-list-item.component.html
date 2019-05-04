@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header">
+    <div class="card-image"
+         [style.background-image]="'url('+(event.imagePath ? 'http://localhost:3000/' + event.imagePath : 'https://bulma.io/images/placeholders/1280x960.png')+')'">
+<!--      <a class="button is-primary is-outlined is-small card-star">-->
+<!--        {{'COMMON.SAVE' | translate}}-->
+<!--      </a>-->
+    </div>
+  </div>
+  <div class="card-body">
+    <a [routerLink]="['/event', event._id]">
+      <div class="card-title">
+        {{event.title}}
+      </div>
+    </a>
+    <div class="card-meta mt-2">
+      <div>
+        <i class="fa fa-calendar mr-2"></i>
+        <span>{{event.date.start | date}}</span>
+        <span *ngIf="event.date.end && event.date.end > event.date.start">- {{event.date.end | date:'MMM dd'}}</span>
+      </div>
+      <div>
+        <i class="fa fa-users mr-2"></i>
+        <a [routerLink]="['/organizations', 'details', event.organization._id]">
+          {{event.organization.name}}
+        </a>
+      </div>
+    </div>
+    <div class="card-description">
+      <p>
+        {{event.description | cutSentence:100}}
+      </p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <a class="button is-primary is-outlined"
+       [routerLink]="['/event', event._id]"
+    >
+      {{'Join now'}}
+    </a>
+  </div>
+</div>

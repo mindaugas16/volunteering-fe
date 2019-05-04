@@ -1,78 +1,42 @@
 <app-events-search-panel></app-events-search-panel>
 <div class="mt-4 mb-4">
   <div class="container">
-    <div *ngIf="!loading; else loader">
-      <div class="results" *ngIf="events && events.length; else noEventsFound">
-        <div class="is-flex justify-content-between">
-          <div class="is-flex align-items-center">
-            <span class="mr-4 has-text-weight-semibold is-5">
-              {{events.length}} Events
-            </span>
-            <app-sort
-              [sortItems]="sortItems"
-              (sortChange)="onSortChange($event)"
-            ></app-sort>
-          </div>
-          <div class="is-flex align-items-center">
-            <span class="icon has-text-primary">
-              <i class="fa fa-th"></i>
-            </span>
-            <span class="icon mr-2">
-              <i class="fa fa-list"></i>
-            </span>
-          </div>
-        </div>
-        <div class="columns is-multiline mt-4">
-          <a class="column is-one-quarter-desktop is-one-third-tablet"
-             *ngFor="let event of events"
-             [routerLink]="['/event', event._id]"
-          >
-            <div class="card">
-              <div class="card-image">
-                <app-logo [imagePath]="event.imagePath"></app-logo>
-              </div>
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-content">
-                    <h4 class="title is-4">
-                      {{ event.title }}
-                    </h4>
-                    <span class="is-6">
-                      {{'Hosted by'}}:
-                      <a
-                        [routerLink]="['/organizations', 'details', event.organization._id]"
-                        appClickStopPropagation
-                      >
-                        {{ event.organization.name }}
-                      </a>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="content">
-                  <div>
-                    <a
-                      *ngFor="let tag of event.tags"
-                      href="#"
-                    >
-                      #{{tag}}
-                    </a>
-                  </div>
-                  <time>
-                    {{event.date.start | date}}
-                  </time>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+    <div class="columns">
+      <div class="filters column is-3 is-2-widescreen">
+        Filters
       </div>
-      <ng-template #noEventsFound>
-        {{'No events found'}}
+      <div class="column is-9 is-10-widescreen" *ngIf="!loading; else loader">
+        <div class="results" *ngIf="events && events.length; else noEventsFound">
+          <!--        <div class="is-flex justify-content-between">-->
+          <!--          <div class="is-flex align-items-center">-->
+          <!--            <app-sort-->
+          <!--              [sortItems]="sortItems"-->
+          <!--              (sortChange)="onSortChange($event)"-->
+          <!--            ></app-sort>-->
+          <!--          </div>-->
+          <!--          <div class="is-flex align-items-center">-->
+          <!--            <span class="icon has-text-primary">-->
+          <!--              <i class="fa fa-th"></i>-->
+          <!--            </span>-->
+          <!--            <span class="icon mr-2">-->
+          <!--              <i class="fa fa-list"></i>-->
+          <!--            </span>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <div class="columns is-multiline mt-4">
+            <app-events-list-item class="column is-6 is-4-widescreen is-flex"
+                                  *ngFor="let event of events"
+                                  [event]="event"
+            ></app-events-list-item>
+          </div>
+        </div>
+        <ng-template #noEventsFound>
+          {{'No events found'}}
+        </ng-template>
+      </div>
+      <ng-template #loader>
+        <app-loader></app-loader>
       </ng-template>
     </div>
-    <ng-template #loader>
-      <app-loader></app-loader>
-    </ng-template>
   </div>
 </div>
