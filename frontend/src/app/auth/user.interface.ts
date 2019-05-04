@@ -20,3 +20,9 @@ export interface CreateUserInterface {
   lastName: string;
   postalCode: string;
 }
+
+export interface UpdateUserInterface {
+  firstName: string;
+  lastName: string;
+  postalCode?: string;
+}

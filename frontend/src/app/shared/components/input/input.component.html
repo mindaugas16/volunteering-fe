@@ -35,6 +35,14 @@
       {{'Email address is invalid'}}
     </span>
 
+    <span *ngIf="formControl.errors.required">
+      {{label + ' is required!'}}
+    </span>
+
+    <span *ngIf="formControl.errors.numeric">
+      {{label + ' accepts only numbers'}}
+    </span>
+
     <span *ngIf="formControl.errors.invalid">
       {{'Invalid value'}}
     </span>

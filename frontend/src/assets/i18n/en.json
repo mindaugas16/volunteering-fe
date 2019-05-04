@@ -1,7 +1,8 @@
 {
   "COMMON": {
     "SAVE": "Save",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "RESET": "Reset"
   },
   "NAVIGATION": {
     "HOME": "Home",

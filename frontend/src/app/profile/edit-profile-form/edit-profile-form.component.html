@@ -1,0 +1,68 @@
+<form [formGroup]="form"
+      (submit)="onSaveChanges()"
+>
+  <app-form-message *ngIf="failureMessage"
+                    [message]="failureMessage"
+                    status="danger"
+                    (close)="failureMessage = null"
+  ></app-form-message>
+
+  <app-form-message *ngIf="isChangesSaved"
+                    [message]="'Changes successfully saved'"
+                    status="success"
+                    (close)="isChangesSaved = false"
+  ></app-form-message>
+  <fieldset disabled>
+    <app-input class="field"
+               type="email"
+               formControlName="email"
+               [formControl]="form.get('email')"
+               placeholder="Email input"
+               label="Email"
+    ></app-input>
+  </fieldset>
+
+  <div class="columns">
+    <div class="column">
+      <app-input class="field"
+                 formControlName="firstName"
+                 [formControl]="form.get('firstName')"
+                 placeholder="First name input"
+                 label="First Name"
+      ></app-input>
+    </div>
+    <div class="column">
+      <app-input class="field"
+                 formControlName="lastName"
+                 [formControl]="form.get('lastName')"
+                 placeholder="Last name input"
+                 label="Last Name"
+      ></app-input>
+    </div>
+  </div>
+
+  <app-input class="field"
+             formControlName="postalCode"
+             [formControl]="form.get('postalCode')"
+             placeholder="Postal input"
+             label="Postal Code"
+  ></app-input>
+
+  <div class="field is-grouped is-grouped-right">
+    <div class="control">
+      <button class="button is-link"
+              type="submit"
+      >
+        {{'COMMON.SAVE' | translate}}
+      </button>
+    </div>
+    <div class="control">
+      <button class="button is-text"
+              type="button"
+              (click)="onResetChanges()"
+      >
+        {{'COMMON.RESET' | translate}}
+      </button>
+    </div>
+  </div>
+</form>

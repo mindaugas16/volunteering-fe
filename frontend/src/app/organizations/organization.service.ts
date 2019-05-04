@@ -53,7 +53,6 @@ export class OrganizationService {
                 address
                 city
                 country
-                postalCode
               }
               members {
                 _id

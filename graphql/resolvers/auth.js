@@ -6,6 +6,8 @@ const Volunteer = require('../../models/Volunteer');
 
 const isEmail = require('validator/lib/isEmail');
 
+const { transformUser } = require('./merge');
+
 module.exports = {
     createVolunteer: async args => {
         try {
@@ -114,11 +116,7 @@ module.exports = {
                 throw new Error('User not found.');
             }
 
-            return {
-                ...user._doc,
-                _id: user.id,
-                password: null
-            };
+            return transformUser(user);
         } catch (err) {
             throw err;
         }

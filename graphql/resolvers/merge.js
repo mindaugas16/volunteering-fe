@@ -35,6 +35,15 @@ const transformEvent = event => {
     }
 };
 
+const transformUser = user => {
+    return {
+        ...user._doc,
+        _id: user.id,
+        password: null,
+        organizations: () => organizationLoader.loadMany(user._doc.organizations),
+    }
+};
+
 const transformOrganization = organization => {
     return {
         ...organization._doc,
@@ -173,3 +182,4 @@ exports.transformActivity = transformActivity;
 exports.transformParticipation = transformParticipation;
 exports.transformDateRange = transformDateRange;
 exports.transformOrganization = transformOrganization;
+exports.transformUser = transformUser;

@@ -66,10 +66,12 @@ type User {
     firstName: String!
     lastName: String!
     postalCode: String!
+    contacts: String
+    bio: String
     password: String
-    organizations: [Organization!]!
-    createdEvents: [Event!]!
-    createdActivities: [Activity!]!
+    organizations: [Organization]
+    createdEvents: [Event]
+    createdActivities: [Activity]
 }
 
 type AuthData {
@@ -133,6 +135,12 @@ input UserInput {
     postalCode: String!
 }
 
+input UserUpdateInput {
+    firstName: String!
+    lastName: String!
+    postalCode: String
+}
+
 input LocationInput {
     title: String
     address: String
@@ -165,8 +173,11 @@ type RootMutation {
     addEventTag(id: ID!, tagLabel: String!): Tag!
     updateEventTag(id: ID!, tag: TagUpdateInput!): Tag!
     deleteEventTag(id: ID!, tagId: ID!): Tag!
+    
     createUser(userInput: UserInput): User
     createVolunteer(userInput: UserInput): User
+    updateUserInfo(userInput: UserUpdateInput): User
+    
     createActivity(activityInput: ActivityInput): Activity
     participate(participationInput: ParticipationInput): Participation
     createOrganization(organizationInput: OrganizationInput): Organization
