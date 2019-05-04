@@ -7,7 +7,6 @@ import { CutSentencePipe } from './pipes/cut-sentence/cut-sentence.pipe';
 import { SortComponent } from './components/sort/sort.component';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive';
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
-import { StickyDirective } from './directives/sticky/sticky.directive';
 import { LogoComponent } from './components/logo/logo.component';
 import { LoaderComponent } from './components/loader/loader.component';
 
@@ -18,7 +17,6 @@ import { LoaderComponent } from './components/loader/loader.component';
     CutSentencePipe,
     SortComponent,
     ClickStopPropagationDirective,
-    StickyDirective,
     LogoComponent,
     LoaderComponent,
   ],
@@ -34,7 +32,6 @@ import { LoaderComponent } from './components/loader/loader.component';
     CutSentencePipe,
     SortComponent,
     ClickStopPropagationDirective,
-    StickyDirective,
     LogoComponent,
     LoaderComponent
   ]

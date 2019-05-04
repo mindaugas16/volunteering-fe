@@ -1,17 +1,17 @@
+@charset "utf-8";
 @import "assets/scss/spacing";
 @import "assets/scss/helpers";
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .modal {
-  z-index: 1060!important;
+  z-index: 1060 !important;
 }
 
 .dialog-modal {
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, .5);
 }
 
 .modal-backdrop {
@@ -26,19 +26,35 @@ body {
 .separated-items {
   display: inline-block;
   word-break: break-all;
+
   &--slash {
     span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
       content: ' / ';
     }
   }
+
   &--line {
     span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
       content: ' | ';
     }
   }
+
   &--minus {
     span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
       content: ' - ';
     }
   }
 }
+
+// Set your brand colors
+$purple: #8E51C7;
+$light-purple: #998DA0;
+
+// Update Bulma's global variables
+$primary: $purple;
+$link: $light-purple;
+$link-hover: $purple;
+
+
+// Import only what you need from Bulma
+@import "../node_modules/bulma/bulma";

@@ -1,7 +1,6 @@
 <nav class="navbar"
      role="navigation"
      aria-label="main navigation"
-     appSticky
 >
   <div class="container">
     <div class="navbar-brand">
@@ -20,9 +19,11 @@
       </a>
     </div>
 
-    <div id="navbarBasicExample"
-         class="navbar-menu">
+    <div class="navbar-menu">
       <div class="navbar-start">
+      </div>
+
+      <div class="navbar-end align-items-center">
         <a class="navbar-item"
            [routerLink]="'/homepage'"
            routerLinkActive="is-active"
@@ -35,9 +36,6 @@
         >
           {{'NAVIGATION.ORGANIZATIONS' | translate}}
         </a>
-      </div>
-
-      <div class="navbar-end">
         <div class="navbar-item" *ngIf="!isAuthenticated; else userProfile">
           <div class="buttons">
             <a class="button is-primary"
