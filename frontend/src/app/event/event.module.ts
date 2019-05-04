@@ -11,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MapModule } from '../ui-elements/map/map.module';
-import { TagsModule } from '../tags/tags.module';
+import { TagsModule } from '../ui-elements/tags/tags.module';
 
 @NgModule({
   declarations: [

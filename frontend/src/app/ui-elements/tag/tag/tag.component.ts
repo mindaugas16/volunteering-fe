@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TagInterface } from '../tag.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tag',
@@ -35,7 +36,9 @@ export class TagComponent implements OnInit {
     }
   }
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -59,6 +62,8 @@ export class TagComponent implements OnInit {
       setTimeout(() => {
         this.inputElement.nativeElement.focus();
       }, 0);
+    } else {
+      this.router.navigate(['search'], {queryParams: {tags: this.tag.label}});
     }
   }
 

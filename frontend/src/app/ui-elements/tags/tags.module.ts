@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TagsComponent } from './tags/tags.component';
-import { TagModule } from '../ui-elements/tag/tag.module';
+import { TagModule } from '../tag/tag.module';
 
 @NgModule({
   declarations: [TagsComponent],

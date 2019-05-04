@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TagInterface } from '../../ui-elements/tag/tag.interface';
+import { TagInterface } from '../../tag/tag.interface';
 
 @Component({
   selector: 'app-tags',

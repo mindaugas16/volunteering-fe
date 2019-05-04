@@ -38,6 +38,10 @@ const routes: Routes = [
     loadChildren: './organizations/organizations.module#OrganizationsModule'
   },
   {
+    path: 'search',
+    loadChildren: './global-search/global-search.module#GlobalSearchModule'
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }
