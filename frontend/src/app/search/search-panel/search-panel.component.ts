@@ -21,7 +21,6 @@ export class SearchPanelComponent implements OnInit {
   }
 
   onFind() {
-    console.log(this.form.value);
     this.router.navigate(['events'], {queryParams: {...this.form.value}});
   }
 

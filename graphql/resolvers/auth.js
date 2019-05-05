@@ -9,19 +9,39 @@ const isEmail = require('validator/lib/isEmail');
 const { transformUser } = require('./merge');
 
 module.exports = {
-    createVolunteer: async args => {
+    createUser: async ({ userInput, userType }) => {
         try {
-            const user = await Volunteer.findOne({ email: args.userInput.email });
+            let type = User;
+            if (userType === 0) {
+                type = Volunteer;
+            }
+            const user = await type.findOne({ email: userInput.email });
 
             if (user) {
                 throw new Error('User already exist!');
             }
-            const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
-            const createdUser = new Volunteer({
-                email: args.userInput.email,
-                firstName: args.userInput.firstName,
-                lastName: args.userInput.lastName,
-                postalCode: args.userInput.postalCode,
+
+            const errors = [];
+
+            if (!isEmail(userInput.email)) {
+                errors.push({
+                    email: 'invalidEmail'
+                });
+            }
+
+            if (errors.length) {
+                const error = new Error('Invalid input');
+                error.data = errors;
+                error.code = 400;
+                throw error;
+            }
+
+            const hashedPassword = await bcrypt.hash(userInput.password, 12);
+            const createdUser = new type({
+                email: userInput.email,
+                firstName: userInput.firstName,
+                lastName: userInput.lastName,
+                postalCode: userInput.postalCode,
                 password: hashedPassword,
             });
             const result = await createdUser.save();
@@ -35,32 +55,32 @@ module.exports = {
             throw error;
         }
     },
-    createUser: async args => {
-        try {
-            const user = await User.findOne({ email: args.userInput.email });
-
-            if (user) {
-                throw new Error('User already exist!');
-            }
-            const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
-            const createdUser = new User({
-                email: args.userInput.email,
-                firstName: args.userInput.firstName,
-                lastName: args.userInput.lastName,
-                postalCode: args.userInput.postalCode,
-                password: hashedPassword,
-            });
-            const result = await createdUser.save();
-            return {
-                ...result._doc,
-                _id: result.id,
-                password: null
-            }
-
-        } catch (error) {
-            throw error;
-        }
-    },
+    // createUser: async args => {
+    //     try {
+    //         const user = await User.findOne({ email: args.userInput.email });
+    //
+    //         if (user) {
+    //             throw new Error('User already exist!');
+    //         }
+    //         const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
+    //         const createdUser = new User({
+    //             email: args.userInput.email,
+    //             firstName: args.userInput.firstName,
+    //             lastName: args.userInput.lastName,
+    //             postalCode: args.userInput.postalCode,
+    //             password: hashedPassword,
+    //         });
+    //         const result = await createdUser.save();
+    //         return {
+    //             ...result._doc,
+    //             _id: result.id,
+    //             password: null
+    //         }
+    //
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // },
     login: async (args, req) => {
         const errors = [];
         if (req.isAuth) {

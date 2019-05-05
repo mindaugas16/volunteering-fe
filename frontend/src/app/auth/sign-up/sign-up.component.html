@@ -1,81 +1,26 @@
 <div class="container">
   <div class="columns is-mobile mt-4">
-    <div class="column is-one-third is-offset-one-third">
-      <h3 class="has-text-weight-semibold is-size-3">
-        Sign up
-      </h3>
-      <form [formGroup]="form">
-        <app-input class="field"
-                   formControlName="firstName"
-                   [formControl]="form.get('firstName')"
-                   placeholder="First name input"
-                   label="First Name"
-                   required="true"
-        ></app-input>
-
-        <app-input class="field"
-                   formControlName="lastName"
-                   [formControl]="form.get('lastName')"
-                   placeholder="Last name input"
-                   label="Last Name"
-                   required="true"
-        ></app-input>
-        <app-input class="field"
-                   type="email"
-                   formControlName="email"
-                   [formControl]="form.get('email')"
-                   placeholder="Email input"
-                   label="Email"
-                   required="true"
-        ></app-input>
-
-        <app-input class="field"
-                   formControlName="postalCode"
-                   [formControl]="form.get('postalCode')"
-                   placeholder="Postal input"
-                   label="Postal Code"
-                   required="true"
-        ></app-input>
-        <app-input class="field"
-                   type="password"
-                   formControlName="password"
-                   [formControl]="form.get('password')"
-                   placeholder="Password input"
-                   label="Password"
-                   required="true"
-        ></app-input>
-
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox"
-                     formControlName="termsAndConditions">
-              I agree to the <a href="#">terms and conditions</a>
-            </label>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <button class="button button--submit is-link"
-                    (click)="submit()"
+    <div class="column is-three-fifths is-offset-one-fifth">
+      <h2 class="title">
+        Select user type
+      </h2>
+      <div class="columns">
+        <div class="column" *ngFor="let type of userTypes">
+          <div class="box">
+            <h4 class="title is-4">
+              {{type.title}}
+            </h4>
+            <p class="description mb-4">
+              {{type.description}}
+            </p>
+            <button class="button is-primary is-outlined"
+                    (click)="onSelectType(type.id)"
             >
-              Register
+              Continue
             </button>
           </div>
         </div>
-
-        <div class="field">
-          <p class="control">
-            <button class="button">
-              <span class="icon mr-2">
-                <i class="fa fa-facebook"></i>
-              </span>
-              Sign up with Facebook
-            </button>
-          </p>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

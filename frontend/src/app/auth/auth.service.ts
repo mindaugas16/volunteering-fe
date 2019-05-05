@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
-import { errorHandler } from '@angular/platform-browser/src/browser';
+import { UserType } from '../profile/user-type.enum';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -65,11 +65,13 @@ export class AuthService {
     );
   }
 
-  signUp(form: CreateUserInterface) {
+  signUp(form: CreateUserInterface, userType: UserType) {
     return this.apiService.query({
       query: `
-        mutation createUser($email: String!, $password: String!, $lastName: String!, $firstName: String!, $postalCode: String!) {
-          createUser(userInput: {email: $email, password: $password, lastName: $lastName, firstName: $firstName, postalCode: $postalCode}) {
+        mutation createUser($email: String!, $password: String!,
+        $lastName: String!, $firstName: String!, $postalCode: String!, $userType: Int!) {
+          createUser(userInput: {email: $email, password: $password,
+          lastName: $lastName, firstName: $firstName, postalCode: $postalCode}, userType: $userType) {
             email
             firstName
             lastName
@@ -77,7 +79,10 @@ export class AuthService {
           }
         }
       `,
-      variables: form
+      variables: {
+        ...form,
+        userType
+      }
     }).pipe(
       map(({data}) => data),
       tap(() => {

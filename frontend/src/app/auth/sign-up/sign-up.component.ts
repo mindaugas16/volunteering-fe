@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
+import { UserType } from '../../profile/user-type.enum';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,32 +9,20 @@ import { FormControlsHelperService } from '../../core/services/helpers/form-cont
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    firstName: new FormControl(null, [Validators.required]),
-    lastName: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [Validators.required]),
-    postalCode: new FormControl(null, [Validators.required]),
-    termsAndConditions: new FormControl(false, [Validators.required])
-  });
+  userTypes = [
+    {id: UserType.VOLUNTEER, title: 'Volunteer', description: 'Lorem ipsum and bla bla bla'},
+    {id: UserType.ORGANIZATION, title: 'Organization', description: 'Lorem ipsum and bla bla bla'},
+    {id: UserType.SPONSOR, title: 'Sponsor', description: 'Lorem ipsum and bla bla bla'},
+  ];
 
-  constructor(private authService: AuthService) {
+  constructor(private modalService: NgbModal) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  submit() {
-    if (this.form.invalid) {
-      FormControlsHelperService.invalidateFormControls(this.form);
-      return;
-    }
-    const {termsAndConditions, ...rest} = this.form.value;
-    this.authService.signUp(rest).subscribe(() => {
-      },
-      err => {
-        FormControlsHelperService.invalidateFormControls(this.form);
-      }
-    );
+  onSelectType(id: number) {
+    const modalRef = this.modalService.open(SignUpFormComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.userType = id;
   }
 }

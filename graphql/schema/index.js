@@ -174,8 +174,7 @@ type RootMutation {
     updateEventTag(id: ID!, tag: TagUpdateInput!): Tag!
     deleteEventTag(id: ID!, tagId: ID!): Tag!
     
-    createUser(userInput: UserInput): User
-    createVolunteer(userInput: UserInput): User
+    createUser(userInput: UserInput!, userType: Int!): User
     updateUserInfo(userInput: UserUpdateInput): User
     
     createActivity(activityInput: ActivityInput): Activity
