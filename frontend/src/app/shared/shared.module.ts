@@ -9,6 +9,7 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 import { LogoComponent } from './components/logo/logo.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     ClickStopPropagationDirective,
     LogoComponent,
     LoaderComponent,
+    HasPermissionDirective,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     SortComponent,
     ClickStopPropagationDirective,
     LogoComponent,
-    LoaderComponent
+    LoaderComponent,
+    HasPermissionDirective
   ]
 })
 export class SharedModule {

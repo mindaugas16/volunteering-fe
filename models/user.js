@@ -29,6 +29,9 @@ const userSchema = new Schema({
     bio: {
         type: String
     },
+    role: {
+        type: Number
+    },
     createdEvents: [
         {
             type: Schema.Types.ObjectId,

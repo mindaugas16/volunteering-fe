@@ -4,7 +4,7 @@ import { AuthService } from '../../auth.service';
 import { FormControlsHelperService } from '../../../core/services/helpers/form-controls-helper.service';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { UserType } from '../../../profile/user-type.enum';
+import { UserRole } from '../../../profile/user-type.enum';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -12,7 +12,7 @@ import { UserType } from '../../../profile/user-type.enum';
   styleUrls: ['./sign-up-form.component.scss']
 })
 export class SignUpFormComponent implements OnInit {
-  @Input() userType: UserType;
+  @Input() userType: UserRole;
   form: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     firstName: new FormControl(null, [Validators.required]),
@@ -48,13 +48,13 @@ export class SignUpFormComponent implements OnInit {
 
   getFormTitle() {
     switch (this.userType) {
-      case UserType.GENERAL:
+      case UserRole.GENERAL:
         return 'General';
-      case UserType.VOLUNTEER:
+      case UserRole.VOLUNTEER:
         return 'Volunteer';
-      case UserType.ORGANIZATION:
+      case UserRole.ORGANIZATION:
         return 'Organization';
-      case UserType.SPONSOR:
+      case UserRole.SPONSOR:
         return 'Sponsor';
     }
   }

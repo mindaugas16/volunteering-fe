@@ -6,6 +6,9 @@ import { switchMap } from 'rxjs/operators';
 import { EventEditComponent } from '../event-edit/event-edit.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
+import { ActionsRules } from '../../shared/permissions.config';
+import { AuthService } from '../../auth/auth.service';
+import { UserInterface } from '../../auth/user.interface';
 
 @Component({
   selector: 'app-event-inner',
@@ -15,11 +18,14 @@ import { TagInterface } from '../../ui-elements/tag/tag.interface';
 export class EventInnerComponent implements OnInit {
   event: EventInterface;
   isTagsEditEnabled: boolean;
+  user: UserInterface;
+  actionsRules = ActionsRules;
 
   constructor(
     private eventsService: EventsService,
     private route: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) {
   }
 
@@ -31,6 +37,8 @@ export class EventInnerComponent implements OnInit {
     ).subscribe(event => {
       this.event = event;
     });
+
+    this.authService.getCurrentUser().subscribe(user => this.user = user);
   }
 
   onEditDetails() {

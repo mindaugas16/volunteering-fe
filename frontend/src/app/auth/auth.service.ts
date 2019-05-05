@@ -4,7 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
-import { UserType } from '../profile/user-type.enum';
+import { UserRole } from '../profile/user-type.enum';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -65,7 +65,7 @@ export class AuthService {
     );
   }
 
-  signUp(form: CreateUserInterface, userType: UserType) {
+  signUp(form: CreateUserInterface, userType: UserRole) {
     return this.apiService.query({
       query: `
         mutation createUser($email: String!, $password: String!,
@@ -109,6 +109,7 @@ export class AuthService {
               firstName
               lastName
               postalCode
+              role
             }
            }
       `

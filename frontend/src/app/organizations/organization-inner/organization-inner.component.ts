@@ -8,6 +8,7 @@ import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventEditComponent } from '../../event/event-edit/event-edit.component';
+import { ActionsRules } from '../../shared/permissions.config';
 
 @Component({
   selector: 'app-organization-inner',
@@ -17,9 +18,8 @@ import { EventEditComponent } from '../../event/event-edit/event-edit.component'
 export class OrganizationInnerComponent implements OnInit {
   organization: OrganizationInterface;
   isUserJoinedOrganization: boolean;
-  isOwner: boolean;
-  isMember: boolean;
   user: UserInterface;
+  actionsRules = ActionsRules;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,8 +43,8 @@ export class OrganizationInnerComponent implements OnInit {
       });
       if (user) {
         this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
-        this.isOwner = this.organization.creator._id === user._id;
-        this.isMember = !!this.organization.members.find(member => member._id === user._id);
+        // this.isOwner = this.organization.creator._id === user._id;
+        // this.isMember = !!this.organization.members.find(member => member._id === user._id);
         this.user = user;
       }
     });

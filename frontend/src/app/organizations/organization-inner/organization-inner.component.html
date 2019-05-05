@@ -1,5 +1,6 @@
 <div
   class="mb-4"
+  *ngIf="organization"
 >
   <section class="hero">
     <div class="hero-body">
@@ -23,7 +24,7 @@
           <div>
             <button
               class="button"
-              *ngIf="!isOwner && organization"
+              *appHasPermission="{condition: actionsRules?.JOIN_ORGANIZATION, args: organization}"
               [class.is-primary]="!isUserJoinedOrganization"
               (click)="toggleOrganizationJoin()"
             >
@@ -52,7 +53,7 @@
             <div>
               <a
                 class="icon"
-                *ngIf="isMember || isOwner"
+                *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}"
                 (click)="onEventAdd()"
               >
                 <i class="fa fa-plus"></i>
@@ -81,7 +82,7 @@
             <h4 class="title is-4">
               {{'Details'}}:
             </h4>
-            <div *ngIf="isOwner">
+            <div *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}">
               <a class="icon"
                  [routerLink]="['edit']">
                 <i class="fa fa-pencil"></i>
@@ -105,7 +106,7 @@
             <h4 class="title is-4">
               {{'Members'}} ({{organization?.members.length}}):
             </h4>
-            <div *ngIf="isOwner">
+            <div *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}">
               <a
                 class="icon"
                 (click)="onUserInvite()"

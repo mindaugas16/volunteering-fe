@@ -20,6 +20,7 @@
             {{'Activities'}}
           </h4>
           <a class="icon"
+             *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}"
              [routerLink]="['activities']"
           >
             <i class="fa fa-plus"></i>
@@ -75,7 +76,7 @@
       </div>
     </div>
     <div class="column">
-      <div class="box is-shadowless">
+      <div class="box is-shadowless" *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}">
         <a (click)="onEditDetails()">
           <i class="fa fa-pencil" aria-hidden="true"></i>
           <span>
@@ -126,19 +127,21 @@
             Tags
           </h4>
           <div>
-            <span class="icon"
-                  *ngIf="event.tags && event.tags.length"
-                  (click)="isTagsEditEnabled = !isTagsEditEnabled"
-            >
-              <i class="fa"
-                 [ngClass]="[isTagsEditEnabled ? 'fa-check has-text-success' : 'fa-pencil']"
-              ></i>
-            </span>
-            <span class="icon ml-2"
-                  *ngIf="isTagsEditEnabled"
-            >
-              <i class="fa fa-times"></i>
-            </span>
+            <ng-container *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}">
+              <span class="icon"
+                    *ngIf="event.tags && event.tags.length"
+                    (click)="isTagsEditEnabled = !isTagsEditEnabled"
+              >
+                <i class="fa"
+                   [ngClass]="[isTagsEditEnabled ? 'fa-check has-text-success' : 'fa-pencil']"
+                ></i>
+              </span>
+              <span class="icon ml-2"
+                    *ngIf="isTagsEditEnabled"
+              >
+                <i class="fa fa-times"></i>
+              </span>
+            </ng-container>
           </div>
         </div>
         <div class="is-flex flex-wrap">

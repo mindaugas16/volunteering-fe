@@ -34,6 +34,7 @@ export class EventsService {
                   zipCode
                 }
                 creator {
+                  _id
                   firstName
                 }
                 organization {
@@ -75,6 +76,7 @@ export class EventsService {
               zipCode
            }
            creator {
+            _id
             firstName
            }
            tags {

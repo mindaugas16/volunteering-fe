@@ -72,6 +72,7 @@ type User {
     organizations: [Organization]
     createdEvents: [Event]
     createdActivities: [Activity]
+    role: Int
 }
 
 type AuthData {

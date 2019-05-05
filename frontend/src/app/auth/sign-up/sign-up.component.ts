@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
-import { UserType } from '../../profile/user-type.enum';
+import { UserRole } from '../../profile/user-type.enum';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,9 +10,9 @@ import { UserType } from '../../profile/user-type.enum';
 })
 export class SignUpComponent implements OnInit {
   userTypes = [
-    {id: UserType.VOLUNTEER, title: 'Volunteer', description: 'Lorem ipsum and bla bla bla'},
-    {id: UserType.ORGANIZATION, title: 'Organization', description: 'Lorem ipsum and bla bla bla'},
-    {id: UserType.SPONSOR, title: 'Sponsor', description: 'Lorem ipsum and bla bla bla'},
+    {id: UserRole.VOLUNTEER, title: 'Volunteer', description: 'Lorem ipsum and bla bla bla'},
+    {id: UserRole.ORGANIZATION, title: 'Organization', description: 'Lorem ipsum and bla bla bla'},
+    {id: UserRole.SPONSOR, title: 'Sponsor', description: 'Lorem ipsum and bla bla bla'},
   ];
 
   constructor(private modalService: NgbModal) {
