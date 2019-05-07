@@ -1,4 +1,5 @@
 <div class="container" *ngIf="event">
+  <app-breadcrumb [items]="getBreadcrumbItems()"></app-breadcrumb>
   <div class="columns mt-4 mb-4">
     <div class="column is-two-thirds">
       <div class="is-flex align-items-center">

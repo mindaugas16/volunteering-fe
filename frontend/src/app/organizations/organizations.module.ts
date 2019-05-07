@@ -12,6 +12,7 @@ import { InviteUserModalComponent } from '../ui-elements/invite-user-modal/invit
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
+import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { OrganizationEditComponent } from './organization-edit/organization-edit
     ReactiveFormsModule,
     FormsModule,
     GenericModalModule,
-    EventModule
+    EventModule,
+    BreadcrumbModule
   ],
   entryComponents: [
     InviteUserModalComponent

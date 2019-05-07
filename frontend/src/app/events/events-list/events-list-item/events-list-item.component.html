@@ -1,11 +1,12 @@
 <div class="card">
   <div class="card-header">
-    <div class="card-image"
-         [style.background-image]="'url('+(event.imagePath ? 'http://localhost:3000/' + event.imagePath : 'https://bulma.io/images/placeholders/1280x960.png')+')'">
-<!--      <a class="button is-primary is-outlined is-small card-star">-->
-<!--        {{'COMMON.SAVE' | translate}}-->
-<!--      </a>-->
-    </div>
+    <a class="card-image"
+       [routerLink]="['/event', event._id]"
+       [style.background-image]="'url('+(event.imagePath ? 'http://localhost:3000/' + event.imagePath : 'https://bulma.io/images/placeholders/1280x960.png')+')'">
+      <!--      <a class="button is-primary is-outlined is-small card-star">-->
+      <!--        {{'COMMON.SAVE' | translate}}-->
+      <!--      </a>-->
+    </a>
   </div>
   <div class="card-body">
     <a [routerLink]="['/event', event._id]">

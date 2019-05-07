@@ -1,8 +1,11 @@
-<nav class="breadcrumb mb-4" aria-label="breadcrumbs">
+<nav class="breadcrumb mt-4 mb-4 is-medium" aria-label="breadcrumbs">
   <ul>
-    <li><a href="#">Bulma</a></li>
-    <li><a href="#">Documentation</a></li>
-    <li><a href="#">Components</a></li>
-    <li class="is-active"><a href="#" aria-current="page">Breadcrumb</a></li>
+    <li *ngFor="let item of items"
+        [class.is-active]="!item.link"
+    >
+      <a [routerLink]="item.link">
+        {{item.title}}
+      </a>
+    </li>
   </ul>
 </nav>

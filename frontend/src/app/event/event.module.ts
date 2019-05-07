@@ -12,6 +12,7 @@ import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-ran
 import { TranslateModule } from '@ngx-translate/core';
 import { MapModule } from '../ui-elements/map/map.module';
 import { TagsModule } from '../ui-elements/tags/tags.module';
+import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TagsModule } from '../ui-elements/tags/tags.module';
     DateRangePickerModule,
     TranslateModule,
     MapModule,
-    TagsModule
+    TagsModule,
+    BreadcrumbModule
   ],
   entryComponents: [
     EventEditComponent

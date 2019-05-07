@@ -9,6 +9,7 @@ import { TagInterface } from '../../ui-elements/tag/tag.interface';
 import { ActionsRules } from '../../shared/permissions.config';
 import { AuthService } from '../../auth/auth.service';
 import { UserInterface } from '../../auth/user.interface';
+import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
 
 @Component({
   selector: 'app-event-inner',
@@ -62,5 +63,9 @@ export class EventInnerComponent implements OnInit {
 
   onDeleteTag(id: number) {
     this.eventsService.deleteTag(this.event._id, `${id}`).subscribe();
+  }
+
+  getBreadcrumbItems(): BreadcrumbInterface[] {
+    return [{title: 'Events', link: ['/events']}, {title: this.event.title, link: null}];
   }
 }

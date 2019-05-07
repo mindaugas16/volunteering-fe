@@ -36,15 +36,12 @@ export class OrganizationInnerComponent implements OnInit {
         return zip(this.organizationService.getOrganization(params['id']), this.authService.getCurrentUser());
       })
     ).subscribe(([organization, user]) => {
-      console.log(organization);
       this.organization = organization;
       this.organization.events.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
       if (user) {
         this.isUserJoinedOrganization = !!this.organization.members.find(member => member._id === user._id);
-        // this.isOwner = this.organization.creator._id === user._id;
-        // this.isMember = !!this.organization.members.find(member => member._id === user._id);
         this.user = user;
       }
     });
