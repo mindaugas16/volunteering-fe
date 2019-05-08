@@ -1,30 +1,47 @@
 const User = require('../../models/user');
 const Organization = require('../../models/organization');
 const { transformOrganization } = require('./merge');
+const bcrypt = require('bcryptjs');
+
+const isEmail = require('validator/lib/isEmail');
 
 module.exports = {
-    createOrganization: async (args, req) => {
-        if (!req.isAuth && !args.organizationInput.creatorId) {
-            throw new Error('Unauthenticated!');
-        }
-
+    registerOrganization: async ({ organizationInput, userInput }) => {
         try {
-            const creatorId = req.userId || args.organizationInput.creatorId;
-            const user = await User.findById(creatorId);
-            if (!user) {
-                throw new Error('User not found.');
+            const user = await Organization.findOne({ email: userInput.email });
+
+            if (user) {
+                throw new Error('User already exist!');
             }
 
+            const errors = [];
+
+            if (!isEmail(userInput.email)) {
+                errors.push({
+                    email: 'invalidEmail'
+                });
+            }
+
+            if (errors.length) {
+                const error = new Error('Invalid input');
+                error.data = errors;
+                error.code = 400;
+                throw error;
+            }
+
+            const hashedPassword = await bcrypt.hash(userInput.password, 12);
+
             const organization = new Organization({
-                name: args.organizationInput.name,
-                description: args.organizationInput.description,
-                location: args.organizationInput.location,
-                creator: creatorId
+                email: userInput.email,
+                firstName: userInput.firstName,
+                lastName: userInput.lastName,
+                postalCode: userInput.postalCode,
+                password: hashedPassword,
+                name: organizationInput.name,
+                description: organizationInput.description,
+                location: organizationInput.location
             });
             const result = await organization.save();
-
-            user.organizations.push(organization);
-            await user.save();
             return transformOrganization(result);
         } catch (err) {
             throw err;

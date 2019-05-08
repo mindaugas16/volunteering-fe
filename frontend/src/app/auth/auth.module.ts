@@ -5,15 +5,19 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { SignUpFormComponent } from './sign-up/sign-up-form/sign-up-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
+import { SignUpVolunteerFormComponent } from './sign-up/sign-up-volunteer-form/sign-up-volunteer-form.component';
+import { SignUpOrganizationFormComponent } from './sign-up/sign-up-organization-form/sign-up-organization-form.component';
+import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-up-sponsor-form.component';
 
 @NgModule({
   declarations: [
     SignInComponent,
     SignUpComponent,
-    SignUpFormComponent
+    SignUpVolunteerFormComponent,
+    SignUpOrganizationFormComponent,
+    SignUpSponsorFormComponent
   ],
   imports: [
     CommonModule,
@@ -25,10 +29,14 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
     GenericModalModule
   ],
   exports: [
-    SignUpFormComponent
+    SignUpVolunteerFormComponent,
+    SignUpOrganizationFormComponent,
+    SignUpSponsorFormComponent
   ],
   entryComponents: [
-    SignUpFormComponent
+    SignUpVolunteerFormComponent,
+    SignUpOrganizationFormComponent,
+    SignUpSponsorFormComponent
   ]
 })
 export class AuthModule {

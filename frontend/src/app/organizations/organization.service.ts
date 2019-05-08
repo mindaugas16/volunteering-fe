@@ -21,9 +21,6 @@ export class OrganizationService {
            organizations {
               _id
               name
-              creator {
-                email
-              }
               location {
                 address
               }
@@ -44,11 +41,6 @@ export class OrganizationService {
               _id
               name
               description
-              creator {
-                _id
-                email
-                firstName
-              }
               location {
                 address
                 city

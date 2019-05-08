@@ -4,7 +4,6 @@ import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
-import { UserRole } from '../profile/user-type.enum';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -65,13 +64,11 @@ export class AuthService {
     );
   }
 
-  signUp(form: CreateUserInterface, userType: UserRole) {
+  signUp(user: CreateUserInterface) {
     return this.apiService.query({
       query: `
-        mutation createUser($email: String!, $password: String!,
-        $lastName: String!, $firstName: String!, $postalCode: String!, $userType: Int!) {
-          createUser(userInput: {email: $email, password: $password,
-          lastName: $lastName, firstName: $firstName, postalCode: $postalCode}, userType: $userType) {
+        mutation createUser($userInput: UserInput) {
+          createUser(userInput: $userInput) {
             email
             firstName
             lastName
@@ -80,14 +77,35 @@ export class AuthService {
         }
       `,
       variables: {
-        ...form,
-        userType
+        userInput: user
       }
     }).pipe(
       map(({data}) => data),
       tap(() => {
         this.router.navigate(['/auth/sign-in']);
       })
+    );
+  }
+
+  registerOrganization(user: CreateUserInterface, organization) {
+    return this.apiService.query({
+      query: `
+        mutation registerOrganization($organizationInput: OrganizationInput!, $userInput: UserInput!) {
+          registerOrganization(organizationInput: $organizationInput, userInput: $userInput) {
+            email
+            firstName
+            lastName
+            name
+          }
+        }
+      `,
+      variables: {
+        organizationInput: organization,
+        userInput: user
+      }
+    }).pipe(
+      map(({data}) => data),
+      map(({registerOrganization}) => registerOrganization),
     );
   }
 

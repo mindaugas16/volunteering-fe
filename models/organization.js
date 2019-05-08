@@ -2,15 +2,12 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const User = require('./user');
+
 const organizationSchema = new Schema({
-    creator: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
     name: {
         type: String,
-        required: true
+        // required: true
     },
     description: {
         type: String
@@ -30,6 +27,7 @@ const organizationSchema = new Schema({
             ref: 'Event'
         }
     ]
-}, { timestamps: true });
+});
 
-module.exports = mongoose.model('Organization', organizationSchema);
+// module.exports = mongoose.model('Organization', organizationSchema);
+module.exports = User.discriminator('Organization', organizationSchema);

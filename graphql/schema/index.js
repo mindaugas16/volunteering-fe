@@ -6,9 +6,26 @@ type Tag {
     label: String!
 }
 
+type User {
+    _id: ID!
+    email: String!
+    firstName: String!
+    lastName: String!
+    postalCode: String!
+    contacts: String
+    bio: String
+    password: String
+    organizations: [Organization]
+    createdEvents: [Event]
+    createdActivities: [Activity]
+    role: Int
+}
+
 type Organization {
     _id: ID!
-    creator: User!
+    email: String!
+    firstName: String!
+    lastName: String!
     members: [User!]!
     name: String!
     description: String
@@ -58,21 +75,6 @@ type Event {
     imagePath: String
     createdAt: String!
     updatedAt: String!
-}
-
-type User {
-    _id: ID!
-    email: String!
-    firstName: String!
-    lastName: String!
-    postalCode: String!
-    contacts: String
-    bio: String
-    password: String
-    organizations: [Organization]
-    createdEvents: [Event]
-    createdActivities: [Activity]
-    role: Int
 }
 
 type AuthData {
@@ -180,7 +182,8 @@ type RootMutation {
     
     createActivity(activityInput: ActivityInput): Activity
     participate(participationInput: ParticipationInput): Participation
-    createOrganization(organizationInput: OrganizationInput): Organization
+    
+    registerOrganization(organizationInput: OrganizationInput, userInput: UserInput): Organization
     joinOrganization(organizationId: ID): Boolean
     leaveOrganization(organizationId: ID): Boolean
     updateOrganization(id: ID!, organizationInput: OrganizationInput!): Organization!

@@ -2,18 +2,29 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user');
-const Volunteer = require('../../models/Volunteer');
+const Volunteer = require('../../models/volunteer');
+const Organization = require('../../models/organization');
 
 const isEmail = require('validator/lib/isEmail');
 
 const { transformUser } = require('./merge');
 
+const { UserRoles } = require('../../models/user-role.type');
+
+const organizationResolver = require('../resolvers/organization');
+
+
 module.exports = {
     createUser: async ({ userInput, userType }) => {
         try {
             let type = User;
-            if (userType === 0) {
-                type = Volunteer;
+            switch (userType) {
+                case UserRoles.VOLUNTEER:
+                    type = Volunteer;
+                    break;
+                case UserRoles.ORGANIZATION:
+                    type = Organization;
+                    break;
             }
             const user = await type.findOne({ email: userInput.email });
 
@@ -44,6 +55,11 @@ module.exports = {
                 postalCode: userInput.postalCode,
                 password: hashedPassword,
             });
+
+
+            organizationResolver.createOrganization();
+
+
             const result = await createdUser.save();
             return {
                 ...result._doc,
