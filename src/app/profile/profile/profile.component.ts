@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../profile.service';
 import { UserInterface } from '../../auth/user.interface';
 import { TabInterface } from '../../ui-elements/tabs/tab.interface';
+import { UserRole } from '../user-type.enum';
 
 @Component({
   selector: 'app-profile',
@@ -10,11 +11,7 @@ import { TabInterface } from '../../ui-elements/tabs/tab.interface';
 })
 export class ProfileComponent implements OnInit {
   user: UserInterface;
-  tabs: TabInterface[] = [
-    {title: 'Profile', id: 0, icon: 'fa-user'},
-    {title: 'Organizations', id: 1, icon: 'fa-star'},
-    {title: 'Settings', icon: 'fa-gears', id: 2},
-  ];
+  tabs: TabInterface[] = [];
   selectedTab: TabInterface;
 
   constructor(private profileService: ProfileService) {
@@ -23,6 +20,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.profileService.getUserInfo().subscribe(user => {
       this.user = user;
+      this.tabs = [
+        {title: 'Profile', id: 0, icon: 'fa-user'},
+        {title: 'Organizations', id: 1, icon: 'fa-star', isHidden: this.user && this.user.role === UserRole.ORGANIZATION},
+        {title: 'Settings', icon: 'fa-gears', id: 2},
+      ];
     });
   }
 }

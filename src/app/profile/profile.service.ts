@@ -28,6 +28,7 @@ export class ProfileService {
                 _id
                 name
               }
+              role
             }
            }
       `
