@@ -21,10 +21,10 @@
         <span *ngIf="event.date.end && event.date.end > event.date.start">- {{event.date.end | date:'MMM dd'}}</span>
       </div>
       <div>
-<!--        <i class="fa fa-users mr-2"></i>-->
-<!--        <a [routerLink]="['/organizations', 'details', event.organization._id]">-->
-<!--          {{event.organization.name}}-->
-<!--        </a>-->
+        <i class="fa fa-users mr-2"></i>
+        <a [routerLink]="['/organizations', 'details', event.organization._id]">
+          {{event.organization.name}}
+        </a>
       </div>
     </div>
     <div class="card-description">
@@ -35,6 +35,7 @@
   </div>
   <div class="card-footer">
     <a class="button is-primary is-outlined"
+       *appHasPermission="{condition: actionsRules?.JOIN_EVENT, args: {}}"
        [routerLink]="['/event', event._id]"
     >
       {{'Join now'}}

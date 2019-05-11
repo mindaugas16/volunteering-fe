@@ -22,17 +22,7 @@ export interface EventInterface {
 export interface CreateEventInterface {
   title: string;
   description: string;
-  date: string;
-  image?: File;
-  location?: LocationInterface;
-  imagePath?: string;
-}
-
-export interface UpdateEventInterface {
-  title: string;
-  description: string;
   date: DateRangeInterface;
-  tags?: TagInterface[];
   image?: File;
   location?: LocationInterface;
   imagePath?: string;

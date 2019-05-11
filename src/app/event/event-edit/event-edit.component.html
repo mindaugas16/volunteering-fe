@@ -6,6 +6,49 @@
     </h2>
     <hr/>
     <form [formGroup]="form">
+      <div class="field">
+        <label class="label">
+          {{'Image'}}
+        </label>
+        <div class="is-flex">
+        <app-logo [imagePath]="image"></app-logo>
+        <div class="field is-grouped mt-4">
+          <div class="control">
+            <div class="field">
+              <div class="file is-primary">
+                <label class="file-label">
+                  <input class="file-input"
+                         #inputImageElement
+                         type="file"
+                         accept="image/*"
+                         (change)="onFileChange($event)"
+                  >
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      {{'Select image'}}
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <button class="button is-warning"
+                  *ngIf="image"
+                  (click)="onRemoveImage()"
+          >
+            <span class="file-icon">
+              <i class="fa fa-trash"></i>
+            </span>
+            <span>
+              {{'Remove'}}
+            </span>
+          </button>
+        </div>
+        </div>
+      </div>
       <app-input class="field"
                  type="text"
                  formControlName="title"
@@ -22,42 +65,14 @@
                  placeholder="Description"
                  label="Description"
       ></app-input>
-
-
-      <div class="field" *ngIf="!event">
-        <div class="control" *ngIf="!image; else imagePreview">
-          <div class="file has-name is-fullwidth">
-            <label class="file-label">
-              <input class="file-input"
-                     type="file"
-                     (change)="onFileChange($event)"
-              >
-              <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fa fa-upload"></i>
-                </span>
-                <span class="file-label">
-                  Choose a file…
-                </span>
-              </span>
-              <span class="file-name">
-                Screen Shot 2017-07-29 at 15.54.25.png
-              </span>
-            </label>
-          </div>
-        </div>
-        <ng-template #imagePreview>
-          <img class="is-3by4 is-rounded" [src]="image"/>
-        </ng-template>
-      </div>
       <div class="field">
         <div class="control">
           <label class="label">
             {{'Event date'}}
           </label>
-        <app-date-range-picker [dateRange]="event?.date"
-                               (dateSelect)="onDateSelect($event)"
-        ></app-date-range-picker>
+          <app-date-range-picker [dateRange]="event?.date"
+                                 (dateSelect)="onDateSelect($event)"
+          ></app-date-range-picker>
         </div>
       </div>
       <div formGroupName="location">
@@ -86,20 +101,20 @@
                    label="Address 2"
         ></app-input>
         <div class="columns">
-        <app-input class="field column is-half m-0"
-                   type="text"
-                   formControlName="city"
-                   [formControl]="form.get('location').get('city')"
-                   placeholder="City"
-                   label="City"
-        ></app-input>
-        <app-input class="field column is-half m-0"
-                   type="text"
-                   formControlName="country"
-                   [formControl]="form.get('location').get('country')"
-                   placeholder="Country"
-                   label="Country"
-        ></app-input>
+          <app-input class="field column is-half m-0"
+                     type="text"
+                     formControlName="city"
+                     [formControl]="form.get('location').get('city')"
+                     placeholder="City"
+                     label="City"
+          ></app-input>
+          <app-input class="field column is-half m-0"
+                     type="text"
+                     formControlName="country"
+                     [formControl]="form.get('location').get('country')"
+                     placeholder="Country"
+                     label="Country"
+          ></app-input>
         </div>
         <app-input class="field"
                    type="number"

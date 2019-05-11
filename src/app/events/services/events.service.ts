@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../../event/models/event.interface';
+import { CreateEventInterface, EventInterface } from '../../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +34,9 @@ export class EventsService {
                   country
                   zipCode
                 }
-                creator {
+                organization {
                   _id
-                  firstName
+                  name
                 }
                 imagePath
            }
@@ -47,6 +48,10 @@ export class EventsService {
     }).pipe(
       map(({data}) => data),
       map(({events}) => events),
+      map((e) => {
+        e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        return e;
+      })
     );
   }
 
@@ -71,25 +76,15 @@ export class EventsService {
               country
               zipCode
            }
-           creator {
-            _id
-            firstName
+           organization {
+              _id
+              name
            }
            tags {
-            _id
-            label
+              _id
+              label
            }
-           activities {
-              name
-              description
-              date {
-                start
-                end
-              }
-              volunteersNeeded
-              volunteers
-            }
-           }
+          }
         }`
       ,
       variables: {
@@ -98,17 +93,18 @@ export class EventsService {
     }).pipe(
       map(({data}) => data),
       map(({event}) => event),
+      map((e) => {
+        e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        return e;
+      })
     );
   }
 
-  update(id: string, event: UpdateEventInterface): Observable<any> {
+  update(id: string, event: CreateEventInterface): Observable<any> {
     return this.apiService.query({
       query: `
-        mutation updateEvent($id: ID!, $title: String!, $description: String!, $date: DateRangeInput!,
-        $imagePath: String, $locationInput: LocationInput, $tagsInput: [TagInput]) {
-            updateEvent(id: $id, eventInput:
-            {title: $title, description: $description, date: $date, imagePath: $imagePath, location: $locationInput, tags: $tagsInput}
-            ) {
+        mutation updateEvent($id: ID!, $eventInput: EventInput!) {
+            updateEvent(id: $id, eventInput: $eventInput) {
                _id
                title
                description
@@ -124,35 +120,29 @@ export class EventsService {
                 city
                 country
                 zipCode
-               }
-               tags {
-                _id
-                label
                }
              }
           }`
       ,
       variables: {
         id,
-        title: event.title,
-        description: event.description,
-        date: event.date,
-        imagePath: event.imagePath,
-        locationInput: event.location
+        eventInput: event
       }
     }).pipe(
       map(({data}) => data),
       map(({updateEvent}) => updateEvent),
+      map((e) => {
+        e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        return e;
+      })
     );
   }
 
-  createEvent(event: CreateEventInterface, organizationId: string): Observable<any> {
+  createEvent(event: CreateEventInterface): Observable<any> {
     return this.apiService.query({
       query: `
-        mutation createEvent($title: String!, $description: String!, $date: DateRangeInput!, $organizationId: ID!, $imagePath: String) {
-            createEvent(eventInput:
-            {title: $title, description: $description, date: $date, organizationId: $organizationId, imagePath: $imagePath}
-            ) {
+        mutation createEvent($eventInput: EventInput!) {
+            createEvent(eventInput: $eventInput) {
                _id
                title
                description
@@ -173,11 +163,7 @@ export class EventsService {
           }`
       ,
       variables: {
-        title: event.title,
-        description: event.description,
-        date: event.date,
-        organizationId,
-        imagePath: event.imagePath
+        eventInput: event
       }
     }).pipe(
       map(({data}) => data),

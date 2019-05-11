@@ -1,12 +1,14 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateEventInterface, EventInterface, UpdateEventInterface } from '../models/event.interface';
+import { CreateEventInterface, EventInterface } from '../models/event.interface';
 import { ApiService } from '../../api.service';
 import { EventsService } from '../../events/services/events.service';
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { DateRangeInterface } from '../../activities/models/activity.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-event-edit',
@@ -17,6 +19,8 @@ export class EventEditComponent implements OnInit {
   @Input() event: EventInterface;
   @Input() organization: OrganizationInterface;
   @Output() eventChange: EventEmitter<EventInterface> = new EventEmitter<EventInterface>();
+
+  @ViewChild('inputImageElement') inputImageElement: ElementRef;
 
   form: FormGroup = new FormGroup({
     title: new FormControl(null, Validators.required),
@@ -54,8 +58,10 @@ export class EventEditComponent implements OnInit {
         startDate: date.start,
         endDate: date.end
       });
+      if (this.event.imagePath) {
+        this.image = this.event.imagePath;
+      }
     }
-    console.log(this.form.value);
   }
 
   onDateSelect({start, end}: DateRangeInterface) {
@@ -65,52 +71,47 @@ export class EventEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    const {image, ...eventInput} = this.form.value;
-    eventInput.date = {
-      start: eventInput.startDate,
-      end: eventInput.endDate || eventInput.startDate,
+  private changeDateFormat(startDate: Date, endDate: Date): DateRangeInterface {
+    return {
+      start: startDate,
+      end: endDate || startDate,
     };
+  }
+
+  onSubmit() {
+    const {image, startDate, endDate, ...eventInput} = this.form.value;
+    eventInput.date = this.changeDateFormat(startDate, endDate);
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
     }
 
-    if (this.event) {
-      this.updateEvent(eventInput, null);
-    }
+    this.uploadImage(image).subscribe(imagePath => {
+      if (this.event) {
+        this.updateEvent(eventInput, imagePath);
+        return;
+      }
 
-    // let actionObservable = res => this.eventsService.createEvent({...eventInput, imagePath: res.filePath}, this.organization._id);
-    //
-    // if (this.event) {
-    // actionObservable = this.eventsService.update(this.event.id, {...eventInput, imagePath: res.filePath}, this.organization._id)
-    // }
-
-    // if (image) {
-    //   const formData = new FormData();
-    //   formData.append('image', image);
-    //   this.apiService.upload(formData).pipe(
-    //     switchMap((r) => {
-    //       console.log(r);
-    //       // @ts-ignore
-    //       return actionObservable(r);
-    //     })
-    //   ).subscribe(event => {
-    //     this.eventChange.emit(event);
-    //     this.onCloseModal();
-    //   }, error => FormControlsHelperService.invalidateFormControls(this.form));
-    // } else {
-    //   actionObservable().subscribe(event => {
-    //     this.eventChange.emit(event);
-    //     this.onCloseModal();
-    //   }, error => FormControlsHelperService.invalidateFormControls(this.form));
-    // }
+      this.createEvent(eventInput, imagePath);
+    });
   }
 
-  updateEvent(eventInput: UpdateEventInterface, filePath: string) {
-    this.eventsService.update(this.event._id, {...eventInput, imagePath: filePath}).subscribe(event => {
-      this.eventChange.emit(event);
-      this.onCloseModal();
-    }, error => FormControlsHelperService.invalidateFormControls(this.form));
+  private uploadImage(image): Observable<string> {
+    if (!image) {
+      return of(null);
+    }
+    return new Observable(observer => {
+      const formData = new FormData();
+      formData.append('image', image);
+      this.apiService.upload(formData).subscribe(res => {
+        observer.next((res as any).fileName);
+        observer.complete();
+      });
+    });
+  }
+
+  onRemoveImage() {
+    this.image = null;
+    this.inputImageElement.nativeElement.value = this.image;
   }
 
   onCloseModal() {
@@ -129,10 +130,25 @@ export class EventEditComponent implements OnInit {
           image: file
         });
         this.image = reader.result;
-        console.log(this.image);
         this.cd.markForCheck();
       };
     }
+  }
+
+
+  private updateEvent(eventInput: CreateEventInterface, filePath: string) {
+    this.eventsService.update(this.event._id, {...eventInput, imagePath: filePath}).subscribe(event => {
+      this.eventChange.emit(event);
+      this.onCloseModal();
+    }, () => FormControlsHelperService.invalidateFormControls(this.form));
+  }
+
+
+  private createEvent(eventInput: CreateEventInterface, filePath: string) {
+    this.eventsService.createEvent({...eventInput, imagePath: filePath}).subscribe(event => {
+      this.eventChange.emit(event);
+      this.onCloseModal();
+    }, () => FormControlsHelperService.invalidateFormControls(this.form));
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventInterface } from '../../../event/models/event.interface';
+import { ActionsRules } from '../../../shared/permissions.config';
 
 @Component({
   selector: 'app-events-list-item',
@@ -8,6 +9,7 @@ import { EventInterface } from '../../../event/models/event.interface';
 })
 export class EventsListItemComponent implements OnInit {
   @Input() event: EventInterface;
+  actionsRules = ActionsRules;
 
   constructor() {
   }

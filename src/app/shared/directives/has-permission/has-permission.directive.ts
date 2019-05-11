@@ -18,6 +18,7 @@ export class HasPermissionDirective implements OnInit {
 
   @Input()
   set appHasPermission({condition, args}) {
+    this.viewContainer.clear();
     this.authService.getCurrentUser().subscribe(user => {
       this.user = user;
       const functionCallBack = condition.bind(this, args);

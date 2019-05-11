@@ -4,10 +4,13 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(public injector: Injector, private router: Router) {
+  constructor(public injector: Injector,
+              private router: Router
+  ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -26,6 +29,8 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401) {
             authService.logout();
+            const activeModal: NgbActiveModal = this.injector.get(NgbActiveModal);
+            activeModal.close();
             this.router.navigate(['/auth/sign-in']);
           }
         }
