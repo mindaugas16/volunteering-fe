@@ -4,6 +4,14 @@
       {{'Organization registration form'}}
     </h3>
     <form [formGroup]="form">
+      <app-input class="field"
+                 formControlName="name"
+                 [formControl]="form.get('name')"
+                 placeholder="Organization name input"
+                 label="Organization Name"
+                 required="true"
+      ></app-input>
+
       <div class="columns">
         <app-input class="field column"
                    formControlName="firstName"

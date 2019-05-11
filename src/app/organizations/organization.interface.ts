@@ -1,7 +1,7 @@
 import { UserInterface } from '../auth/user.interface';
 import { EventInterface } from '../event/models/event.interface';
 
-export interface OrganizationInterface {
+export interface OrganizationInterface extends UserInterface {
   _id: string;
   name: string;
   description: string;

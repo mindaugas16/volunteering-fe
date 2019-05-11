@@ -40,7 +40,7 @@
     <hr/>
     <div class="columns">
       <div class="column is-three-fifths">
-        <div class="box is-shadowless">
+        <div class="box is-shadowless" *ngIf="organization.description">
           <p>
             {{organization?.description}}
           </p>
@@ -91,7 +91,7 @@
           </div>
           <span>
             <span class="has-text-weight-semibold">{{'Creator'}}:</span>
-            {{organization?.creator.firstName}}
+            {{organization?.firstName}} {{organization?.lastName}}
           </span>
           <hr/>
           <span>

@@ -40,6 +40,8 @@ export class OrganizationService {
            organization(organizationId: $organizationId) {
               _id
               name
+              firstName
+              lastName
               description
               location {
                 address

@@ -4,6 +4,7 @@ import { AuthService } from '../../auth.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { FormControlsHelperService } from '../../../core/services/helpers/form-controls-helper.service';
+import { UserRole } from '../../../profile/user-type.enum';
 
 @Component({
   selector: 'app-sign-up-organization-form',
@@ -12,6 +13,7 @@ import { FormControlsHelperService } from '../../../core/services/helpers/form-c
 })
 export class SignUpOrganizationFormComponent implements OnInit {
   form: FormGroup = new FormGroup({
+    name: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     firstName: new FormControl(null, [Validators.required]),
     lastName: new FormControl(null, [Validators.required]),
@@ -33,8 +35,7 @@ export class SignUpOrganizationFormComponent implements OnInit {
       FormControlsHelperService.invalidateFormControls(this.form);
       return;
     }
-    const {termsAndConditions, ...rest} = this.form.value;
-    this.authService.signUp(rest).subscribe(() => {
+    this.authService.signUp(this.form.value, UserRole.ORGANIZATION).subscribe(() => {
         this.activeModal.close();
         this.router.navigate(['/auth', 'sign-in']);
       },

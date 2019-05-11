@@ -21,6 +21,8 @@ export interface CreateUserInterface {
   firstName: string;
   lastName: string;
   postalCode: string;
+
+  name: string;
 }
 
 export interface UpdateUserInterface {

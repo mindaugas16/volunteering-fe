@@ -4,6 +4,7 @@ import { AuthService } from '../../auth.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { FormControlsHelperService } from '../../../core/services/helpers/form-controls-helper.service';
+import { UserRole } from '../../../profile/user-type.enum';
 
 @Component({
   selector: 'app-sign-up-sponsor-form',
@@ -28,13 +29,13 @@ export class SignUpSponsorFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  // @TODO: add sponsor register logic
   submit() {
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
       return;
     }
-    const {termsAndConditions, ...rest} = this.form.value;
-    this.authService.signUp(rest).subscribe(() => {
+    this.authService.signUp(this.form.value, UserRole.SPONSOR).subscribe(() => {
         this.activeModal.close();
         this.router.navigate(['/auth', 'sign-in']);
       },

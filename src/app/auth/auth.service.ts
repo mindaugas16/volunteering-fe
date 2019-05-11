@@ -4,6 +4,7 @@ import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
+import { UserRole } from '../profile/user-type.enum';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -64,11 +65,11 @@ export class AuthService {
     );
   }
 
-  signUp(user: CreateUserInterface) {
+  signUp(user: CreateUserInterface, userRole: UserRole) {
     return this.apiService.query({
       query: `
-        mutation createUser($userInput: UserInput) {
-          createUser(userInput: $userInput) {
+        mutation createUser($userInput: UserInput!, $userRole: UserRole!) {
+          createUser(userInput: $userInput, userRole: $userRole) {
             email
             firstName
             lastName
@@ -77,7 +78,8 @@ export class AuthService {
         }
       `,
       variables: {
-        userInput: user
+        userInput: user,
+        userRole
       }
     }).pipe(
       map(({data}) => data),
