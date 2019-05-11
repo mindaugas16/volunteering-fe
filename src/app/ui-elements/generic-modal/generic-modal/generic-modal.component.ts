@@ -1,7 +1,7 @@
-import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { ModalContentDirective } from '../modal-content.directive';
-import { ModalService } from '../../../core/services/modal/modal.service';
+import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
+import { ModalContentDirective } from '../directives/modal-content/modal-content.directive';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalFooterDirective } from '../directives/modal-footer/modal-footer.directive';
 
 @Component({
   selector: 'app-generic-modal',
@@ -13,6 +13,7 @@ export class GenericModalComponent implements OnInit {
   @Input() extraClasses: string;
 
   @ContentChild(ModalContentDirective, {read: TemplateRef}) contentTemplate;
+  @ContentChild(ModalFooterDirective, {read: TemplateRef}) footerTemplate;
 
   constructor(
     private activeModal: NgbActiveModal

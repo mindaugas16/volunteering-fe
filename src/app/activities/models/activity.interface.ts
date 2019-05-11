@@ -6,6 +6,16 @@ export interface DateRangeInterface {
 }
 
 export interface ActivityInterface {
+  _id: string;
+  eventId: string;
+  name: string;
+  description?: string;
+  volunteersNeeded: number;
+  date: DateRangeInterface;
+  volunteers?: UserInterface[];
+}
+
+export interface ActivityCreateInterface {
   eventId: string;
   name: string;
   description?: string;

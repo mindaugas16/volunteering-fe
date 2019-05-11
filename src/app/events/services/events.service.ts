@@ -48,9 +48,13 @@ export class EventsService {
     }).pipe(
       map(({data}) => data),
       map(({events}) => events),
-      map((e) => {
-        e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-        return e;
+      map((events) => {
+        return events.map(e => {
+          if (e.imagePath) {
+            e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+          }
+          return e;
+        });
       })
     );
   }
@@ -83,6 +87,19 @@ export class EventsService {
            tags {
               _id
               label
+           }
+           activities {
+              _id
+              name
+              description
+              date {
+                start
+                end
+              }
+              volunteersNeeded
+              volunteers {
+                firstName
+              }
            }
           }
         }`

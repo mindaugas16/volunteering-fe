@@ -8,6 +8,7 @@ import { DropdownItemInterface } from '../dropdown.interface';
 })
 export class DropdownComponent implements OnInit {
   @Input() title: string;
+  @Input() object: any;
   @Input() items: DropdownItemInterface[];
   @Input() isOpen: boolean;
   @Input() extraClasses: string;

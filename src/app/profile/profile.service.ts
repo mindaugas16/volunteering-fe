@@ -23,11 +23,6 @@ export class ProfileService {
               lastName
               postalCode
               contacts
-              bio
-              organizations {
-                _id
-                name
-              }
               role
             }
            }

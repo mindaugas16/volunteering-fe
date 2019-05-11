@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GenericModalComponent } from './generic-modal/generic-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ModalContentDirective } from './modal-content.directive';
-import { ModalService } from '../../core/services/modal/modal.service';
+import { ModalContentDirective } from './directives/modal-content/modal-content.directive';
+import { ModalFooterDirective } from './directives/modal-footer/modal-footer.directive';
 
 @NgModule({
   declarations: [
     GenericModalComponent,
-    ModalContentDirective
+    ModalContentDirective,
+    ModalFooterDirective
   ],
   imports: [
     CommonModule,
@@ -17,13 +18,11 @@ import { ModalService } from '../../core/services/modal/modal.service';
   ],
   exports: [
     GenericModalComponent,
-    ModalContentDirective
+    ModalContentDirective,
+    ModalFooterDirective
   ],
   entryComponents: [
     GenericModalComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class GenericModalModule {

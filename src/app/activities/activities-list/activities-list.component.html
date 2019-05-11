@@ -1,5 +1,5 @@
-<div class="container mt-4 mb-4">
-  <h2 class="title" routerLink="../">{{event?.title}}</h2>
+<div class="container mt-4 mb-4" *ngIf="event">
+  <app-breadcrumb [items]="getBreadcrumbItems()"></app-breadcrumb>
   <hr/>
   <div class="columns">
     <div class="column">
@@ -26,6 +26,7 @@
               </time>
             </div>
             <app-dropdown [title]="'Actions'"
+                          [object]="activity"
                           [items]="dropdownActions"
                           [extraClasses]="'is-right'"
             ></app-dropdown>

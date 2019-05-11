@@ -2,7 +2,7 @@
   <div class="dropdown-trigger">
     <button class="button is-fullwidth" appDropdownToggle>
       <span *ngIf="!(dateRangeTransformed || dateRange); else datePreview">
-        {{'Select event date'}}
+        {{'Select date'}}
       </span>
       <ng-template #datePreview>
         <div class="separated-items separated-items--minus">
@@ -22,7 +22,8 @@
                       [displayMonths]="2"
                       [dayTemplate]="t"
                       outsideDays="hidden"
-                      [minDate]="calendar.getToday()"
+                      [minDate]="transformedMinDate"
+                      [maxDate]="transformedMaxDate"
       >
       </ngb-datepicker>
 

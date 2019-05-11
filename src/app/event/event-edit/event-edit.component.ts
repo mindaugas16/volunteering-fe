@@ -9,6 +9,7 @@ import { FormControlsHelperService } from '../../core/services/helpers/form-cont
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { DateFormatHelper } from '../../core/services/helpers/date-format-helper.service';
 
 @Component({
   selector: 'app-event-edit',
@@ -71,16 +72,9 @@ export class EventEditComponent implements OnInit {
     });
   }
 
-  private changeDateFormat(startDate: Date, endDate: Date): DateRangeInterface {
-    return {
-      start: startDate,
-      end: endDate || startDate,
-    };
-  }
-
   onSubmit() {
     const {image, startDate, endDate, ...eventInput} = this.form.value;
-    eventInput.date = this.changeDateFormat(startDate, endDate);
+    eventInput.date = DateFormatHelper.changeDateFormat(startDate, endDate);
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
     }

@@ -11,6 +11,8 @@ import { DateRangeInterface } from '../../../activities/models/activity.interfac
 export class DateRangePickerComponent implements OnInit {
   @ViewChild('dp') dp;
   @Input() dateRange: DateRangeInterface;
+  @Input() minDate?: Date | string;
+  @Input() maxDate?: Date | string;
 
   @Output() dateSelect: EventEmitter<DateRangeInterface> = new EventEmitter();
 
@@ -19,11 +21,14 @@ export class DateRangePickerComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
 
+  transformedMinDate: NgbDate;
+  transformedMaxDate: NgbDate;
+
   dateRangeTransformed: DateRangeInterface;
 
   isOpen: boolean;
 
-  constructor(public calendar: NgbCalendar) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -31,6 +36,14 @@ export class DateRangePickerComponent implements OnInit {
       this.fromDate = this.fromModel(new Date(this.dateRange.start));
       this.toDate = this.fromModel(new Date(this.dateRange.end));
       this.dp.navigateTo(this.fromDate);
+    }
+
+    if (this.minDate) {
+      this.transformedMinDate = this.fromModel(new Date(this.minDate));
+    }
+
+    if (this.maxDate) {
+      this.transformedMaxDate = this.fromModel(new Date(this.maxDate));
     }
   }
 

@@ -9,6 +9,8 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
 
 @NgModule({
   declarations: [
@@ -23,10 +25,12 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
     ReactiveFormsModule,
     FormsModule,
     DropdownModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    NgbModule,
+    DateRangePickerModule
   ],
   entryComponents: [
-    ActivityEditModalComponent
+    ActivityEditModalComponent,
   ],
   exports: [
     ActivityEditModalComponent

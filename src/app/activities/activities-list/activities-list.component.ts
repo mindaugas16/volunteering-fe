@@ -4,9 +4,10 @@ import { switchMap } from 'rxjs/operators';
 import { EventsService } from '../../events/services/events.service';
 import { EventInterface } from '../../event/models/event.interface';
 import { ActivitiesService } from '../activities.service';
-import { ModalService } from '../../core/services/modal/modal.service';
 import { ActivityEditModalComponent } from '../activity-edit-modal/activity-edit-modal.component';
 import { DropdownItemInterface } from '../../ui-elements/dropdown/dropdown.interface';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
 
 @Component({
   selector: 'app-activities-list',
@@ -18,11 +19,23 @@ export class ActivitiesListComponent implements OnInit {
   dropdownActions: DropdownItemInterface[] = [
     {
       title: 'Edit',
-      action: () => {}
+      action: (activity) => {
+        const modalRef = this.openEditModal();
+        modalRef.componentInstance.event = this.event;
+        modalRef.componentInstance.activity = activity;
+        modalRef.componentInstance.success.subscribe(act => {
+          const foundIndex = this.event.activities.findIndex(item => item._id === act._id);
+          if (foundIndex > -1) {
+            this.event.activities[foundIndex] = {...this.event.activities[foundIndex], ...act};
+          }
+        });
+      }
     },
     {
-      title: 'Cancel',
-      action: () => {}
+      title: 'Remove',
+      action: (activity) => {
+        console.log(activity);
+      }
     }
   ];
 
@@ -30,7 +43,7 @@ export class ActivitiesListComponent implements OnInit {
     private route: ActivatedRoute,
     private eventsService: EventsService,
     private activitiesService: ActivitiesService,
-    private modalService: ModalService
+    private modalService: NgbModal
   ) {
   }
 
@@ -46,12 +59,22 @@ export class ActivitiesListComponent implements OnInit {
   }
 
   addActivity() {
-    const modalRef = this.modalService.open(ActivityEditModalComponent);
-    modalRef.instance.event = this.event;
-    modalRef.instance.create.subscribe(activity => {
-      console.log(activity);
+    const modalRef = this.openEditModal();
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.success.subscribe(activity => {
       this.event.activities.push(activity);
     });
   }
 
+  private openEditModal(): NgbModalRef {
+    return this.modalService.open(ActivityEditModalComponent, {windowClass: 'modal is-active'});
+  }
+
+  getBreadcrumbItems(): BreadcrumbInterface[] {
+    return [
+      {title: 'Events', link: ['/events']},
+      {title: this.event.title, link: ['/event', this.event._id]},
+      {title: 'Activities', link: null}
+    ];
+  }
 }

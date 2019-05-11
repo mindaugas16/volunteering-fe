@@ -21,7 +21,7 @@
     <div class="dropdown-content">
       <a class="dropdown-item"
          *ngFor="let item of items"
-         (click)="item.action"
+         (click)="item.action(object)"
       >
         {{item.title}}
       </a>
