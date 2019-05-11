@@ -92,7 +92,7 @@
           </span>
           About organization
         </h4>
-        <a [routerLink]="['/organizations', 'details', event.organization._id]">
+        <a *ngIf="event.organization" [routerLink]="['/organizations', 'details', event.organization._id]">
           {{event.organization.name}}
         </a>
       </div>

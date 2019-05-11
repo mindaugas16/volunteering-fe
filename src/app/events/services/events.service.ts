@@ -37,10 +37,6 @@ export class EventsService {
                   _id
                   firstName
                 }
-                organization {
-                  name
-                  _id
-                }
                 imagePath
            }
         }`,
@@ -92,10 +88,6 @@ export class EventsService {
               }
               volunteersNeeded
               volunteers
-            }
-            organization {
-              _id
-              name
             }
            }
         }`
