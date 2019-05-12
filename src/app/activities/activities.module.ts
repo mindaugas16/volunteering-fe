@@ -11,6 +11,7 @@ import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
+import { FormMessageModule } from '../ui-elements/form-message/form-message.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-ran
     DropdownModule,
     BreadcrumbModule,
     NgbModule,
-    DateRangePickerModule
+    DateRangePickerModule,
+    FormMessageModule
   ],
   entryComponents: [
     ActivityEditModalComponent,

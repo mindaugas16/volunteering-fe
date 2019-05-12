@@ -66,4 +66,19 @@ export class ActivitiesService {
       map(({data}) => data.updateActivity)
     );
   }
+
+  delete(id: string): Observable<boolean> {
+    return this.apiService.query({
+      query: `
+        mutation deleteActivity($id: ID!) {
+          deleteActivity(id: $id)
+        }
+      `,
+      variables: {
+        id,
+      }
+    }).pipe(
+      map(({data}) => data.deleteActivity)
+    );
+  }
 }

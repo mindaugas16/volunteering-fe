@@ -1,9 +1,15 @@
 <app-generic-modal>
+  <ng-template appModalHeader>
+    {{'Add activity to event'}}
+  </ng-template>
   <ng-template appModalContent>
-    <h3 class="title">
-      {{'Add activity to event'}}
-    </h3>
     <form [formGroup]="form">
+      <app-form-message *ngIf="failureMessage"
+                        [message]="failureMessage"
+                        status="danger"
+                        (close)="failureMessage = null"
+      ></app-form-message>
+
       <app-input class="field"
                  label="Name"
                  formControlName="name"

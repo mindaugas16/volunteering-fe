@@ -10,6 +10,8 @@ import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
 import { LogoComponent } from './components/logo/logo.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { HasPermissionDirective } from './directives/has-permission/has-permissi
     LogoComponent,
     LoaderComponent,
     HasPermissionDirective,
+    ConfirmModalComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    DropdownModule
+    DropdownModule,
+    GenericModalModule
   ],
   exports: [
     InputComponent,
@@ -36,7 +40,11 @@ import { HasPermissionDirective } from './directives/has-permission/has-permissi
     ClickStopPropagationDirective,
     LogoComponent,
     LoaderComponent,
-    HasPermissionDirective
+    HasPermissionDirective,
+    ConfirmModalComponent
+  ],
+  entryComponents: [
+    ConfirmModalComponent
   ]
 })
 export class SharedModule {

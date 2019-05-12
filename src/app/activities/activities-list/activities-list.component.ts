@@ -8,6 +8,8 @@ import { ActivityEditModalComponent } from '../activity-edit-modal/activity-edit
 import { DropdownItemInterface } from '../../ui-elements/dropdown/dropdown.interface';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { ActivityInterface } from '../models/activity.interface';
 
 @Component({
   selector: 'app-activities-list',
@@ -33,8 +35,14 @@ export class ActivitiesListComponent implements OnInit {
     },
     {
       title: 'Remove',
-      action: (activity) => {
-        console.log(activity);
+      action: (activity: ActivityInterface) => {
+        const modalRef = this.modalService.open(ConfirmModalComponent, {windowClass: 'modal is-active'});
+        modalRef.componentInstance.title = `Confirm`;
+        modalRef.componentInstance.message = `Are you really want to delete activity ${activity.name}?`;
+        modalRef.componentInstance.confirm.pipe(switchMap(() => this.activitiesService.delete(activity._id)))
+          .subscribe(() => {
+            this.event.activities = this.event.activities.filter(item => item._id !== activity._id);
+          });
       }
     }
   ];

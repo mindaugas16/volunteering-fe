@@ -16,12 +16,13 @@ export class ActivityEditModalComponent implements OnInit {
   @Output() success: EventEmitter<ActivityInterface> = new EventEmitter();
   event: EventInterface;
   activity: ActivityInterface;
+  failureMessage: string;
 
   form: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
     description: new FormControl(null, []),
     volunteersNeeded: new FormControl(1, [Validators.required, Validators.min(1)]),
-    startDate: new FormControl(null, []),
+    startDate: new FormControl(null, [Validators.required]),
     endDate: new FormControl(0, []),
   });
 
@@ -45,6 +46,11 @@ export class ActivityEditModalComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
+
+      if (!this.form.value.startDate) {
+        this.failureMessage = 'Activity start date is required';
+      }
+
       return;
     }
 

@@ -4,12 +4,14 @@ import { GenericModalComponent } from './generic-modal/generic-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalContentDirective } from './directives/modal-content/modal-content.directive';
 import { ModalFooterDirective } from './directives/modal-footer/modal-footer.directive';
+import { ModalHeaderDirective } from './directives/modal-header/modal-header.directive';
 
 @NgModule({
   declarations: [
     GenericModalComponent,
     ModalContentDirective,
-    ModalFooterDirective
+    ModalFooterDirective,
+    ModalHeaderDirective
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { ModalFooterDirective } from './directives/modal-footer/modal-footer.dir
   exports: [
     GenericModalComponent,
     ModalContentDirective,
-    ModalFooterDirective
+    ModalFooterDirective,
+    ModalHeaderDirective
   ],
   entryComponents: [
     GenericModalComponent
