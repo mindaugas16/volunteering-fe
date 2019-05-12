@@ -35,6 +35,10 @@
       {{'Email address is invalid'}}
     </span>
 
+    <span *ngIf="formControl.errors.maxlength">
+      {{'Field max length is'}} {{formControl.errors.maxlength.requiredLength}} {{' symbols'}}
+    </span>
+
     <span *ngIf="formControl.errors.required">
       {{label + ' is required!'}}
     </span>

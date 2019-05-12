@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
 import { UserRole } from '../profile/user-type.enum';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -17,7 +18,7 @@ export class AuthService {
 
   constructor(
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
   ) {
     this.authenticated$.next(this.isAuthenticated());
   }

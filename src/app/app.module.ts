@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ERRORS_INTERCEPTOR } from './core/services/error/error.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeaderMessageModule } from './ui-elements/header-message/header-message.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -34,7 +35,8 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
         }
       }
-    )
+    ),
+    HeaderMessageModule
   ],
   providers: [
     {

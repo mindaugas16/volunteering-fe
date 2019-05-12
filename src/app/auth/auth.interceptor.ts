@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
       tap(_ => {
       }, (error: any) => {
         if (error instanceof HttpErrorResponse) {
-          if (error.status === 401) {
+          if (error.status === 401 || error.error.errors && error.error.errors[0].status === 401) {
             authService.logout();
             this.router.navigate(['/auth/sign-in']);
           }

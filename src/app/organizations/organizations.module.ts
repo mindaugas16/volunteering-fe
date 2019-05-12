@@ -33,7 +33,8 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
     BreadcrumbModule
   ],
   entryComponents: [
-    InviteUserModalComponent
+    InviteUserModalComponent,
+    OrganizationEditComponent
   ]
 })
 export class OrganizationsModule {

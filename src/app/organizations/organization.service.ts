@@ -101,19 +101,26 @@ export class OrganizationService {
     });
   }
 
-  update(id: string, updatedOrganization: UpdateOrganizationInterface): Observable<OrganizationInterface> {
+  update(updatedOrganization: UpdateOrganizationInterface): Observable<OrganizationInterface> {
     return this.apiService.query({
       query: `
-        mutation updateOrganization($id: ID!, $organizationInput: OrganizationInput!) {
-          updateOrganization(id: $id, organizationInput: $organizationInput) {
+        mutation updateOrganization($organizationInput: OrganizationInput!) {
+          updateOrganization(organizationInput: $organizationInput) {
             name
+            description
+            location {
+              address
+              city
+              country
+            }
           }
         }
       `,
       variables: {
-        id,
         organizationInput: updatedOrganization
       }
-    });
+    }).pipe(
+      map(({data}) => data.updateOrganization),
+    );
   }
 }

@@ -84,7 +84,7 @@
             </h4>
             <div *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}">
               <a class="icon"
-                 [routerLink]="['edit']">
+                 (click)="onEditDetails()">
                 <i class="fa fa-pencil"></i>
               </a>
             </div>
