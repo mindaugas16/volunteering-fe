@@ -1,17 +1,31 @@
 <div class="tabs is-boxed">
   <ul>
     <ng-container *ngFor="let tab of tabs">
-      <li *ngIf="!tab.isHidden"
-        [class.is-active]="selected.id === tab.id">
-        <a (click)="onTabSelect(tab)">
-          <span class="icon is-small" *ngIf="tab.icon">
-            <i class="fa" [ngClass]="tab.icon" aria-hidden="true"></i>
-          </span>
-          <span>{{tab.title}}</span>
-        </a>
-      </li>
+      <ng-container *ngIf="!tab.isHidden">
+        <li
+          *ngIf="!tab.link; else withLink"
+          [class.is-active]="selected.id === tab.id" (click)="onTabSelect(tab)">
+          <ng-container *ngTemplateOutlet="tabButton; context: {$implicit: tab}"></ng-container>
+        </li>
+
+        <ng-template #withLink>
+          <li [routerLink]="tab.link" routerLinkActive="is-active">
+            <ng-container *ngTemplateOutlet="tabButton; context: {$implicit: tab}"></ng-container>
+          </li>
+        </ng-template>
+      </ng-container>
     </ng-container>
   </ul>
 </div>
 
 <ng-content></ng-content>
+
+
+<ng-template #tabButton let-tab>
+  <a>
+    <span class="icon is-small" *ngIf="tab?.icon">
+      <i class="fa" [ngClass]="tab?.icon" aria-hidden="true"></i>
+    </span>
+    <span>{{tab?.title}}</span>
+  </a>
+</ng-template>

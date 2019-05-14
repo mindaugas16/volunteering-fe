@@ -7,13 +7,18 @@ import { SharedModule } from '../shared/shared.module';
 import { EventsSearchPanelComponent } from './events-search-panel/events-search-panel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { EventsListItemComponent } from './events-list/events-list-item/events-list-item.component';
+import { EventsListCardComponent } from './events-list/events-list-card/events-list-card.component';
+import { EventsComponent } from './events/events.component';
 
 @NgModule({
   declarations: [
     EventsListComponent,
     EventsSearchPanelComponent,
-    EventsListItemComponent,
+    EventsListCardComponent,
+    EventsComponent,
+  ],
+  exports: [
+    EventsListComponent
   ],
   imports: [
     CommonModule,

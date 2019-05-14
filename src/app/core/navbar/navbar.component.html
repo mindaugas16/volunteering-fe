@@ -61,7 +61,13 @@
             </a>
             <div class="navbar-dropdown is-right">
               <a class="navbar-item"
-                 [routerLink]="'/profile'">
+                 *appHasPermission="{condition: actionsRules?.IS_ORGANIZATION, args: {}}"
+                 [routerLink]="'/profile/my-organization'">
+                {{'NAVIGATION.MY_ORGANIZATION' | translate}}
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item"
+                 [routerLink]="'/profile/settings'">
                 {{'NAVIGATION.SETTINGS' | translate}}
               </a>
               <hr class="navbar-divider">

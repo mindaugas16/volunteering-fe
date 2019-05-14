@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalContentDirective } from './directives/modal-content/modal-content.directive';
 import { ModalFooterDirective } from './directives/modal-footer/modal-footer.directive';
 import { ModalHeaderDirective } from './directives/modal-header/modal-header.directive';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,9 @@ import { ModalHeaderDirective } from './directives/modal-header/modal-header.dir
     ModalContentDirective,
     ModalFooterDirective,
     ModalHeaderDirective
+  ],
+  providers: [
+    NgbActiveModal
   ],
   entryComponents: [
     GenericModalComponent

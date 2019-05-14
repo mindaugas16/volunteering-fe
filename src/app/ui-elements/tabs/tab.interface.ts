@@ -4,4 +4,5 @@ export interface TabInterface {
   position?: number;
   icon?: string;
   isHidden?: boolean | Function;
+  link?: string[];
 }

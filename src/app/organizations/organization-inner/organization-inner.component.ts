@@ -9,8 +9,8 @@ import { UserInterface } from '../../auth/user.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventEditComponent } from '../../event/event-edit/event-edit.component';
 import { ActionsRules } from '../../shared/permissions.config';
-import { OrganizationEditComponent } from '../organization-edit/organization-edit.component';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
+import { OrganizationEditModalComponent } from '../organization-edit/organization-edit-modal/organization-edit-modal.component';
 
 @Component({
   selector: 'app-organization-inner',
@@ -78,7 +78,7 @@ export class OrganizationInnerComponent implements OnInit {
   }
 
   onEditDetails() {
-    const modalRef = this.modalService.open(OrganizationEditComponent, {windowClass: 'modal is-active'});
+    const modalRef = this.modalService.open(OrganizationEditModalComponent, {windowClass: 'modal is-active'});
     modalRef.componentInstance.organization = this.organization;
     modalRef.componentInstance.update.subscribe(organization => {
       this.organization = {...this.organization, ...organization};

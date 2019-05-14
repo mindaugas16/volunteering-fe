@@ -11,15 +11,14 @@ import { InviteUserModalModule } from '../ui-elements/invite-user-modal/invite-u
 import { InviteUserModalComponent } from '../ui-elements/invite-user-modal/invite-user-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
-import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
+import { OrganizationEditModule } from './organization-edit/organization-edit.module';
 
 @NgModule({
   declarations: [
     OrganizationsListComponent,
     OrganizationInnerComponent,
-    OrganizationEditComponent
   ],
   imports: [
     CommonModule,
@@ -32,11 +31,11 @@ import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-
     GenericModalModule,
     EventModule,
     BreadcrumbModule,
-    EventStatusLabelModule
+    EventStatusLabelModule,
+    OrganizationEditModule
   ],
   entryComponents: [
     InviteUserModalComponent,
-    OrganizationEditComponent
   ]
 })
 export class OrganizationsModule {

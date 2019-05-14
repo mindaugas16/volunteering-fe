@@ -3,6 +3,7 @@ import { UserInterface } from '../../auth/user.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../profile.service';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -20,11 +21,20 @@ export class EditProfileFormComponent implements OnInit {
   failureMessage: string;
   isChangesSaved: boolean;
 
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService,
+              private authService: AuthService
+  ) {
   }
 
   ngOnInit() {
-    this.pathValueForm();
+    if (this.user) {
+      this.pathValueForm();
+      return;
+    }
+    this.authService.getCurrentUser().subscribe(user => {
+      this.user = user;
+      this.pathValueForm();
+    });
   }
 
   onSaveChanges() {

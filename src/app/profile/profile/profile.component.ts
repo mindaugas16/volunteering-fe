@@ -3,6 +3,14 @@ import { ProfileService } from '../profile.service';
 import { UserInterface } from '../../auth/user.interface';
 import { TabInterface } from '../../ui-elements/tabs/tab.interface';
 import { UserRole } from '../user-type.enum';
+import { Router } from '@angular/router';
+
+enum ProfileTabsEnum {
+  PROFILE,
+  MY_ORGANIZATION,
+  ORGANIZATIONS,
+  SETTINGS
+}
 
 @Component({
   selector: 'app-profile',
@@ -12,18 +20,30 @@ import { UserRole } from '../user-type.enum';
 export class ProfileComponent implements OnInit {
   user: UserInterface;
   tabs: TabInterface[] = [];
-  selectedTab: TabInterface;
 
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService
+  ) {
   }
 
   ngOnInit() {
     this.profileService.getUserInfo().subscribe(user => {
       this.user = user;
       this.tabs = [
-        {title: 'Profile', id: 0, icon: 'fa-user'},
-        {title: 'Organizations', id: 1, icon: 'fa-star', isHidden: this.user && this.user.role === UserRole.ORGANIZATION},
-        {title: 'Settings', icon: 'fa-gears', id: 2},
+        {title: 'Profile', id: ProfileTabsEnum.PROFILE, icon: 'fa-user', link: ['edit']},
+        {
+          title: 'My organization',
+          id: ProfileTabsEnum.MY_ORGANIZATION,
+          icon: 'fa-star',
+          isHidden: this.user && this.user.role !== UserRole.ORGANIZATION, link: ['my-organization']
+        },
+        {
+          title: 'Organizations',
+          id: ProfileTabsEnum.ORGANIZATIONS,
+          icon: 'fa-star',
+          isHidden: this.user && this.user.role === UserRole.ORGANIZATION,
+          link: ['organizations']
+        },
+        {title: 'Settings', icon: 'fa-gears', id: ProfileTabsEnum.SETTINGS, link: ['settings']},
       ];
     });
   }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabsComponent } from './tabs/tabs.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [TabsComponent],
@@ -8,7 +10,9 @@ import { TabsComponent } from './tabs/tabs.component';
     TabsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    RouterModule
   ]
 })
 export class TabsModule { }

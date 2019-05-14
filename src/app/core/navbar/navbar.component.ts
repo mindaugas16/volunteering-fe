@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { UserInterface } from '../../auth/user.interface';
+import { ActionsRules } from '../../shared/permissions.config';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   user: UserInterface;
   isAuthenticated: boolean;
+  actionsRules = ActionsRules;
 
   constructor(private authService: AuthService) {
   }

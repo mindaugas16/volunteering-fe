@@ -3,36 +3,6 @@
     {{user.firstName}} {{user.lastName}}
   </h2>
   <hr/>
-  <app-tabs [tabs]="tabs"
-            (select)="selectedTab = $event"
-  >
-    <div [ngSwitch]="selectedTab?.id" class="mb-4">
-      <div *ngSwitchCase="tabs[0].id">
-        <div class="columns">
-        <app-edit-profile-form class="column is-three-fifths is-offset-one-fifth"
-                               [user]="user"
-        ></app-edit-profile-form>
-        </div>
-      </div>
-      <div *ngSwitchCase="tabs[1].id">
-        <h4 class="title is-4">
-          {{'Organizations'}}
-        </h4>
-        <div>
-          <a *ngFor="let organization of user.organizations"
-             class="is-flex align-items-center"
-             [routerLink]="['/organizations', 'details', organization._id]"
-          >
-            <app-logo [imagePath]="null"
-                      [extraClasses]="'small'"
-            ></app-logo>
-            <span>
-              {{organization.name}}
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </app-tabs>
-
+  <app-tabs [tabs]="tabs" class="is-block mb-4"></app-tabs>
+  <router-outlet></router-outlet>
 </div>

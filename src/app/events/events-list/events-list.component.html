@@ -1,42 +1,42 @@
-<app-events-search-panel></app-events-search-panel>
-<div class="mt-4 mb-4">
-  <div class="container">
-    <div class="columns">
-      <div class="filters column is-3 is-2-widescreen">
-        Filters
-      </div>
-      <div class="column is-9 is-10-widescreen" *ngIf="!loading; else loader">
-        <div class="results" *ngIf="events && events.length; else noEventsFound">
-          <!--        <div class="is-flex justify-content-between">-->
-          <!--          <div class="is-flex align-items-center">-->
-          <!--            <app-sort-->
-          <!--              [sortItems]="sortItems"-->
-          <!--              (sortChange)="onSortChange($event)"-->
-          <!--            ></app-sort>-->
-          <!--          </div>-->
-          <!--          <div class="is-flex align-items-center">-->
-          <!--            <span class="icon has-text-primary">-->
-          <!--              <i class="fa fa-th"></i>-->
-          <!--            </span>-->
-          <!--            <span class="icon mr-2">-->
-          <!--              <i class="fa fa-list"></i>-->
-          <!--            </span>-->
-          <!--          </div>-->
-          <!--        </div>-->
-          <div class="columns is-multiline mt-4">
-            <app-events-list-item class="column is-6 is-4-widescreen is-flex"
-                                  *ngFor="let event of events"
-                                  [event]="event"
-            ></app-events-list-item>
-          </div>
+<div *ngIf="!loading; else loader">
+  <div class="results" *ngIf="events && events.length; else noEventsFound">
+    <!--        <div class="is-flex justify-content-between">-->
+    <!--          <div class="is-flex align-items-center">-->
+    <!--            <app-sort-->
+    <!--              [sortItems]="sortItems"-->
+    <!--              (sortChange)="onSortChange($event)"-->
+    <!--            ></app-sort>-->
+    <!--          </div>-->
+    <!--          <div class="is-flex align-items-center">-->
+    <!--            <span class="icon has-text-primary">-->
+    <!--              <i class="fa fa-th"></i>-->
+    <!--            </span>-->
+    <!--            <span class="icon mr-2">-->
+    <!--              <i class="fa fa-list"></i>-->
+    <!--            </span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <div class="columns is-multiline mt-4">
+      <ng-container [ngSwitch]="viewMode">
+        <ng-container *ngSwitchCase="'GRID'"
+        >
+          <app-events-list-card class="column is-6 is-4-widescreen is-flex"
+                                *ngFor="let event of events"
+                                [event]="event"
+          ></app-events-list-card>
+        </ng-container>
+        <div *ngSwitchCase="'LIST'">
+          <li *ngFor="let event of events">
+            {{event.title}}
+          </li>
         </div>
-        <ng-template #noEventsFound>
-          {{'No events found'}}
-        </ng-template>
-      </div>
-      <ng-template #loader>
-        <app-loader></app-loader>
-      </ng-template>
+      </ng-container>
     </div>
   </div>
+  <ng-template #noEventsFound>
+    {{'No events found'}}
+  </ng-template>
 </div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

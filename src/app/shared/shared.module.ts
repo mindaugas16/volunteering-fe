@@ -12,6 +12,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
     ReactiveFormsModule,
     FormsModule,
     DropdownModule,
-    GenericModalModule
+    GenericModalModule,
   ],
   exports: [
     InputComponent,

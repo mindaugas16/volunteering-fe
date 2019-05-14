@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../services/events.service';
-import { EventInterface, EventStatus } from '../../event/models/event.interface';
-import { EventsSearchService } from '../services/events-search/events-search.service';
-import { switchMap } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
+import { EventInterface } from '../../event/models/event.interface';
 
 @Component({
   selector: 'app-events-list',
@@ -10,39 +7,13 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./events-list.component.scss']
 })
 export class EventsListComponent implements OnInit {
-  events: EventInterface[];
-  loading: boolean;
-  sortItems: { label: string, value: string }[] = [
-    {label: 'Date', value: 'date'},
-    {label: 'Title', value: 'title'},
-    {label: 'Created', value: 'createdAt'},
-    {label: 'Updated', value: 'updatedAt'},
-  ];
+  @Input() events: EventInterface[] = [];
+  @Input() loading: boolean;
+  @Input() viewMode: 'LIST' | 'GRID';
 
-  constructor(private eventsService: EventsService,
-              private eventsSearchService: EventsSearchService
-  ) {
+  constructor() {
   }
 
-  ngOnInit() {
-    this.eventsSearchService.getSearchQueryAsObservable().pipe(
-      switchMap(query => {
-        this.loading = true;
-        return this.eventsService.getEvents(query, null, [EventStatus.PUBLIC]);
-      })
-    ).subscribe(events => {
-      this.events = events;
-      this.loading = false;
-    }, () => this.loading = false);
-  }
-
-  onSortChange(orderBy) {
-    this.fetch(orderBy);
-  }
-
-  fetch(orderBy?: string) {
-    this.eventsService.getEvents(null, orderBy).subscribe(events => {
-      this.events = events;
-    });
+  ngOnInit(): void {
   }
 }
