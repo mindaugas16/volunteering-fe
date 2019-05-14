@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MapModule } from '../ui-elements/map/map.module';
 import { TagsModule } from '../ui-elements/tags/tags.module';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
+import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
     TranslateModule,
     MapModule,
     TagsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    EventStatusLabelModule
   ],
   entryComponents: [
     EventEditComponent

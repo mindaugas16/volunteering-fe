@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../services/events.service';
-import { EventInterface } from '../../event/models/event.interface';
+import { EventInterface, EventStatus } from '../../event/models/event.interface';
 import { EventsSearchService } from '../services/events-search/events-search.service';
 import { switchMap } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class EventsListComponent implements OnInit {
     this.eventsSearchService.getSearchQueryAsObservable().pipe(
       switchMap(query => {
         this.loading = true;
-        return this.eventsService.getEvents(query);
+        return this.eventsService.getEvents(query, null, [EventStatus.PUBLIC]);
       })
     ).subscribe(events => {
       this.events = events;
@@ -41,7 +41,7 @@ export class EventsListComponent implements OnInit {
   }
 
   fetch(orderBy?: string) {
-    this.eventsService.getEvents(orderBy).subscribe(events => {
+    this.eventsService.getEvents(null, orderBy).subscribe(events => {
       this.events = events;
     });
   }

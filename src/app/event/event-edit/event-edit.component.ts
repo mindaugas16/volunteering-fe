@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateEventInterface, EventInterface } from '../models/event.interface';
+import { CreateEventInterface, EventInterface, EventStatus } from '../models/event.interface';
 import { ApiService } from '../../api.service';
 import { EventsService } from '../../events/services/events.service';
 import { OrganizationInterface } from '../../organizations/organization.interface';
@@ -8,8 +8,8 @@ import { DateRangeInterface } from '../../activities/models/activity.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { DateFormatHelper } from '../../core/services/helpers/date-format-helper.service';
+import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 
 @Component({
   selector: 'app-event-edit',
@@ -29,6 +29,7 @@ export class EventEditComponent implements OnInit {
     startDate: new FormControl(null, []),
     endDate: new FormControl(0, []),
     image: new FormControl(null),
+    status: new FormControl(null, Validators.required),
     location: new FormGroup({
       title: new FormControl(null),
       address: new FormControl(null),
@@ -38,6 +39,8 @@ export class EventEditComponent implements OnInit {
       zipCode: new FormControl(null)
     })
   });
+  eventStatus = EventStatus;
+  removeImage: boolean;
 
   image;
 
@@ -47,7 +50,8 @@ export class EventEditComponent implements OnInit {
     private apiService: ApiService,
     private cd: ChangeDetectorRef,
     private eventsService: EventsService,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private headerMessageService: HeaderMessageService
   ) {
   }
 
@@ -73,13 +77,24 @@ export class EventEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const {image, startDate, endDate, ...eventInput} = this.form.value;
-    eventInput.date = DateFormatHelper.changeDateFormat(startDate, endDate);
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
+      return;
     }
 
-    this.uploadImage(image).subscribe(imagePath => {
+    let uploadObservable = of(this.removeImage ? 'remove' : null);
+
+    const {image, startDate, endDate, ...eventInput} = this.form.value;
+    eventInput.date = DateFormatHelper.changeDateFormat(startDate, endDate);
+    if (eventInput.status) {
+      eventInput.status = +eventInput.status;
+    }
+
+    if (image && !this.removeImage) {
+      uploadObservable = this.uploadImage(image);
+    }
+
+    uploadObservable.subscribe(imagePath => {
       if (this.event) {
         this.updateEvent(eventInput, imagePath);
         return;
@@ -105,6 +120,7 @@ export class EventEditComponent implements OnInit {
 
   onRemoveImage() {
     this.image = null;
+    this.removeImage = true;
     this.inputImageElement.nativeElement.value = this.image;
   }
 
@@ -134,6 +150,7 @@ export class EventEditComponent implements OnInit {
     this.eventsService.update(this.event._id, {...eventInput, imagePath: filePath}).subscribe(event => {
       this.eventChange.emit(event);
       this.onCloseModal();
+      this.headerMessageService.show('Event updated successfully', 'SUCCESS');
     }, () => FormControlsHelperService.invalidateFormControls(this.form));
   }
 
@@ -142,6 +159,7 @@ export class EventEditComponent implements OnInit {
     this.eventsService.createEvent({...eventInput, imagePath: filePath}).subscribe(event => {
       this.eventChange.emit(event);
       this.onCloseModal();
+      this.headerMessageService.show('Event created successfully', 'SUCCESS');
     }, () => FormControlsHelperService.invalidateFormControls(this.form));
   }
 

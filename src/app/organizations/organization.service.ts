@@ -59,6 +59,7 @@ export class OrganizationService {
                   start
                   end
                 }
+                status
                 createdAt
                 updatedAt
                 imagePath

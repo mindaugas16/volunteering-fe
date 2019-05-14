@@ -1,9 +1,9 @@
 <app-generic-modal>
-  <ng-template appModalContent>
-    <h3 class="title is-3">
+  <form [formGroup]="form">
+    <ng-template appModalHeader>
       {{'Volunteer registration form'}}
-    </h3>
-    <form [formGroup]="form">
+    </ng-template>
+    <ng-template appModalContent>
       <div class="columns">
         <app-input class="field column"
                    formControlName="firstName"
@@ -46,25 +46,20 @@
                  required="true"
       ></app-input>
 
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox"
-                   formControlName="termsAndConditions">
-            I agree to the <a href="#">terms and conditions</a>
-          </label>
-        </div>
+    </ng-template>
+    <ng-template appModalFooter>
+      <div class="is-flex align-items-center">
+        <label class="checkbox mr-4 nowrap">
+          <input type="checkbox"
+                 formControlName="termsAndConditions">
+          I agree to the <a href="#">terms and conditions</a>
+        </label>
+        <button class="button is-fullwidth is-primary"
+                (click)="onSubmit()"
+        >
+          Register
+        </button>
       </div>
-
-      <div class="field">
-        <div class="control">
-          <button class="button is-fullwidth is-link"
-                  (click)="submit()"
-          >
-            Register
-          </button>
-        </div>
-      </div>
-    </form>
-  </ng-template>
+    </ng-template>
+  </form>
 </app-generic-modal>

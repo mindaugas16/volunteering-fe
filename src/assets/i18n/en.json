@@ -3,7 +3,8 @@
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "RESET": "Reset",
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "CREATE": "Create"
   },
   "NAVIGATION": {
     "HOME": "Home",

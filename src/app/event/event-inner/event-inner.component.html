@@ -7,9 +7,14 @@
                   [extraClasses]="'large'"
         ></app-logo>
         <div>
-          <h1 class="title">
-            About {{event.title}}
-          </h1>
+          <div>
+            <app-event-status-label [status]="event?.status"
+                                    class="mr-2"
+            ></app-event-status-label>
+            <h1 class="title">
+              {{event.title}}
+            </h1>
+          </div>
           <h2>
             {{event.description}}
           </h2>

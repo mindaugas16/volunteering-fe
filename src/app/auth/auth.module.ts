@@ -17,7 +17,7 @@ import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-
     SignUpComponent,
     SignUpVolunteerFormComponent,
     SignUpOrganizationFormComponent,
-    SignUpSponsorFormComponent
+    SignUpSponsorFormComponent,
   ],
   imports: [
     CommonModule,

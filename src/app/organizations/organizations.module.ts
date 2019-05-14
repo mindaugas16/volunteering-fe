@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
+import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
     FormsModule,
     GenericModalModule,
     EventModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    EventStatusLabelModule
   ],
   entryComponents: [
     InviteUserModalComponent,

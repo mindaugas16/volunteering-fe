@@ -66,9 +66,12 @@
               *ngFor="let event of organization?.events"
               [routerLink]="['/event', event?._id]"
             >
-              <span class="is-6 title">
-                {{event?.title}}
-              </span>
+              <div class="is-flex align-items-center">
+                <app-event-status-label class="mr-2 is-block" [status]="event?.status"></app-event-status-label>
+                <span class="is-6 title">
+                  {{event?.title}}
+                </span>
+              </div>
               <p>
                 {{event?.date?.start | date}} - {{event?.date?.end | date}}
               </p>

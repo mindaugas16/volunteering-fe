@@ -30,7 +30,7 @@ export class SignUpSponsorFormComponent implements OnInit {
   }
 
   // @TODO: add sponsor register logic
-  submit() {
+  onSubmit() {
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
       return;

@@ -1,6 +1,5 @@
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { ActivityInterface, DateRangeInterface } from '../../activities/models/activity.interface';
-import { Timestamp } from 'rxjs';
 import { LocationInterface } from '../../shared/models/location.interface';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
 
@@ -17,6 +16,7 @@ export interface EventInterface {
   imagePath?: string;
   createdAt: number;
   updatedAt: number;
+  status: EventStatus;
 }
 
 export interface CreateEventInterface {
@@ -26,4 +26,11 @@ export interface CreateEventInterface {
   image?: File;
   location?: LocationInterface;
   imagePath?: string;
+  status: string;
+}
+
+export enum EventStatus {
+  DRAFT,
+  PUBLIC,
+  PRIVATE
 }

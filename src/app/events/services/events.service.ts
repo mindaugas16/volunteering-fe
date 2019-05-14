@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface } from '../../event/models/event.interface';
+import { CreateEventInterface, EventInterface, EventStatus } from '../../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
 import { environment } from '../../../environments/environment';
@@ -14,11 +14,11 @@ export class EventsService {
   constructor(private apiService: ApiService) {
   }
 
-  getEvents(query?: string, orderBy?: string): Observable<EventInterface[]> {
+  getEvents(query?: string, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
     return this.apiService.query({
       query: `
-        query events($query: String, $orderBy: String) {
-          events(query: $query, orderBy: $orderBy) {
+        query events($query: String, $orderBy: String, $statuses: [Int]) {
+          events(query: $query, orderBy: $orderBy, statuses: $statuses) {
                 _id
                 title
                 description
@@ -39,11 +39,13 @@ export class EventsService {
                   name
                 }
                 imagePath
+                status
            }
         }`,
       variables: {
         query,
-        orderBy
+        orderBy,
+        statuses
       }
     }).pipe(
       map(({data}) => data),
@@ -68,6 +70,7 @@ export class EventsService {
            imagePath
            title
            description
+           status
            date {
               start
               end
@@ -111,7 +114,9 @@ export class EventsService {
       map(({data}) => data),
       map(({event}) => event),
       map((e) => {
-        e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        if (e.imagePath) {
+          e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        }
         return e;
       })
     );
@@ -124,6 +129,7 @@ export class EventsService {
             updateEvent(id: $id, eventInput: $eventInput) {
                _id
                title
+               status
                description
                date {
                 start
@@ -149,7 +155,9 @@ export class EventsService {
       map(({data}) => data),
       map(({updateEvent}) => updateEvent),
       map((e) => {
-        e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        if (e.imagePath) {
+          e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+        }
         return e;
       })
     );
@@ -163,6 +171,7 @@ export class EventsService {
                _id
                title
                description
+               status
                date {
                 start
                 end

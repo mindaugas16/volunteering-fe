@@ -30,7 +30,7 @@ export class SignUpOrganizationFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  submit() {
+  onSubmit() {
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
       return;
