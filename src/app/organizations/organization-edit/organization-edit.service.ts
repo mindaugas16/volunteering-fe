@@ -4,6 +4,7 @@ import { OrganizationInterface, UpdateOrganizationInterface } from '../organizat
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrganizationService } from '../organization.service';
 import { Observable } from 'rxjs';
+import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { Observable } from 'rxjs';
 export class OrganizationEditService {
   private form: FormGroup;
 
-  constructor(private organizationService: OrganizationService) {
+  constructor(private organizationService: OrganizationService,
+              private headerMessageService: HeaderMessageService) {
   }
 
   createForm(organization: OrganizationInterface): FormGroup {
@@ -33,12 +35,13 @@ export class OrganizationEditService {
   }
 
   update(): Observable<any> {
-    if (this.form.invalid) {
-      FormControlsHelperService.invalidateFormControls(this.form);
-      return;
-    }
-
     return new Observable(observer => {
+      if (this.form.invalid) {
+        FormControlsHelperService.invalidateFormControls(this.form);
+        this.headerMessageService.show('Form is invalid. Please check errors in form', 'DANGER');
+        observer.error('Invalid form');
+      }
+
       const organization: UpdateOrganizationInterface = {
         name: this.form.value.general.name,
         description: this.form.value.general.description,
@@ -46,6 +49,7 @@ export class OrganizationEditService {
       };
 
       this.organizationService.update(organization).subscribe(res => {
+        this.headerMessageService.show('Organization details updated successfully', 'SUCCESS');
         observer.next(res);
         observer.complete();
       }, (error) => observer.error(error));

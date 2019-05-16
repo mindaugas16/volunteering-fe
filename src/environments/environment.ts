@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   api: 'http://localhost:3000/graphql/',
-  apiRest: 'http://localhost:3000/',
-  googleApiKey: 'AIzaSyDa29bMfvVy1SGToVKfISv8RJwo8NetllM'
+  apiRest: 'http://localhost:3000/'
 };
 
 /*

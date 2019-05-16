@@ -44,6 +44,8 @@ export class OrganizationService {
               lastName
               description
               location {
+                title
+                zipCode
                 address
                 city
                 country

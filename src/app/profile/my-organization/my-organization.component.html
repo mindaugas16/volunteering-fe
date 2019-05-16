@@ -1,8 +1,28 @@
 <div class="columns">
   <div class="column is-1by3">
     <app-organization-edit-form></app-organization-edit-form>
+    <div class="field is-grouped mt-4 is-grouped-right">
+      <div class="control">
+        <button class="button is-primary"
+                (click)="onSave()"
+        >
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+      <div class="control">
+        <button class="button is-text">
+          {{'COMMON.RESET' | translate}}
+        </button>
+      </div>
+    </div>
   </div>
   <div class="column">
+    <div class="is-flex mb-3">
+      <h4 class="is-4 title">
+        {{'Events'}}
+      </h4>
+
+    </div>
     <app-events-list [events]="events" [viewMode]="'LIST'" [loading]="loading"></app-events-list>
   </div>
 </div>
