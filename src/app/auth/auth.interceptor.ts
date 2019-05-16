@@ -4,6 +4,8 @@ import { forwardRef, Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { HeaderMessageService } from '../ui-elements/header-message/header-message.service';
+import { HeaderMessageStatus } from '../ui-elements/header-message/header-message.interface';
 
 export const AUTH_HEADER_INTERCEPTOR_PROVIDER = {
   provide: HTTP_INTERCEPTORS,
@@ -14,7 +16,8 @@ export const AUTH_HEADER_INTERCEPTOR_PROVIDER = {
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(public injector: Injector,
-              private router: Router
+              private router: Router,
+              private headerMessageService: HeaderMessageService
   ) {
   }
 
@@ -34,7 +37,9 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401 || error.error.errors && error.error.errors[0].status === 401) {
             authService.logout();
-            this.router.navigate(['/auth/sign-in']);
+            this.router.navigate(['/auth/sign-in']).then(() => {
+              this.headerMessageService.show('Please login!', 'WARNING');
+            });
           }
         }
       }));

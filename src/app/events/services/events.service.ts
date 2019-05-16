@@ -18,8 +18,8 @@ export class EventsService {
   getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
     return this.apiService.query({
       query: `
-        query events($query: String, $location: String, $orderBy: String, $statuses: [Int]) {
-          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses) {
+        query events($query: String, $location: String, $orderBy: String, $statuses: [Int], $tags: [String]) {
+          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses, tags: $tags) {
                 _id
                 title
                 description
@@ -242,10 +242,7 @@ export class EventsService {
     return this.apiService.query({
       query: `
         mutation deleteEventTag($id: ID!, $tagId: ID!) {
-            deleteEventTag(id: $id, tagId: $tagId) {
-               _id
-               label
-             }
+            deleteEventTag(id: $id, tagId: $tagId)
           }`
       ,
       variables: {
