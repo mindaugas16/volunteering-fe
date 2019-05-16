@@ -1,0 +1,71 @@
+<section class="hero is-medium is-bold">
+  <div class="hero-body">
+    <div class="columns">
+      <div class="column is-three-fifths is-offset-one-fifth">
+        <h1 class="title is-1">
+          Start volunteering right now!
+        </h1>
+        <h3 class="subtitle is-3">
+          Enter your location and GO volunteer
+        </h3>
+        <div class=" ">
+          <form [formGroup]="form"
+                class="box p-0 columns"
+                (submit)="onFind()"
+          >
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <label>
+                    What
+                  </label>
+                  <input class="input"
+                         type="text"
+                         formControlName="query"
+                         placeholder="What are you looking for?"
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <label>
+                    Location
+                  </label>
+                  <input class="input"
+                         type="text"
+                         formControlName="location"
+                         placeholder="Where are you looking for?"
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <label>
+                    Type
+                  </label>
+                  <select class="input"
+                          formControlName="type"
+                  >
+                    <option value="1" selected>First</option>
+                    <option value="2">Second</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="column is-flex align-items-center">
+              <button class="button is-fullwidth is-primary"
+                      type="submit"
+              >
+                {{'Find now'}}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

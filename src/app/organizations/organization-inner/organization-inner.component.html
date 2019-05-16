@@ -1,0 +1,130 @@
+<div
+  class="mb-4"
+  *ngIf="organization"
+>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="is-flex justify-content-between align-items-center">
+          <div class="is-flex align-items-center">
+            <figure
+              class="image organization-logo mr-4"
+              [style.background-image]="'url('+('https://bulma.io/images/placeholders/1280x960.png')+')'"
+            >
+            </figure>
+            <div>
+              <h1 class="title">
+                {{organization?.name}}
+              </h1>
+              <h2 class="subtitle">
+                {{'Motivation'}}
+              </h2>
+            </div>
+          </div>
+          <div>
+            <button
+              class="button"
+              *appHasPermission="{condition: actionsRules?.JOIN_ORGANIZATION, args: organization}"
+              [class.is-primary]="!isUserJoinedOrganization"
+              (click)="toggleOrganizationJoin()"
+            >
+              {{ isUserJoinedOrganization ? 'Leave organization' : 'Join organization'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <hr/>
+    <div class="columns">
+      <div class="column is-three-fifths">
+        <div class="box is-shadowless" *ngIf="organization.description">
+          <p>
+            {{organization?.description}}
+          </p>
+        </div>
+        <div class="box is-shadowless">
+          <div class="is-flex justify-content-between">
+            <h4 class="title is-4">
+              {{'Events'}} ({{organization?.events.length}}):
+            </h4>
+            <div>
+              <a
+                class="icon"
+                *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}"
+                (click)="onEventAdd()"
+              >
+                <i class="fa fa-plus"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <a
+              class="box"
+              *ngFor="let event of organization?.events"
+              [routerLink]="['/event', event?._id]"
+            >
+              <div class="is-flex align-items-center">
+                <app-event-status-label class="mr-2 is-block" [status]="event?.status"></app-event-status-label>
+                <span class="is-6 title">
+                  {{event?.title}}
+                </span>
+              </div>
+              <p>
+                {{event?.date?.start | date}} - {{event?.date?.end | date}}
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box is-shadowless">
+          <div class="is-flex justify-content-between">
+            <h4 class="title is-4">
+              {{'Details'}}:
+            </h4>
+            <div *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}">
+              <a class="icon"
+                 (click)="onEditDetails()">
+                <i class="fa fa-pencil"></i>
+              </a>
+            </div>
+          </div>
+          <span>
+            <span class="has-text-weight-semibold">{{'Creator'}}:</span>
+            {{organization?.firstName}} {{organization?.lastName}}
+          </span>
+          <hr/>
+          <span>
+            <span class="has-text-weight-semibold">{{'Address'}}:</span>
+            {{organization?.location?.address}}
+            , {{organization?.location?.city}}
+            {{organization?.location?.country}} {{organization?.location?.postalCode}}
+          </span>
+        </div>
+        <div class="box is-shadowless">
+          <div class="is-flex justify-content-between">
+            <h4 class="title is-4">
+              {{'Members'}} ({{organization?.members.length}}):
+            </h4>
+            <div *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}">
+              <a
+                class="icon"
+                (click)="onUserInvite()"
+              >
+                <i class="fa fa-plus"></i>
+              </a>
+            </div>
+          </div>
+          <ul>
+            <li *ngFor="let member of organization?.members">
+              {{member?.firstName}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

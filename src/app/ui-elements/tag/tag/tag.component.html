@@ -1,0 +1,21 @@
+<div class="hash-tag">
+  <span class="hash-tag__label"
+        (click)="onClick()"
+        *ngIf="!isRenameEnabled; else renameTag"
+  >
+    {{tag.label}}
+  </span>
+  <ng-template #renameTag>
+    <input type="text"
+           (blur)="onRename()"
+           #inputElement
+           [(ngModel)]="tag.label"
+    />
+  </ng-template>
+  <span class="icon is-1"
+        *ngIf="isTagsEditEnabled"
+        (click)="onDeleteTag()"
+  >
+    <i class="fa fa-times"></i>
+  </span>
+</div>

@@ -1,0 +1,6 @@
+export enum UserRole {
+  GENERAL = 'GENERAL',
+  VOLUNTEER = 'VOLUNTEER',
+  ORGANIZATION = 'ORGANIZATION',
+  SPONSOR = 'SPONSOR'
+}

@@ -1,0 +1,42 @@
+<div class="dropdown is-up" appDropdown>
+  <div class="dropdown-trigger">
+    <button class="button is-fullwidth" appDropdownToggle>
+      <span *ngIf="!(dateRangeTransformed || dateRange); else datePreview">
+        {{'Select date'}}
+      </span>
+      <ng-template #datePreview>
+        <div class="separated-items separated-items--minus">
+          <span>{{(dateRangeTransformed?.start || dateRange?.start) | date}}</span>
+          <span *ngIf="(dateRangeTransformed?.end || dateRange?.end)">{{(dateRangeTransformed?.end || dateRange?.end) | date}}</span>
+        </div>
+      </ng-template>
+      <span class="icon is-small">
+        <i class="fa fa-angle-up" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" appDropdownContent>
+    <div class="dropdown-content">
+      <ngb-datepicker #dp
+                      (select)="onDateSelection($event)"
+                      [displayMonths]="2"
+                      [dayTemplate]="t"
+                      outsideDays="hidden"
+                      [minDate]="transformedMinDate"
+                      [maxDate]="transformedMaxDate"
+      >
+      </ngb-datepicker>
+
+      <ng-template #t let-date let-focused="focused">
+        <span class="custom-day"
+              [class.focused]="focused"
+              [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)"
+              (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+  </div>
+</div>

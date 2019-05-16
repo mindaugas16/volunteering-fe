@@ -1,0 +1,63 @@
+@charset "utf-8";
+@import "assets/scss/spacing";
+@import "assets/scss/helpers";
+
+body {
+  margin: 0;
+}
+
+.modal {
+  z-index: 1060 !important;
+  justify-content: flex-start!important;
+}
+
+.dialog-modal {
+  background: rgba(0, 0, 0, .5);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.separated-items {
+  display: inline-block;
+  word-break: break-all;
+
+  &--slash {
+    span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
+      content: ' / ';
+    }
+  }
+
+  &--line {
+    span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
+      content: ' | ';
+    }
+  }
+
+  &--minus {
+    span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
+      content: ' - ';
+    }
+  }
+}
+
+//// Set your brand colors
+//$purple: #8E51C7;
+//$purple-dark: #463853;
+//$light-purple: #998DA0;
+//
+//// Update Bulma's global variables
+//$primary: $purple;
+//$dark: $purple-dark;
+//$link: $light-purple;
+//$link-hover: $purple;
+//
+//
+//// Import only what you need from Bulma
+//@import "../node_modules/bulma/bulma";

@@ -1,0 +1,22 @@
+<div class="modal-card">
+  <header class="modal-card-head" *ngIf="headerTemplate">
+    <p class="modal-card-title">
+      <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+    </p>
+    <button
+      class="delete"
+      aria-label="close"
+      (click)="onClose()"
+      *ngIf="closeable"
+    ></button>
+  </header>
+  <section class="modal-card-body">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </section>
+  <footer class="modal-card-foot justify-content-end" *ngIf="footerTemplate">
+    <div class="flex-basis-full">
+      <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+    </div>
+  </footer>
+</div>
+

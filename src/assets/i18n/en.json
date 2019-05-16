@@ -1,0 +1,18 @@
+{
+  "COMMON": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "RESET": "Reset",
+    "SEARCH": "Search",
+    "CREATE": "Create"
+  },
+  "NAVIGATION": {
+    "HOME": "Home",
+    "ORGANIZATIONS": "Organizations",
+    "SIGN_UP": "Sign up",
+    "LOG_IN": "Log in",
+    "MY_ORGANIZATION": "My organization",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout"
+  }
+}

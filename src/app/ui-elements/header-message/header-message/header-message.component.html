@@ -1,0 +1,12 @@
+<div class="notification"
+     [class.visible]="message.visible"
+     [ngClass]="'is-' + message?.status?.toLowerCase()"
+>
+  <div class="container">
+    <button class="delete"
+            (click)="onClose()"
+            *ngIf="message.options?.closeable"
+    ></button>
+    {{message?.message}}
+  </div>
+</div>

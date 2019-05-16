@@ -1,0 +1,16 @@
+<h4 class="title is-4">
+  {{'Organizations'}}
+</h4>
+<div>
+  <a *ngFor="let organization of user.organizations"
+     class="is-flex align-items-center"
+     [routerLink]="['/organizations', 'details', organization._id]"
+  >
+    <app-logo [imagePath]="null"
+              [extraClasses]="'small'"
+    ></app-logo>
+    <span>
+      {{organization.name}}
+    </span>
+  </a>
+</div>

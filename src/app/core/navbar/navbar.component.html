@@ -1,0 +1,84 @@
+<nav class="navbar"
+     role="navigation"
+     aria-label="main navigation"
+>
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" [routerLink]="'/'">
+        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      </a>
+
+      <a role="button"
+         class="navbar-burger burger"
+         aria-label="menu"
+         aria-expanded="false"
+         data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div class="navbar-menu">
+      <div class="navbar-start">
+      </div>
+
+      <div class="navbar-end align-items-center">
+        <a class="navbar-item"
+           [routerLink]="'/homepage'"
+           routerLinkActive="is-active"
+        >
+          {{'NAVIGATION.HOME' | translate}}
+        </a>
+        <a class="navbar-item"
+           [routerLink]="'/organizations'"
+           [routerLinkActive]="'is-active'"
+        >
+          {{'NAVIGATION.ORGANIZATIONS' | translate}}
+        </a>
+        <div class="navbar-item" *ngIf="!isAuthenticated; else userProfile">
+          <div class="buttons">
+            <a class="button is-primary"
+               [routerLink]="'/auth/sign-up'"
+               [routerLinkActive]="'is-active'"
+            >
+              {{'NAVIGATION.SIGN_UP' | translate}}
+            </a>
+            <a class="button is-light"
+               [routerLink]="'/auth/sign-in'"
+               [routerLinkActive]="'is-active'"
+            >
+              {{'NAVIGATION.LOG_IN' | translate}}
+            </a>
+          </div>
+        </div>
+        <ng-template #userProfile>
+          <div class="navbar-item has-dropdown"
+               appDropdown>
+            <a class="navbar-link"
+               appDropdownToggle>
+              {{user?.email}}
+            </a>
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item"
+                 *appHasPermission="{condition: actionsRules?.IS_ORGANIZATION, args: {}}"
+                 [routerLink]="'/profile/my-organization'">
+                {{'NAVIGATION.MY_ORGANIZATION' | translate}}
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item"
+                 [routerLink]="'/profile/settings'">
+                {{'NAVIGATION.SETTINGS' | translate}}
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item"
+                 (click)="logout()">
+                {{'NAVIGATION.LOGOUT' | translate}}
+              </a>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>

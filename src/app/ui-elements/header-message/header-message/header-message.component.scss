@@ -1,0 +1,13 @@
+.notification {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-radius: 0;
+  transform: translateY(-75px);
+  transition: transform .5s;
+
+  &.visible {
+    transform: translateY(0px);
+  }
+}

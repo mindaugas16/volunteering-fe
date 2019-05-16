@@ -1,0 +1,19 @@
+@import "~bulma";
+
+:host {
+  @extend .tag;
+}
+
+.hash-tag {
+  &__label {
+    &:hover {
+      color: black;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .icon {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,26 @@
+<app-generic-modal>
+  <ng-template appModalContent>
+    <div class="box">
+      <h3 class="title is-4">
+        Invite user to join organization
+      </h3>
+      <form [formGroup]="form">
+        <app-input class="field"
+                   label="Email"
+                   formControlName="email"
+                   [formControl]="form.get('email')"
+                   placeholder="User email"
+                   required="true"
+        ></app-input>
+        <div class="control">
+          <a
+            class="button is-primary"
+            (click)="onSubmit()"
+          >
+            Send
+          </a>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</app-generic-modal>

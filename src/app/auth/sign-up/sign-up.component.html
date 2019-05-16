@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="columns is-mobile mt-4">
+    <div class="column is-three-fifths is-offset-one-fifth">
+      <h2 class="title">
+        Select user type
+      </h2>
+      <div class="columns">
+        <div class="column" *ngFor="let type of userTypes">
+          <div class="box">
+            <h4 class="title is-4">
+              {{type.title}}
+            </h4>
+            <p class="description mb-4">
+              {{type.description}}
+            </p>
+            <button class="button is-primary is-outlined"
+                    (click)="onSelectType(type.id)"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

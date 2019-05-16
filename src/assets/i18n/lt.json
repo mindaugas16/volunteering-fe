@@ -1,0 +1,9 @@
+{
+  "NAVIGATION": {
+    "HOME": "Pagrindinis",
+    "SIGN_UP": "Registracija",
+    "LOG_IN": "Prisijungimas",
+    "SETTINGS": "Nustatymai",
+    "LOGOUT": "Atsijungti"
+  }
+}

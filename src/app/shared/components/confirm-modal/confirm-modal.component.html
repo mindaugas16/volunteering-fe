@@ -1,0 +1,27 @@
+<app-generic-modal>
+  <ng-template appModalHeader>
+    {{title}}
+  </ng-template>
+  <ng-template appModalContent>
+    <p *ngIf="message">
+      {{message}}
+    </p>
+  </ng-template>
+
+  <ng-template appModalFooter>
+    <button
+      class="button is-primary"
+      type="submit"
+      (click)="onConfirm()"
+    >
+      Confirm
+    </button>
+    <button
+      class="button is-text"
+      type="reset"
+      (click)="onClose()"
+    >
+      Cancel
+    </button>
+  </ng-template>
+</app-generic-modal>

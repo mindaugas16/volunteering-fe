@@ -1,0 +1,60 @@
+<div class="control">
+  <label class="label"
+         [for]="label"
+  >
+    <ng-container *ngIf="label">
+      {{label}}<span *ngIf="required">*</span>
+    </ng-container>
+    <ng-content></ng-content>
+  </label>
+
+  <ng-container [ngSwitch]="fieldType">
+    <input class="input"
+           *ngSwitchCase="'input'"
+           [id]="label"
+           [type]="type"
+           [placeholder]="placeholder"
+           [class.is-danger]="isInvalid()"
+           [(ngModel)]="value"
+           [min]="min"
+    />
+
+    <textarea class="textarea"
+              *ngSwitchCase="'textarea'"
+              [id]="label"
+              [placeholder]="placeholder"
+              [class.is-danger]="isInvalid()"
+              [(ngModel)]="value"
+    ></textarea>
+  </ng-container>
+
+  <div class="help is-danger"
+       *ngIf="isInvalid()"
+  >
+    <span *ngIf="formControl.errors.invalidEmail">
+      {{'Email address is invalid'}}
+    </span>
+
+    <span *ngIf="formControl.errors.maxlength">
+      {{'Field max length is'}} {{formControl.errors.maxlength.requiredLength}} {{' symbols'}}
+    </span>
+
+    <span *ngIf="formControl.errors.required">
+      {{label + ' is required!'}}
+    </span>
+
+    <span *ngIf="formControl.errors.numeric">
+      {{label + ' accepts only numbers'}}
+    </span>
+
+    <span *ngIf="formControl.errors.invalid">
+      {{'Invalid value'}}
+    </span>
+
+    <span *ngIf="formControl.errors.invalidCredentials">
+      {{'Username or password is invalid value'}}
+    </span>
+  </div>
+
+</div>
+

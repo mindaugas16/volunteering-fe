@@ -1,0 +1,10 @@
+<div class="notification"
+     [ngClass]="['is-' + status]"
+     *ngIf="isVisible"
+>
+  <button class="delete"
+          *ngIf="closeable"
+          (click)="onClose()"
+  ></button>
+  {{message}}
+</div>

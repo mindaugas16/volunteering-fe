@@ -1,0 +1,13 @@
+<app-events-search-panel></app-events-search-panel>
+<div class="mt-4 mb-4">
+  <div class="container">
+    <div class="columns">
+      <div class="filters column is-3 is-2-widescreen">
+        Filters
+      </div>
+      <div class="column is-9 is-10-widescreen">
+        <app-events-list [events]="events" [loading]="loading" [viewMode]="'GRID'"></app-events-list>
+      </div>
+    </div>
+  </div>
+</div>

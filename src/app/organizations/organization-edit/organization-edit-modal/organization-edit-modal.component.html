@@ -1,0 +1,19 @@
+<app-generic-modal>
+  <ng-template appModalHeader>
+    Edit {{organization.name}} details
+  </ng-template>
+  <ng-template appModalContent>
+    <app-organization-edit-form [organization]="organization"></app-organization-edit-form>
+  </ng-template>
+  <ng-template appModalFooter>
+    <button class="button is-primary"
+            (click)="onSave()"
+    >
+      {{'COMMON.SAVE' | translate}}
+    </button>
+    <button class="button is-text"
+            (click)="onCancel()">
+      {{'COMMON.CANCEL' | translate}}
+    </button>
+  </ng-template>
+</app-generic-modal>

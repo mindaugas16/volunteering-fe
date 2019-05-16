@@ -1,0 +1,69 @@
+<app-generic-modal>
+  <ng-template appModalHeader>
+    {{'Add activity to event'}}
+  </ng-template>
+  <ng-template appModalContent>
+    <form [formGroup]="form">
+      <app-form-message *ngIf="failureMessage"
+                        [message]="failureMessage"
+                        status="danger"
+                        (close)="failureMessage = null"
+      ></app-form-message>
+
+      <app-input class="field"
+                 label="Name"
+                 formControlName="name"
+                 [formControl]="form.get('name')"
+                 placeholder="Name"
+                 required="true"
+      ></app-input>
+
+      <app-input class="field"
+                 [fieldType]="'textarea'"
+                 label="Description"
+                 formControlName="description"
+                 [formControl]="form.get('description')"
+                 placeholder="Description"
+      ></app-input>
+
+      <app-input class="field"
+                 label="Volunteers needed"
+                 formControlName="volunteersNeeded"
+                 [formControl]="form.get('volunteersNeeded')"
+                 placeholder="Volunteers needed"
+                 required="true"
+                 type="number"
+                 [min]="1"
+      ></app-input>
+
+      <div class="control">
+        <label class="label">
+          Activity date/time
+        </label>
+        <app-date-range-picker [minDate]="event.date.start"
+                               [maxDate]="event.date.end"
+                               [dateRange]="activity?.date"
+                               (dateSelect)="onDateSelect($event)"
+        ></app-date-range-picker>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template appModalFooter>
+    <div class="field is-grouped is-grouped-right">
+      <button
+        class="button is-primary"
+        type="submit"
+        (click)="onSubmit()"
+      >
+        Save
+      </button>
+      <button
+        class="button is-text"
+        type="reset"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</app-generic-modal>
