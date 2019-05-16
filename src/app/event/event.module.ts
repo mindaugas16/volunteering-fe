@@ -14,6 +14,7 @@ import { MapModule } from '../ui-elements/map/map.module';
 import { TagsModule } from '../ui-elements/tags/tags.module';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
+import { AbstractLabelModule } from '../ui-elements/abstract-label/abstract-label.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-
     MapModule,
     TagsModule,
     BreadcrumbModule,
-    EventStatusLabelModule
+    EventStatusLabelModule,
+    AbstractLabelModule
   ],
   entryComponents: [
     EventEditComponent

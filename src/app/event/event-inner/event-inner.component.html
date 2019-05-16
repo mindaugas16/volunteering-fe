@@ -104,11 +104,14 @@
         </a>
       </div>
       <div class="box">
-        <h4 class="title is-4">
-          <span class="icon mr-2">
-            <i class="fa fa-calendar"></i>
-          </span>
-          Event date
+        <h4 class="title is-4 is-flex justify-content-between">
+          <div>
+            <span class="icon mr-2">
+              <i class="fa fa-calendar"></i>
+            </span>
+            Event date
+          </div>
+          <app-abstract-label [labels]="eventDateStatusLabels"></app-abstract-label>
         </h4>
         Start: {{event.date?.start | date}}<br/>
         End: {{event.date?.end | date}}

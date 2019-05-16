@@ -21,6 +21,7 @@ export class EventInnerComponent implements OnInit {
   isTagsEditEnabled: boolean;
   user: UserInterface;
   actionsRules = ActionsRules;
+  eventDateStatusLabels = [];
 
   constructor(
     private eventsService: EventsService,
@@ -31,12 +32,32 @@ export class EventInnerComponent implements OnInit {
   }
 
   ngOnInit() {
+    const convertDate = (date?) => {
+      if (!date) {
+        return new Date().setHours(0, 0, 0, 0);
+      }
+      return new Date(date).setHours(0, 0, 0, 0);
+    };
+
     this.route.params.pipe(
       switchMap(params => {
         return this.eventsService.getEvent(params['id']);
       })
     ).subscribe(event => {
       this.event = event;
+      this.eventDateStatusLabels = [
+        {
+          extraClass: 'is-info', name: 'Soon', condition: convertDate(this.event.date.start) > convertDate()
+        },
+        {
+          extraClass: 'is-primary',
+          name: 'Happening',
+          condition: convertDate(this.event.date.start) <= convertDate() && convertDate() <= convertDate(this.event.date.end)
+        },
+        {
+          extraClass: 'is-success', name: 'Finished', condition: convertDate() > convertDate(this.event.date.end)
+        },
+      ];
     });
 
     this.authService.getCurrentUser().subscribe(user => this.user = user);
