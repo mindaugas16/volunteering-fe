@@ -21,7 +21,11 @@ export class SearchPanelComponent implements OnInit {
   }
 
   onFind() {
-    this.router.navigate(['events'], {queryParams: {...this.form.value}});
+    let route = 'events';
+    if (+this.form.controls['type'].value === 2) {
+      route = 'organizations';
+    }
+    this.router.navigate([route], {queryParams: {...this.form.value}});
   }
 
 }

@@ -3,7 +3,6 @@ import { ProfileService } from '../profile.service';
 import { UserInterface } from '../../auth/user.interface';
 import { TabInterface } from '../../ui-elements/tabs/tab.interface';
 import { UserRole } from '../user-type.enum';
-import { Router } from '@angular/router';
 
 enum ProfileTabsEnum {
   PROFILE,

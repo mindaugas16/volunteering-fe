@@ -63,7 +63,7 @@ export class TagComponent implements OnInit {
         this.inputElement.nativeElement.focus();
       }, 0);
     } else {
-      this.router.navigate(['search'], {queryParams: {tags: this.tag.label}});
+      this.router.navigate(['/events'], {queryParams: {tags: this.tag.label}});
     }
   }
 

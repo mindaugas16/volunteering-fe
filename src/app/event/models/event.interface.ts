@@ -10,7 +10,7 @@ export interface EventInterface {
   date: DateRangeInterface;
   creator: any;
   activities: ActivityInterface[];
-  location: any;
+  location: LocationInterface;
   tags: TagInterface[];
   organization: OrganizationInterface;
   imagePath?: string;

@@ -9,6 +9,7 @@ import { SearchModule } from '../search/search.module';
 import { FooterComponent } from './footer/footer.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
+import { LanguageSwitchModule } from '../ui-elements/language-switch/language-switch.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DropdownModule } from '../ui-elements/dropdown/dropdown.module';
     SharedModule,
     SearchModule,
     TranslateModule,
-    DropdownModule
+    DropdownModule,
+    LanguageSwitchModule
   ],
   exports: [
     NavbarComponent,

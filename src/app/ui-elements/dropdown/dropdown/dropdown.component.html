@@ -1,6 +1,7 @@
 <div class="dropdown"
      [ngClass]="extraClasses"
      appDropdown
+     [appDropdownIsOpen]="isOpen"
      (dropdownOpen)="onOpen()"
 >
   <div class="dropdown-trigger">
@@ -9,9 +10,12 @@
             aria-controls="dropdown-menu"
             appDropdownToggle
     >
-      <span>
+      <span *ngIf="title; else content">
         {{title}}
       </span>
+      <ng-template #content>
+        <ng-content></ng-content>
+      </ng-template>
       <span class="icon is-small">
         <i class="fa fa-angle-down" aria-hidden="true"></i>
       </span>
@@ -23,6 +27,11 @@
          *ngFor="let item of items"
          (click)="item.action(object)"
       >
+        <span *ngIf="item?.icon"
+              class="icon"
+        >
+          <i class="fa" [ngClass]="item?.icon" aria-hidden="true"></i>
+        </span>
         {{item.title}}
       </a>
     </div>

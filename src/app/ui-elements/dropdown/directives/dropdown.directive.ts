@@ -1,11 +1,12 @@
-import { ContentChild, Directive, ElementRef, EventEmitter, HostBinding, HostListener, OnInit, Output } from '@angular/core';
+import { ContentChild, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { DropdownToggleDirective } from './dropdown-toggle.directive';
 import { DropdownContentDirective } from './dropdown-content.directive';
 
 @Directive({
   selector: '[appDropdown]'
 })
-export class DropdownDirective implements OnInit {
+export class DropdownDirective implements OnChanges {
+  @Input('appDropdownIsOpen') appDropdownIsOpen: boolean;
 
   constructor(private elRef: ElementRef) {
   }
@@ -28,6 +29,7 @@ export class DropdownDirective implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    this.isOpen = this.appDropdownIsOpen;
   }
 }
