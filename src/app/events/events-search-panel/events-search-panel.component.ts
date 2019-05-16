@@ -8,21 +8,25 @@ import { EventsSearchService } from '../services/events-search/events-search.ser
   styleUrls: ['./events-search-panel.component.scss']
 })
 export class EventsSearchPanelComponent implements OnInit {
+  showFilters: boolean;
   form: FormGroup = new FormGroup({
-    query: new FormControl('')
+    query: new FormControl(''),
+    location: new FormControl(''),
   });
 
   constructor(private eventsSearchService: EventsSearchService) {
   }
 
   ngOnInit() {
-    this.eventsSearchService.getSearchQueryAsObservable().subscribe(query => {
-      this.form.patchValue({query});
+    this.eventsSearchService.getSearchQueryAsObservable().subscribe(params => {
+      this.form.patchValue({
+        ...params
+      });
     });
   }
 
   onSearch() {
-    this.eventsSearchService.search(this.form.value.query);
+    this.eventsSearchService.search(this.form.value);
   }
 
 }

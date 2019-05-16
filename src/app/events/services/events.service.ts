@@ -5,6 +5,7 @@ import { CreateEventInterface, EventInterface, EventStatus } from '../../event/m
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
 import { environment } from '../../../environments/environment';
+import { SearchParamsInterface } from './events-search/search-params.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class EventsService {
   constructor(private apiService: ApiService) {
   }
 
-  getEvents(query?: string, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
+  getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
     return this.apiService.query({
       query: `
-        query events($query: String, $orderBy: String, $statuses: [Int]) {
-          events(query: $query, orderBy: $orderBy, statuses: $statuses) {
+        query events($query: String, $location: String, $orderBy: String, $statuses: [Int]) {
+          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses) {
                 _id
                 title
                 description
@@ -43,7 +44,8 @@ export class EventsService {
            }
         }`,
       variables: {
-        query,
+        query: params.query,
+        location: params.location,
         orderBy,
         statuses
       }

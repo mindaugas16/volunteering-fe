@@ -2,25 +2,56 @@
   <div class="hero-body">
     <div class="container">
       <form [formGroup]="form"
-            class="columns"
             (submit)="onSearch()"
+            class="is-flex flex-column"
       >
-        <div class="field is-grouped column is-6">
-          <div class="control is-expanded">
-            <input placeholder="Search events near you"
-                   class="input"
-                   formControlName="query"
-                   type="text"
-            >
+        <div class="columns">
+          <div class="column is-4">
+            <div class="control is-expanded has-icons-left">
+              <input placeholder="Search events near you"
+                     class="input"
+                     formControlName="query"
+                     type="text"
+              >
+              <span class="icon is-left">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
           </div>
-          <div class="control">
-            <button class="button is-primary"
-                    type="submit"
-            >
-              {{'COMMON.SEARCH' | translate}}
-            </button>
+          <div class="column is-4">
+
+            <div class="control is-expanded has-icons-left">
+              <input placeholder="Enter location"
+                     class="input"
+                     formControlName="location"
+                     type="text"
+              >
+              <span class="icon is-left">
+                <i class="fa fa-map-marker"></i>
+              </span>
+            </div>
+          </div>
+          <div class="column">
+            <div class="control">
+              <button class="button is-primary"
+                      type="submit"
+              >
+                {{'COMMON.SEARCH' | translate}}
+              </button>
+            </div>
           </div>
         </div>
+        <!--        <div>-->
+        <!--          <button class="button is-text"-->
+        <!--                  type="button"-->
+        <!--                  (click)="showFilters = !showFilters"-->
+        <!--          >-->
+        <!--            Advanced filters-->
+        <!--          </button>-->
+        <!--          <div *ngIf="showFilters">-->
+        <!--            Filtrai-->
+        <!--          </div>-->
+        <!--        </div>-->
       </form>
     </div>
   </div>

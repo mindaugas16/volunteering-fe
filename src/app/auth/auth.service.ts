@@ -135,10 +135,13 @@ export class AuthService {
            }
       `
     }).pipe(
-      map(({data}) => data),
-      map(({currentUser}) => currentUser),
+      map(({data}) => data.currentUser),
       tap(user => {
-        localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
+        if (user) {
+          localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
+        } else {
+          this.router.navigate(['/auth', 'login']);
+        }
       })
     );
   }
