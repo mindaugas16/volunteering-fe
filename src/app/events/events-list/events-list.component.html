@@ -16,22 +16,32 @@
     <!--            </span>-->
     <!--          </div>-->
     <!--        </div>-->
-    <div class="columns is-multiline mt-4">
-      <ng-container [ngSwitch]="viewMode">
-        <ng-container *ngSwitchCase="'GRID'"
-        >
+    <ng-container [ngSwitch]="viewMode">
+      <ng-container *ngSwitchCase="'GRID'">
+        <div class="columns is-multiline mt-4">
+
           <app-events-list-card class="column is-6 is-4-widescreen is-flex"
                                 *ngFor="let event of events"
                                 [event]="event"
           ></app-events-list-card>
-        </ng-container>
-        <div *ngSwitchCase="'LIST'">
-          <li *ngFor="let event of events">
-            {{event.title}}
-          </li>
         </div>
       </ng-container>
-    </div>
+      <div class="list is-hoverable" *ngSwitchCase="'LIST'">
+        <div *ngFor="let event of events" class="list-item is-flex align-items-center justify-content-between">
+          <a [routerLink]="['/event', event._id]">
+            <app-event-status-label [status]="event?.status"></app-event-status-label>
+            <span>
+              {{event.title}}
+            </span>
+          </a>
+          <div>
+            <span class="icon is-small">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
   <ng-template #noEventsFound>
     {{'No events found'}}

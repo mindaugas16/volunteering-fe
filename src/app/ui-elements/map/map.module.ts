@@ -7,10 +7,7 @@ import { environment } from '../../../environments/environment';
 @NgModule({
   declarations: [MapComponent],
   imports: [
-    CommonModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleApiKey
-    })
+    CommonModule
   ],
   exports: [
     MapComponent

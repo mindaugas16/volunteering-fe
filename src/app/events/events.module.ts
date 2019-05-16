@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { EventsListCardComponent } from './events-list/events-list-card/events-list-card.component';
 import { EventsComponent } from './events/events.component';
+import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EventsComponent } from './events/events.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    EventStatusLabelModule
   ]
 })
 export class EventsModule {

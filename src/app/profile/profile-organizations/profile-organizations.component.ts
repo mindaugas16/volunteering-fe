@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { OrganizationInterface } from '../../organizations/organization.interface';
 
 @Component({
   selector: 'app-profile-organizations',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-organizations.component.scss']
 })
 export class ProfileOrganizationsComponent implements OnInit {
+  @Input() organization: OrganizationInterface[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

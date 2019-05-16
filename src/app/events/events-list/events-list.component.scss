@@ -1,6 +1,26 @@
 .card {
   transition: box-shadow .2s;
+
   &:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3)!important;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+.list {
+  app-event-status-label {
+    display: inline-block;
+    min-width: 75px;
+  }
+
+  .list-item {
+    .icon {
+      display: none;
+    }
+
+    &:hover {
+      .icon {
+        display: inline-block;
+      }
+    }
   }
 }
