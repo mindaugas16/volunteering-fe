@@ -44,8 +44,7 @@ export class EventsService {
            }
         }`,
       variables: {
-        query: params.query,
-        location: params.location,
+        ...params,
         orderBy,
         statuses
       }
