@@ -60,7 +60,7 @@ export class EventInnerComponent implements OnInit {
       ];
     });
 
-    this.authService.getCurrentUser().subscribe(user => this.user = user);
+    this.authService.getCurrentUser(false).subscribe(user => this.user = user);
   }
 
   onEditDetails() {

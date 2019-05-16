@@ -10,6 +10,7 @@
 
       <a role="button"
          class="navbar-burger burger"
+         (click)="isActiveMenu = !isActiveMenu"
          aria-label="menu"
          aria-expanded="false"
          data-target="navbarBasicExample">
@@ -19,7 +20,9 @@
       </a>
     </div>
 
-    <div class="navbar-menu">
+    <div class="navbar-menu"
+         [class.is-active]="isActiveMenu"
+    >
       <div class="navbar-start">
       </div>
 

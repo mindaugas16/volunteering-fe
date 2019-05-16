@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
           isHidden: this.user && this.user.role === UserRole.ORGANIZATION,
           link: ['organizations']
         },
-        {title: 'Settings', icon: 'fa-gears', id: ProfileTabsEnum.SETTINGS, link: ['settings']},
+        // {title: 'Settings', icon: 'fa-gears', id: ProfileTabsEnum.SETTINGS, link: ['settings']},
       ];
     });
   }
