@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/M-Morkunas/volunteering.svg?token=dfXxCDRv8bqMrUNqgayU&branch=master)](https://travis-ci.com/M-Morkunas/volunteering)
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.1.
