@@ -1,9 +1,15 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Injectable, Injector } from '@angular/core';
+import { forwardRef, Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+
+export const AUTH_HEADER_INTERCEPTOR_PROVIDER = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: forwardRef(() => AuthInterceptor),
+  multi: true
+};
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

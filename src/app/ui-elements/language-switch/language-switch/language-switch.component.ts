@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DropdownItemInterface } from '../../dropdown/dropdown.interface';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../language.service';
+import { LanguageService } from '../services/language.service';
 import { LanguageInterface } from '../language.interface';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LanguageInterface } from './language.interface';
+import { LanguageInterface } from '../language.interface';
 
 const LanguageConstants = {
   SESSION_STORAGE_KEY: 'language'
