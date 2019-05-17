@@ -42,16 +42,18 @@ export class ProfileService {
       query: `
       query getVolunteer {
           getVolunteer {
+              firstName
               achievements {
                 label
                 icon
+                _id
+                value
               }
             }
            }
       `
     }).pipe(
-      map(({data}) => data),
-      map(({getVolunteer}) => getVolunteer)
+      map(({data}) => data.getVolunteer)
     );
   }
 

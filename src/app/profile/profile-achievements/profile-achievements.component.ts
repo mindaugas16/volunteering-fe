@@ -7,12 +7,12 @@ import { ProfileService } from '../profile.service';
   styleUrls: ['./profile-achievements.component.scss']
 })
 export class ProfileAchievementsComponent implements OnInit {
-
+  user;
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
-    this.profileService.getAchievements().subscribe(achievements => {
-      console.log(achievements);
+    this.profileService.getAchievements().subscribe(user => {
+      this.user = user;
     });
   }
 

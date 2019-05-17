@@ -1,0 +1,12 @@
+.badge {
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  transition: transform .5s;
+  cursor: pointer;
+
+  &:hover, &.is-selected {
+    transform: scale(1.5);
+  }
+}

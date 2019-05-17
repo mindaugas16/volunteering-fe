@@ -79,6 +79,7 @@ export class EventInnerComponent implements OnInit {
 
   onRewardVolunteers() {
     const modalRef = this.modalService.open(RewardVolunteersComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.event = this.event;
   }
 
   onEditDetails() {
