@@ -36,7 +36,7 @@ export class OrganizationInnerComponent implements OnInit {
   ngOnInit() {
     this.route.params.pipe(
       switchMap(params => {
-        return zip(this.organizationService.getOrganization(params['id']), this.authService.getCurrentUser());
+        return zip(this.organizationService.getOrganization(params['id']), this.authService.getCurrentUser(false));
       })
     ).subscribe(([organization, user]) => {
       this.organization = organization;

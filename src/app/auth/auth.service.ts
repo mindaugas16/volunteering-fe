@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
@@ -112,13 +112,17 @@ export class AuthService {
     );
   }
 
-  getCurrentUser(): Observable<UserInterface> {
+  getCurrentUser(fetch = true): Observable<UserInterface> {
     const localUser = AuthService.getUser();
     if (localUser) {
       return new Observable(observer => {
         observer.next(localUser);
         observer.complete();
       });
+    }
+
+    if (!fetch) {
+      return of(null);
     }
 
     return this.apiService.query({

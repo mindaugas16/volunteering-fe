@@ -67,6 +67,26 @@ export class ActivitiesService {
     );
   }
 
+  register(activityId: string) {
+    return this.apiService.query({
+      query: `
+       mutation registerToActivity($activityId: ID!) {
+          registerToActivity(activityId: $activityId) {
+            volunteersNeeded
+            volunteers {
+              firstName
+            }
+          }
+        }
+        `,
+      variables: {
+        activityId
+      }
+    }).pipe(
+      map(({data}) => data.registerToActivity)
+    );
+  }
+
   delete(id: string): Observable<boolean> {
     return this.apiService.query({
       query: `

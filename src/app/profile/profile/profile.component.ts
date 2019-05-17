@@ -8,7 +8,8 @@ enum ProfileTabsEnum {
   PROFILE,
   MY_ORGANIZATION,
   ORGANIZATIONS,
-  SETTINGS
+  SETTINGS,
+  ACHIEVEMENTS
 }
 
 @Component({
@@ -33,7 +34,8 @@ export class ProfileComponent implements OnInit {
           title: 'My organization',
           id: ProfileTabsEnum.MY_ORGANIZATION,
           icon: 'fa-star',
-          isHidden: this.user && this.user.role !== UserRole.ORGANIZATION, link: ['my-organization']
+          isHidden: this.user && this.user.role !== UserRole.ORGANIZATION,
+          link: ['my-organization']
         },
         {
           title: 'Organizations',
@@ -42,7 +44,13 @@ export class ProfileComponent implements OnInit {
           isHidden: this.user && this.user.role === UserRole.ORGANIZATION,
           link: ['organizations']
         },
-        {title: 'Settings', icon: 'fa-gears', id: ProfileTabsEnum.SETTINGS, link: ['settings']},
+        {
+          title: 'Achievements',
+          icon: 'fa-trophy',
+          id: ProfileTabsEnum.ACHIEVEMENTS,
+          link: ['achievements'],
+          isHidden: this.user && this.user.role !== UserRole.VOLUNTEER,
+        },
       ];
     });
   }

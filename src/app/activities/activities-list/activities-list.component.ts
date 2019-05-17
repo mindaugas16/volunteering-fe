@@ -61,7 +61,9 @@ export class ActivitiesListComponent implements OnInit {
         return this.eventsService.getEvent(params['id']);
       })
     ).subscribe(event => {
-      console.log(event);
+      event.activities.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
       this.event = event;
     });
   }

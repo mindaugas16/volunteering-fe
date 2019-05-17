@@ -10,6 +10,10 @@ import { ActionsRules } from '../../shared/permissions.config';
 import { AuthService } from '../../auth/auth.service';
 import { UserInterface } from '../../auth/user.interface';
 import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
+import { RewardVolunteersComponent } from '../reward-volunteers/reward-volunteers.component';
+import { ActivitiesService } from '../../activities/activities.service';
+import { ActivityInterface } from '../../activities/models/activity.interface';
+import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 
 @Component({
   selector: 'app-event-inner',
@@ -27,7 +31,9 @@ export class EventInnerComponent implements OnInit {
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private authService: AuthService
+    private authService: AuthService,
+    private activitiesService: ActivitiesService,
+    private headerMessage: HeaderMessageService
   ) {
   }
 
@@ -60,7 +66,20 @@ export class EventInnerComponent implements OnInit {
       ];
     });
 
-    this.authService.getCurrentUser().subscribe(user => this.user = user);
+    this.authService.getCurrentUser(false).subscribe(user => this.user = user);
+  }
+
+  onJoinActivity(activity: ActivityInterface) {
+    this.activitiesService.register(activity._id).subscribe(res => {
+      this.headerMessage.show(`You have successfully signed up for activity - ${activity.name}`, 'SUCCESS');
+      console.log(res);
+      activity.volunteers = res.volunteers;
+    });
+  }
+
+  onRewardVolunteers() {
+    const modalRef = this.modalService.open(RewardVolunteersComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.event = this.event;
   }
 
   onEditDetails() {
@@ -88,5 +107,9 @@ export class EventInnerComponent implements OnInit {
 
   getBreadcrumbItems(): BreadcrumbInterface[] {
     return [{title: 'Events', link: ['/events']}, {title: this.event.title, link: null}];
+  }
+
+  isRegisteredToActivity(activity: ActivityInterface): boolean {
+    return !!activity.volunteers.find(volunteer => this.user._id === volunteer._id);
   }
 }

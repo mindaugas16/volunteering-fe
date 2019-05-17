@@ -7,6 +7,7 @@
     "CREATE": "Create"
   },
   "NAVIGATION": {
+    "PROFILE": "Profile",
     "HOME": "Home",
     "ORGANIZATIONS": "Organizations",
     "SIGN_UP": "Sign up",

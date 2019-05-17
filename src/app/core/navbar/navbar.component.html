@@ -10,6 +10,7 @@
 
       <a role="button"
          class="navbar-burger burger"
+         (click)="isActiveMenu = !isActiveMenu"
          aria-label="menu"
          aria-expanded="false"
          data-target="navbarBasicExample">
@@ -19,7 +20,9 @@
       </a>
     </div>
 
-    <div class="navbar-menu">
+    <div class="navbar-menu"
+         [class.is-active]="isActiveMenu"
+    >
       <div class="navbar-start">
       </div>
 
@@ -62,15 +65,14 @@
             </a>
             <div class="navbar-dropdown is-right">
               <a class="navbar-item"
-                 *appHasPermission="{condition: actionsRules?.IS_ORGANIZATION, args: {}}"
-                 [routerLink]="'/profile/my-organization'">
-                {{'NAVIGATION.MY_ORGANIZATION' | translate}}
+                 [routerLink]="'/profile/edit'">
+                {{'NAVIGATION.PROFILE' | translate}}
               </a>
-              <hr class="navbar-divider">
-              <a class="navbar-item"
-                 [routerLink]="'/profile/settings'">
-                {{'NAVIGATION.SETTINGS' | translate}}
-              </a>
+<!--              <hr class="navbar-divider">-->
+<!--              <a class="navbar-item"-->
+<!--                 [routerLink]="'/profile/settings'">-->
+<!--                {{'NAVIGATION.SETTINGS' | translate}}-->
+<!--              </a>-->
               <hr class="navbar-divider">
               <a class="navbar-item"
                  (click)="logout()">

@@ -102,8 +102,11 @@ export class EventsService {
               }
               volunteersNeeded
               volunteers {
+                _id
                 firstName
+                lastName
               }
+              createdAt
            }
           }
         }`
@@ -252,6 +255,24 @@ export class EventsService {
     }).pipe(
       map(({data}) => data),
       map(({deleteEventTag}) => deleteEventTag),
+    );
+  }
+
+  rewardVolunteers(eventId: string, achievements: any[], volunteerIds: string[]) {
+    volunteerIds = Array.from(new Set(volunteerIds));
+    return this.apiService.query({
+      query: `
+        mutation rewardVolunteers($eventId: ID!, $achievements: [AchievementInput!]!, $volunteerIds: [ID!]!) {
+            rewardVolunteers(eventId: $eventId, achievements: $achievements, volunteerIds: $volunteerIds)
+          }`
+      ,
+      variables: {
+        eventId,
+        achievements,
+        volunteerIds
+      }
+    }).pipe(
+      map(({data}) => data.rewardVolunteers)
     );
   }
 }

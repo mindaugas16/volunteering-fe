@@ -14,8 +14,8 @@ export interface EventInterface {
   tags: TagInterface[];
   organization: OrganizationInterface;
   imagePath?: string;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: string;
+  updatedAt: string;
   status: EventStatus;
 }
 

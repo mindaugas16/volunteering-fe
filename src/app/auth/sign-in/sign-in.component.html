@@ -1,76 +1,78 @@
-<div class="container mt-4 mb-4">
-  <div class="columns is-mobile">
-    <div class="column is-one-third is-offset-one-third">
-      <h3 class="has-text-weight-semibold is-size-3">
-        Log in
-      </h3>
-      <article class="message is-danger" *ngIf="isInvalid">
-        <div class="message-header">
-          <p>
-            {{'Please provide a valid username and password.'}}
-          </p>
-        </div>
-      </article>
-      <form [formGroup]="form"
-            (ngSubmit)="submit()"
-      >
-        <app-input class="field"
-                   type="email"
-                   formControlName="email"
-                   [formControl]="form.get('email')"
-                   placeholder="Email"
-                   label="Email"
-                   [showValidations]="false"
-        ></app-input>
-
-        <app-input class="field"
-                   type="password"
-                   formControlName="password"
-                   [formControl]="form.get('password')"
-                   placeholder="Password"
-                   [showValidations]="false"
+<div class="section">
+  <div class="container">
+    <div class="columns is-desktop">
+      <div class="column is-one-third is-offset-one-third">
+        <h3 class="has-text-weight-semibold is-size-3">
+          Log in
+        </h3>
+        <article class="message is-danger" *ngIf="isInvalid">
+          <div class="message-header">
+            <p>
+              {{'Please provide a valid username and password.'}}
+            </p>
+          </div>
+        </article>
+        <form [formGroup]="form"
+              (ngSubmit)="submit()"
         >
-          <div class="level">
-            <span class='level-left'>
-              Password
-            </span>
-            <a class='level-right'>
-              Forgot password?
-            </a>
-          </div>
-        </app-input>
+          <app-input class="field"
+                     type="email"
+                     formControlName="email"
+                     [formControl]="form.get('email')"
+                     placeholder="Email"
+                     label="Email"
+                     [showValidations]="false"
+          ></app-input>
 
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox"
-                     formControlName="rememberMe">
-              Remember me
-            </label>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <button class="button is-fullwidth mt-3 is-link"
-                    [class.is-loading]="loading"
-                    type="submit">
-              Login
-            </button>
-          </div>
-        </div>
-
-        <div class="field">
-          <p class="control">
-            <a class="button is-fullwidth">
-              <span class="icon mr-2">
-                <i class="fa fa-facebook"></i>
+          <app-input class="field"
+                     type="password"
+                     formControlName="password"
+                     [formControl]="form.get('password')"
+                     placeholder="Password"
+                     [showValidations]="false"
+          >
+            <div class="level">
+              <span class='level-left'>
+                Password
               </span>
-              Login with Facebook
-            </a>
-          </p>
-        </div>
-      </form>
+              <a class='level-right'>
+                Forgot password?
+              </a>
+            </div>
+          </app-input>
+
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox"
+                       formControlName="rememberMe">
+                Remember me
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-fullwidth mt-3 is-link"
+                      [class.is-loading]="loading"
+                      type="submit">
+                Login
+              </button>
+            </div>
+          </div>
+
+<!--          <div class="field">-->
+<!--            <p class="control">-->
+<!--              <a class="button is-fullwidth">-->
+<!--                <span class="icon mr-2">-->
+<!--                  <i class="fa fa-facebook"></i>-->
+<!--                </span>-->
+<!--                Login with Facebook-->
+<!--              </a>-->
+<!--            </p>-->
+<!--          </div>-->
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -1,167 +1,196 @@
-<div class="container" *ngIf="event">
-  <app-breadcrumb [items]="getBreadcrumbItems()"></app-breadcrumb>
-  <div class="columns mt-4 mb-4">
-    <div class="column is-two-thirds">
-      <div class="is-flex align-items-center">
-        <app-logo [imagePath]="event.imagePath"
-                  [extraClasses]="'large'"
-        ></app-logo>
-        <div>
+<div class="section" *ngIf="event">
+  <div class="container">
+    <app-breadcrumb [items]="getBreadcrumbItems()"></app-breadcrumb>
+    <div class="columns mt-4 mb-4">
+      <div class="column is-two-thirds">
+        <div class="is-flex-desktop align-items-center">
+          <app-logo [imagePath]="event.imagePath"
+                    [extraClasses]="'large'"
+          ></app-logo>
           <div>
-            <app-event-status-label [status]="event?.status"
-                                    class="mr-2"
-            ></app-event-status-label>
-            <h1 class="title">
-              {{event.title}}
-            </h1>
+            <div>
+              <app-event-status-label [status]="event?.status"
+                                      class="mr-2"
+              ></app-event-status-label>
+              <h1 class="title">
+                {{event.title}}
+              </h1>
+            </div>
+            <h2>
+              {{event.description}}
+            </h2>
           </div>
-          <h2>
-            {{event.description}}
-          </h2>
+        </div>
+        <hr/>
+
+        <div>
+          <div class="is-flex align-items-center justify-content-between">
+            <h4 class="title is-4">
+              {{'Activities'}}
+            </h4>
+            <a class="icon"
+               *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}"
+               [routerLink]="['activities']"
+            >
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+          <div class="mt-4">
+            <div class="box"
+                 *ngFor="let activity of event.activities"
+            >
+              <article class="media">
+                <div class="media-content">
+                  <div class="content is-flex justify-content-between">
+                    <div>
+                      <div>
+                        <h4 class="title is-5 mb-0">
+                          {{activity.name}}
+                          <small>({{activity.volunteers.length}} / {{activity.volunteersNeeded}})</small>
+                        </h4>
+                        <time class="is-italic">
+                          {{event.date.start | date}} - {{event.date.end| date}}
+                        </time>
+                      </div>
+                      <p>
+                        {{activity.description}}
+                      </p>
+                    </div>
+                    <div class="mt-2" *appHasPermission="{condition: actionsRules?.JOIN_EVENT, args: event}">
+                      <button class="button is-primary"
+                              *ngIf="isRegisteredToActivity(activity); else registeredToActivity"
+                              (click)="onJoinActivity(activity)"
+                      >
+                        {{'Sign up'}}
+                      </button>
+                      <ng-template #registeredToActivity>
+                        <div class="tag is-large">
+                          <span class="icon mr-2 is-medium">
+                            <i class="fa fa-check-square"></i>
+                          </span>
+                          {{'You\'re Signed up!'}}
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <!--                  <nav class="level is-mobile">-->
+                  <!--                    <div class="level-left">-->
+                  <!--                      <a class="level-item" aria-label="reply">-->
+                  <!--                        <span class="icon is-small">-->
+                  <!--                          <i class="fa fa-reply" aria-hidden="true"></i>-->
+                  <!--                        </span>-->
+                  <!--                      </a>-->
+                  <!--                      <a class="level-item" aria-label="retweet">-->
+                  <!--                        <span class="icon is-small">-->
+                  <!--                          <i class="fa fa-retweet" aria-hidden="true"></i>-->
+                  <!--                        </span>-->
+                  <!--                      </a>-->
+                  <!--                      <a class="level-item" aria-label="like">-->
+                  <!--                        <span class="icon is-small">-->
+                  <!--                          <i class="fa fa-heart" aria-hidden="true"></i>-->
+                  <!--                        </span>-->
+                  <!--                      </a>-->
+                  <!--                    </div>-->
+                  <!--                  </nav>-->
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
       </div>
-      <hr/>
-
-      <div>
-        <div class="is-flex align-items-center justify-content-between">
-          <h4 class="title is-4">
-            {{'Activities'}}
-          </h4>
-          <a class="icon"
+      <div class="column">
+        <div class="box is-flex flex-column is-shadowless"
              *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}"
-             [routerLink]="['activities']"
-          >
-            <i class="fa fa-plus"></i>
+        >
+          <button class="button is-primary mb-2" (click)="onRewardVolunteers()">
+            <span class="icon mr-2">
+              <i class="fa fa-trophy" aria-hidden="true"></i>
+            </span>
+            <span>
+              {{'Reward volunteers'}}
+            </span>
+          </button>
+
+          <button class="button is-text" (click)="onEditDetails()">
+            <span class="icon mr-2">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </span>
+            <span>
+              {{'Edit details'}}
+            </span>
+          </button>
+        </div>
+        <div class="box">
+          <h4 class="title is-4">
+            <span class="icon mr-2">
+              <i class="fa fa-info"></i>
+            </span>
+            About organization
+          </h4>
+          <a *ngIf="event.organization" [routerLink]="['/organizations', 'details', event.organization._id]">
+            {{event.organization.name}}
           </a>
         </div>
-        <div>
-          <div class="box"
-               *ngFor="let activity of event.activities"
-          >
-            <article class="media">
-              <div class="media-left">
-                <figure class="image is-64x64">
-                  <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="content">
-                  <div class="is-flex justify-content-between">
-                    <h4 class="title is-5 mb-0">
-                      {{activity.name}}
-                    </h4>
-                    <time class="is-italic">
-                      {{event.date.start | date}} - {{event.date.end| date}}
-                    </time>
-                  </div>
-                  <p>
-                    {{activity.description}}
-                  </p>
-                </div>
-                <nav class="level is-mobile">
-                  <div class="level-left">
-                    <a class="level-item" aria-label="reply">
-                      <span class="icon is-small">
-                        <i class="fa fa-reply" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <a class="level-item" aria-label="retweet">
-                      <span class="icon is-small">
-                        <i class="fa fa-retweet" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <a class="level-item" aria-label="like">
-                      <span class="icon is-small">
-                        <i class="fa fa-heart" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                  </div>
-                </nav>
-              </div>
-            </article>
-          </div>
+        <div class="box">
+          <h4 class="title is-4 is-flex justify-content-between">
+            <div>
+              <span class="icon mr-2">
+                <i class="fa fa-calendar"></i>
+              </span>
+              Event date
+            </div>
+            <app-abstract-label [labels]="eventDateStatusLabels"></app-abstract-label>
+          </h4>
+          Start: {{event.date?.start | date}}<br/>
+          End: {{event.date?.end | date}}
         </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="box is-shadowless" *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}">
-        <a (click)="onEditDetails()">
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-          <span>
-            {{'Edit details'}}
-          </span>
-        </a>
-      </div>
-      <div class="box">
-        <h4 class="title is-4">
-          <span class="icon mr-2">
-            <i class="fa fa-info"></i>
-          </span>
-          About organization
-        </h4>
-        <a *ngIf="event.organization" [routerLink]="['/organizations', 'details', event.organization._id]">
-          {{event.organization.name}}
-        </a>
-      </div>
-      <div class="box">
-        <h4 class="title is-4 is-flex justify-content-between">
-          <div>
-            <span class="icon mr-2">
-              <i class="fa fa-calendar"></i>
-            </span>
-            Event date
-          </div>
-          <app-abstract-label [labels]="eventDateStatusLabels"></app-abstract-label>
-        </h4>
-        Start: {{event.date?.start | date}}<br/>
-        End: {{event.date?.end | date}}
-      </div>
 
-      <div class="box">
-        <h4 class="title is-4">
-          <span class="icon mr-2">
-            <i class="fa fa-location-arrow"></i>
-          </span>
-          Location
-        </h4>
-        <span>
-          {{'Address'}}: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
-        </span>
-      </div>
-
-      <div class="box">
-        <div class="is-flex justify-content-between">
+        <div class="box">
           <h4 class="title is-4">
             <span class="icon mr-2">
-              <i class="fa fa-hashtag"></i>
+              <i class="fa fa-location-arrow"></i>
             </span>
-            Tags
+            Location
           </h4>
-          <div>
-            <ng-container *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}">
-              <span class="icon"
-                    *ngIf="event.tags && event.tags.length"
-                    (click)="isTagsEditEnabled = !isTagsEditEnabled"
-              >
-                <i class="fa"
-                   [ngClass]="[isTagsEditEnabled ? 'fa-check has-text-success' : 'fa-pencil']"
-                ></i>
-              </span>
-              <span class="icon ml-2"
-                    *ngIf="isTagsEditEnabled"
-              >
-                <i class="fa fa-times"></i>
-              </span>
-            </ng-container>
-          </div>
+          <span>
+            {{'Address'}}: {{event.location?.address}}, {{event.location?.city}} {{event.location?.country}}
+          </span>
         </div>
-        <div class="is-flex flex-wrap">
-          <app-tags [tags]="event.tags"
-                    [isTagsEditEnabled]="isTagsEditEnabled"
-                    (createTag)="onAddNewTag($event)"
-                    (updateTag)="onUpdateTag($event)"
-                    (deleteTag)="onDeleteTag($event)"
-          ></app-tags>
+
+        <div class="box">
+          <div class="is-flex justify-content-between">
+            <h4 class="title is-4">
+              <span class="icon mr-2">
+                <i class="fa fa-hashtag"></i>
+              </span>
+              Tags
+            </h4>
+            <div>
+              <ng-container *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}">
+                <span class="icon"
+                      *ngIf="event.tags && event.tags.length"
+                      (click)="isTagsEditEnabled = !isTagsEditEnabled"
+                >
+                  <i class="fa"
+                     [ngClass]="[isTagsEditEnabled ? 'fa-check has-text-success' : 'fa-pencil']"
+                  ></i>
+                </span>
+                <span class="icon ml-2"
+                      *ngIf="isTagsEditEnabled"
+                >
+                  <i class="fa fa-times"></i>
+                </span>
+              </ng-container>
+            </div>
+          </div>
+          <div class="is-flex flex-wrap">
+            <app-tags [tags]="event.tags"
+                      [isTagsEditEnabled]="isTagsEditEnabled"
+                      (createTag)="onAddNewTag($event)"
+                      (updateTag)="onUpdateTag($event)"
+                      (deleteTag)="onDeleteTag($event)"
+            ></app-tags>
+          </div>
         </div>
       </div>
     </div>

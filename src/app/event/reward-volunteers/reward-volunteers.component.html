@@ -1,0 +1,66 @@
+<app-generic-modal>
+  <ng-template appModalHeader>
+    <div [hidden]="true">
+      <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a
+        href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+        href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+      </div>
+    </div>
+    {{'Reward volunteers'}}
+  </ng-template>
+  <ng-template appModalContent>
+    <div class="columns">
+      <div class="column">
+        <h4 class="title is-5">
+          Volunteers <small class="is-small" *ngIf="selectedVolunteers.length;">({{selectedVolunteers.length}})</small>
+        </h4>
+        <div>
+          <div class="select is-multiple">
+            <select multiple size="8" [(ngModel)]="selectedVolunteers">
+              <option *ngFor="let volunteer of volunteers; let i = index"
+                      [value]="volunteer._id"
+              >
+                {{i + 1}}. {{volunteer.firstName}} {{volunteer.lastName}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <h4 class="title is-5">
+          Badges <small class="is-small" *ngIf="selectedBadges.length;">({{selectedBadges.length}})</small>
+        </h4>
+        <div>
+          <img *ngFor="let badge of badges" class="badge"
+               [id]="badge.id"
+               [class.is-selected]="isBadgeSelected(badge)"
+               [src]="'assets/images/badges/' + badge.icon"
+               (click)="toggleBadge(badge)"
+          >
+          <!--          <div class="select is-multiple">-->
+          <!--            <select multiple size="8">-->
+          <!--              <option  *ngFor="let volunteer of volunteers"-->
+          <!--                       [value]="volunteer._id"-->
+          <!--              >-->
+          <!--                {{volunteer.firstName}} {{volunteer.lastName}}-->
+          <!--              </option>-->
+          <!--            </select>-->
+          <!--          </div>-->
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template appModalFooter>
+    <div class="is-flex justify-content-end">
+      <div>
+        <button class="button is-primary"
+                (click)="onReward()">
+          {{'Reward'}}
+        </button>
+        <button class="button is-text">
+          {{'COMMON.CANCEL' | translate}}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</app-generic-modal>

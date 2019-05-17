@@ -1,50 +1,52 @@
-<div class="container mt-4 mb-4" *ngIf="event">
-  <app-breadcrumb [items]="getBreadcrumbItems()"></app-breadcrumb>
-  <hr/>
-  <div class="columns">
-    <div class="column">
-      <button class="button is-primary"
-              (click)="addActivity()"
-      >
-        {{'Add activity'}}
-      </button>
-      <div class="mt-4 mb-4">
-        <ng-container *ngIf="event?.activities.length; else noActivities">
-          <div class="box mt-4 mb-4"
-               *ngFor="let activity of event?.activities"
-          >
-            <div class="content">
-              <div class="is-flex justify-content-between">
-                <div>
-                  <h4 class="title is-5 mb-0">
-                    {{activity.name}}
-                  </h4>
-                  <span>
-                    {{'Volunteers'}} ({{activity.volunteers.length}} / {{activity.volunteersNeeded}})
-                  </span>
-                  <br/>
-                  <time class="is-italic is-size-7">
-                    {{activity.date.start | date}} - {{(activity.date.end | date) || 'Endless'}}
-                  </time>
+<div class="section">
+  <div class="container" *ngIf="event">
+    <app-breadcrumb [items]="getBreadcrumbItems()"></app-breadcrumb>
+    <hr/>
+    <div class="columns">
+      <div class="column">
+        <button class="button is-primary"
+                (click)="addActivity()"
+        >
+          {{'Add activity'}}
+        </button>
+        <div class="mt-4 mb-4">
+          <ng-container *ngIf="event?.activities.length; else noActivities">
+            <div class="box mt-4 mb-4"
+                 *ngFor="let activity of event?.activities"
+            >
+              <div class="content">
+                <div class="is-flex justify-content-between">
+                  <div>
+                    <h4 class="title is-5 mb-0">
+                      {{activity.name}}
+                    </h4>
+                    <span>
+                      {{'Volunteers'}} ({{activity.volunteers.length}} / {{activity.volunteersNeeded}})
+                    </span>
+                    <br/>
+                    <time class="is-italic is-size-7">
+                      {{activity.date.start | date}} - {{(activity.date.end | date) || 'Endless'}}
+                    </time>
+                  </div>
+                  <app-dropdown [title]="'Actions'"
+                                [object]="activity"
+                                [items]="dropdownActions"
+                                [extraClasses]="'is-right'"
+                  ></app-dropdown>
                 </div>
-                <app-dropdown [title]="'Actions'"
-                              [object]="activity"
-                              [items]="dropdownActions"
-                              [extraClasses]="'is-right'"
-                ></app-dropdown>
               </div>
             </div>
-          </div>
-        </ng-container>
-        <ng-template #noActivities>
-          <div>
-            No activities found
-          </div>
-        </ng-template>
+          </ng-container>
+          <ng-template #noActivities>
+            <div>
+              No activities found
+            </div>
+          </ng-template>
+        </div>
       </div>
-    </div>
-    <div class="column">
+      <div class="column">
 
+      </div>
     </div>
   </div>
 </div>

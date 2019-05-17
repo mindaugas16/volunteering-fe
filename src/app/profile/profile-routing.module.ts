@@ -5,6 +5,7 @@ import { MyOrganizationComponent } from './my-organization/my-organization.compo
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
+import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'organizations',
         component: ProfileOrganizationsComponent,
+      },
+      {
+        path: 'achievements',
+        component: ProfileAchievementsComponent,
       }
     ]
   }
