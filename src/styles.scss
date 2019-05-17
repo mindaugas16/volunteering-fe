@@ -11,6 +11,17 @@ body {
   justify-content: flex-start!important;
 }
 
+.modal-content {
+  max-height: 100vh!important;
+  margin: 0!important;
+}
+
+@media only screen and (max-width: 600px) {
+  .modal-content {
+    width: 100vw!important;
+  }
+}
+
 .dialog-modal {
   background: rgba(0, 0, 0, .5);
 }

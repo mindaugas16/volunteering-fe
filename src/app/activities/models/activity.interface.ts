@@ -13,6 +13,8 @@ export interface ActivityInterface {
   volunteersNeeded: number;
   date: DateRangeInterface;
   volunteers?: UserInterface[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ActivityCreateInterface {

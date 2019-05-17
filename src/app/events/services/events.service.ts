@@ -102,8 +102,10 @@ export class EventsService {
               }
               volunteersNeeded
               volunteers {
+                _id
                 firstName
               }
+              createdAt
            }
           }
         }`

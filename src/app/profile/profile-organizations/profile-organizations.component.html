@@ -2,7 +2,7 @@
   {{'Organizations'}}
 </h4>
 <div>
-  <a *ngFor="let organization of organization"
+  <a *ngFor="let organization of user?.organizations"
      class="is-flex align-items-center"
      [routerLink]="['/organizations', 'details', organization._id]"
   >

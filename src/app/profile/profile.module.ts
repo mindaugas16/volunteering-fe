@@ -14,6 +14,7 @@ import { OrganizationEditModule } from '../organizations/organization-edit/organ
 import { EventsModule } from '../events/events.module';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
+import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProfileOrganizationsComponent } from './profile-organizations/profile-o
     EditProfileFormComponent,
     MyOrganizationComponent,
     ProfileSettingsComponent,
-    ProfileOrganizationsComponent
+    ProfileOrganizationsComponent,
+    ProfileAchievementsComponent
   ],
   imports: [
     CommonModule,

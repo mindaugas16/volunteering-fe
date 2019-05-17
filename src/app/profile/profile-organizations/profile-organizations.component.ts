@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { OrganizationInterface } from '../../organizations/organization.interface';
+import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../profile.service';
+import { UserInterface } from '../../auth/user.interface';
 
 @Component({
   selector: 'app-profile-organizations',
@@ -7,12 +8,13 @@ import { OrganizationInterface } from '../../organizations/organization.interfac
   styleUrls: ['./profile-organizations.component.scss']
 })
 export class ProfileOrganizationsComponent implements OnInit {
-  @Input() organization: OrganizationInterface[];
+  user: UserInterface;
 
-  constructor() {
+  constructor(private profileService: ProfileService) {
   }
 
   ngOnInit() {
+    this.profileService.getUserInfo().subscribe(user => this.user = user);
   }
 
 }

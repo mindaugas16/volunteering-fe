@@ -24,12 +24,34 @@ export class ProfileService {
               postalCode
               contacts
               role
+              organizations {
+                name
+                _id
+              }
             }
            }
       `
     }).pipe(
       map(({data}) => data),
       map(({currentUser}) => currentUser)
+    );
+  }
+
+  getAchievements(): Observable<any> {
+    return this.apiService.query({
+      query: `
+      query getVolunteer {
+          getVolunteer {
+              achievements {
+                label
+                icon
+              }
+            }
+           }
+      `
+    }).pipe(
+      map(({data}) => data),
+      map(({getVolunteer}) => getVolunteer)
     );
   }
 

@@ -35,44 +35,63 @@
               <i class="fa fa-plus"></i>
             </a>
           </div>
-          <div>
+          <div class="mt-4">
             <div class="box"
                  *ngFor="let activity of event.activities"
             >
               <article class="media">
                 <div class="media-content">
-                  <div class="content">
-                    <div class="is-flex justify-content-between">
-                      <h4 class="title is-5 mb-0">
-                        {{activity.name}}
-                      </h4>
-                      <time class="is-italic">
-                        {{event.date.start | date}} - {{event.date.end| date}}
-                      </time>
+                  <div class="content is-flex justify-content-between">
+                    <div>
+                      <div>
+                        <h4 class="title is-5 mb-0">
+                          {{activity.name}}
+                          <small>({{activity.volunteers.length}} / {{activity.volunteersNeeded}})</small>
+                        </h4>
+                        <time class="is-italic">
+                          {{event.date.start | date}} - {{event.date.end| date}}
+                        </time>
+                      </div>
+                      <p>
+                        {{activity.description}}
+                      </p>
                     </div>
-                    <p>
-                      {{activity.description}}
-                    </p>
+                    <div class="mt-2" *appHasPermission="{condition: actionsRules?.JOIN_EVENT, args: event}">
+                      <button class="button is-primary"
+                              *ngIf="isRegisteredToActivity(activity); else registeredToActivity"
+                              (click)="onJoinActivity(activity)"
+                      >
+                        {{'Sign up'}}
+                      </button>
+                      <ng-template #registeredToActivity>
+                        <div class="tag is-large">
+                          <span class="icon mr-2 is-medium">
+                            <i class="fa fa-check-square"></i>
+                          </span>
+                          {{'You\'re Signed up!'}}
+                        </div>
+                      </ng-template>
+                    </div>
                   </div>
-                  <nav class="level is-mobile">
-                    <div class="level-left">
-                      <a class="level-item" aria-label="reply">
-                        <span class="icon is-small">
-                          <i class="fa fa-reply" aria-hidden="true"></i>
-                        </span>
-                      </a>
-                      <a class="level-item" aria-label="retweet">
-                        <span class="icon is-small">
-                          <i class="fa fa-retweet" aria-hidden="true"></i>
-                        </span>
-                      </a>
-                      <a class="level-item" aria-label="like">
-                        <span class="icon is-small">
-                          <i class="fa fa-heart" aria-hidden="true"></i>
-                        </span>
-                      </a>
-                    </div>
-                  </nav>
+                  <!--                  <nav class="level is-mobile">-->
+                  <!--                    <div class="level-left">-->
+                  <!--                      <a class="level-item" aria-label="reply">-->
+                  <!--                        <span class="icon is-small">-->
+                  <!--                          <i class="fa fa-reply" aria-hidden="true"></i>-->
+                  <!--                        </span>-->
+                  <!--                      </a>-->
+                  <!--                      <a class="level-item" aria-label="retweet">-->
+                  <!--                        <span class="icon is-small">-->
+                  <!--                          <i class="fa fa-retweet" aria-hidden="true"></i>-->
+                  <!--                        </span>-->
+                  <!--                      </a>-->
+                  <!--                      <a class="level-item" aria-label="like">-->
+                  <!--                        <span class="icon is-small">-->
+                  <!--                          <i class="fa fa-heart" aria-hidden="true"></i>-->
+                  <!--                        </span>-->
+                  <!--                      </a>-->
+                  <!--                    </div>-->
+                  <!--                  </nav>-->
                 </div>
               </article>
             </div>
@@ -80,13 +99,26 @@
         </div>
       </div>
       <div class="column">
-        <div class="box is-shadowless" *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}">
-          <a (click)="onEditDetails()">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+        <div class="box is-flex flex-column is-shadowless"
+             *appHasPermission="{condition: actionsRules?.EDIT_EVENT_DETAILS, args: event}"
+        >
+          <button class="button is-primary mb-2" (click)="onRewardVolunteers()">
+            <span class="icon mr-2">
+              <i class="fa fa-trophy" aria-hidden="true"></i>
+            </span>
+            <span>
+              {{'Reward volunteers'}}
+            </span>
+          </button>
+
+          <button class="button is-text" (click)="onEditDetails()">
+            <span class="icon mr-2">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </span>
             <span>
               {{'Edit details'}}
             </span>
-          </a>
+          </button>
         </div>
         <div class="box">
           <h4 class="title is-4">

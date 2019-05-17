@@ -15,11 +15,13 @@ import { TagsModule } from '../ui-elements/tags/tags.module';
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 import { AbstractLabelModule } from '../ui-elements/abstract-label/abstract-label.module';
+import { RewardVolunteersComponent } from './reward-volunteers/reward-volunteers.component';
 
 @NgModule({
   declarations: [
     EventInnerComponent,
-    EventEditComponent
+    EventEditComponent,
+    RewardVolunteersComponent
   ],
   exports: [
     EventEditComponent
@@ -41,7 +43,8 @@ import { AbstractLabelModule } from '../ui-elements/abstract-label/abstract-labe
     AbstractLabelModule
   ],
   entryComponents: [
-    EventEditComponent
+    EventEditComponent,
+    RewardVolunteersComponent
   ]
 })
 export class EventModule {
