@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../profile.service';
+import { CalendarDateFormatter, CalendarEvent } from 'angular-calendar';
+import { startOfDay } from 'date-fns';
+import { Router } from '@angular/router';
 import { EventInterface } from '../../event/models/event.interface';
+import { ActivityInterface } from '../../activities/models/activity.interface';
+import { CustomDateFormat } from '../../ui-elements/calendar/custom-date-format.provider';
 
 @Component({
   selector: 'app-participation',
@@ -8,14 +13,26 @@ import { EventInterface } from '../../event/models/event.interface';
   styleUrls: ['./participation.component.scss']
 })
 export class ParticipationComponent implements OnInit {
-  events: EventInterface[] = [];
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
+  groupedEvents: EventInterface[] = [];
 
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService,
+              private router: Router
+  ) {
   }
 
   ngOnInit() {
     this.profileService.getUserParticipation().subscribe(participation => {
-      this.events = this.groupParticipationByEvent(participation);
+      this.events = participation.map(part => {
+        return {
+          start: startOfDay(new Date(part.activity.date.start)),
+          end: startOfDay(new Date(part.activity.date.end)),
+          title: part.activity.name,
+          _id: part.activity.event._id
+        };
+      });
+      this.groupedEvents = this.groupParticipationByEvent(participation);
     });
   }
 
@@ -31,4 +48,11 @@ export class ParticipationComponent implements OnInit {
     }, []);
   }
 
+  onEvent(event) {
+    this.router.navigate(['/event', event._id]);
+  }
+
+  onActivity(activity: ActivityInterface) {
+    this.viewDate = new Date(activity.date.start);
+  }
 }

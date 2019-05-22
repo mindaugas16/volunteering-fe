@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
         },
         {
           title: 'Participation',
-          icon: 'fa-trophy',
+          icon: 'fa-calendar',
           id: ProfileTabsEnum.PARTICIPATION,
           link: ['participation'],
           isHidden: this.user && this.user.role !== UserRole.VOLUNTEER,

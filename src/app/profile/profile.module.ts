@@ -16,6 +16,7 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
 import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
 import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
 import { ParticipationComponent } from './participation/participation.component';
+import { CalendarModule } from '../ui-elements/calendar/calendar.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ParticipationComponent } from './participation/participation.component'
     TabsModule,
     AuthModule,
     OrganizationEditModule,
-    EventsModule
+    EventsModule,
+    CalendarModule
   ]
 })
 export class ProfileModule {

@@ -86,6 +86,10 @@ export class ProfileService {
             activity {
               _id
               name
+              date {
+                start
+                end
+              }
               event {
                 _id
                 title

@@ -1,13 +1,29 @@
-<div *ngFor="let event of events">
-  <h4 class="title is-4">
-    {{event.title}}
-  </h4>
-  <div class="list is-hoverable">
-    <a class="list-item"
-       *ngFor="let activity of event.activities"
-       [routerLink]="['/event', event._id]"
-    >
-      {{activity.name}}
-    </a>
+<div class="columns">
+  <div class="column is-4-desktop">
+    <div class="mb-4" *ngFor="let event of groupedEvents">
+      <h4 class="title is-4">
+        {{event.title}}
+      </h4>
+      <div class="list is-hoverable">
+        <div class="list-item is-flex align-items-center justify-content-between"
+             *ngFor="let activity of event.activities"
+        >
+          <a (click)="onActivity(activity)">
+            {{activity.name}}
+          </a>
+          <a class="icon"
+             [routerLink]="['/event', event._id]"
+          >
+            <i class="fa fa-external-link" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <app-calendar [events]="events"
+                  [viewDate]="viewDate"
+    ></app-calendar>
   </div>
 </div>

@@ -1,0 +1,93 @@
+<h3 class="title is-3">{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
+<div class="is-flex-desktop align-items-center justify-content-between">
+  <div class="buttons has-addons m-0">
+    <div
+      class="button is-outlined"
+      (click)="view = calendarView.Month"
+      [class.is-active]="view === calendarView.Month"
+    >
+      Month
+    </div>
+    <div
+      class="button is-outlined"
+      (click)="view = calendarView.Week"
+      [class.is-active]="view === calendarView.Week"
+    >
+      Week
+    </div>
+    <div
+      class="button is-outlined"
+      (click)="view = calendarView.Day"
+      [class.is-active]="view === calendarView.Day"
+    >
+      Day
+    </div>
+  </div>
+
+  <div class="buttons has-addons m-0">
+    <button
+      class="button is-outlined"
+      mwlCalendarPreviousView
+      [view]="view"
+      [(viewDate)]="viewDate"
+    >
+      <span class="icon"
+      >
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </span>
+    </button>
+    <button
+      class="button is-outlined"
+      mwlCalendarToday
+      [(viewDate)]="viewDate"
+    >
+      <span class="icon"
+      >
+        <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+      </span>
+    </button>
+    <button
+      class="button is-outlined"
+      mwlCalendarNextView
+      [view]="view"
+      [(viewDate)]="viewDate"
+    >
+      <span class="icon"
+      >
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+</div>
+
+<div [ngSwitch]="view">
+
+  <mwl-calendar-month-view
+    *ngSwitchCase="calendarView.Month"
+    [locale]="locale"
+    weekStartsOn="1"
+    [viewDate]="viewDate"
+    [events]="events"
+    (eventClicked)="onEvent($event.event)"
+  >
+  </mwl-calendar-month-view>
+
+  <mwl-calendar-week-view
+    *ngSwitchCase="calendarView.Week"
+    [viewDate]="viewDate"
+    weekStartsOn="1"
+    [locale]="locale"
+    [events]="events"
+    (eventClicked)="onEvent($event.event)"
+  >
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="calendarView.Day"
+    [viewDate]="viewDate"
+    weekStartsOn="1"
+    [locale]="locale"
+    [events]="events"
+    (eventClicked)="onEvent($event.event)"
+  >
+  </mwl-calendar-day-view>
+</div>
