@@ -46,7 +46,7 @@
                       <div>
                         <h4 class="title is-5 mb-0">
                           {{activity.name}}
-                          <small>({{activity.volunteers.length}} / {{activity.volunteersNeeded}})</small>
+<!--                          <small>({{activity.volunteers.length}} / {{activity.volunteersNeeded}})</small>-->
                         </h4>
                         <time class="is-italic">
                           {{event.date.start | date}} - {{event.date.end| date}}
@@ -58,7 +58,7 @@
                     </div>
                     <div class="mt-2" *appHasPermission="{condition: actionsRules?.JOIN_EVENT, args: event}">
                       <button class="button is-primary"
-                              *ngIf="isRegisteredToActivity(activity); else registeredToActivity"
+                              *ngIf="!isRegisteredToActivity(activity); else registeredToActivity"
                               (click)="onJoinActivity(activity)"
                       >
                         {{'Sign up'}}

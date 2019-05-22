@@ -1,0 +1,13 @@
+<div *ngFor="let event of events">
+  <h4 class="title is-4">
+    {{event.title}}
+  </h4>
+  <div class="list is-hoverable">
+    <a class="list-item"
+       *ngFor="let activity of event.activities"
+       [routerLink]="['/event', event._id]"
+    >
+      {{activity.name}}
+    </a>
+  </div>
+</div>

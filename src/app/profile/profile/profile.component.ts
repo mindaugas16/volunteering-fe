@@ -9,7 +9,8 @@ enum ProfileTabsEnum {
   MY_ORGANIZATION,
   ORGANIZATIONS,
   SETTINGS,
-  ACHIEVEMENTS
+  ACHIEVEMENTS,
+  PARTICIPATION
 }
 
 @Component({
@@ -49,6 +50,13 @@ export class ProfileComponent implements OnInit {
           icon: 'fa-trophy',
           id: ProfileTabsEnum.ACHIEVEMENTS,
           link: ['achievements'],
+          isHidden: this.user && this.user.role !== UserRole.VOLUNTEER,
+        },
+        {
+          title: 'Participation',
+          icon: 'fa-trophy',
+          id: ProfileTabsEnum.PARTICIPATION,
+          link: ['participation'],
           isHidden: this.user && this.user.role !== UserRole.VOLUNTEER,
         },
       ];

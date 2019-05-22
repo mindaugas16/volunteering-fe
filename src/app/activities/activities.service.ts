@@ -72,9 +72,11 @@ export class ActivitiesService {
       query: `
        mutation registerToActivity($activityId: ID!) {
           registerToActivity(activityId: $activityId) {
-            volunteersNeeded
-            volunteers {
-              firstName
+            participation {
+              _id
+              volunteer {
+                _id
+              }
             }
           }
         }

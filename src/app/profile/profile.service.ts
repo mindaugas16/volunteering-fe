@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { UpdateUserInterface, UserInterface } from '../auth/user.interface';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../api.service';
+import { ParticipationInterface } from '../shared/models/participation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,27 @@ export class ProfileService {
     }).pipe(
       map(({data}) => data),
       map(({updateUserInfo}) => updateUserInfo)
+    );
+  }
+
+  getUserParticipation(): Observable<ParticipationInterface[]> {
+    return this.apiService.query({
+      query: `
+        query participation {
+          participation {
+            activity {
+              _id
+              name
+              event {
+                _id
+                title
+              }
+            }
+          }
+        }
+      `
+    }).pipe(
+      map(({data}) => data.participation),
     );
   }
 }

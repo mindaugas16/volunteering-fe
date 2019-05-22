@@ -101,10 +101,13 @@ export class EventsService {
                 end
               }
               volunteersNeeded
-              volunteers {
+              participation {
                 _id
-                firstName
-                lastName
+                volunteer {
+                  _id
+                  firstName
+                  lastName
+                }
               }
               createdAt
            }

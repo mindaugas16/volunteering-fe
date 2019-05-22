@@ -16,10 +16,11 @@
 </div>
 
 <ng-template #noTags>
+  No tags found
   <button class="button is-text"
+          *ngIf="user?.role === userRoles.ORGANIZATION"
           (click)="onAddTag()"
   >
     {{'Add new tag'}}
   </button>
 </ng-template>
-

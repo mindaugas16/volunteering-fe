@@ -6,6 +6,7 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
 import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
 import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
+import { ParticipationComponent } from './participation/participation.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'achievements',
         component: ProfileAchievementsComponent,
+      },
+      {
+        path: 'participation',
+        component: ParticipationComponent,
       }
     ]
   }

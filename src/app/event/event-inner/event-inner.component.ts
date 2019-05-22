@@ -70,10 +70,10 @@ export class EventInnerComponent implements OnInit {
   }
 
   onJoinActivity(activity: ActivityInterface) {
-    this.activitiesService.register(activity._id).subscribe(res => {
+    this.activitiesService.register(activity._id).subscribe(modifiedActivity => {
       this.headerMessage.show(`You have successfully signed up for activity - ${activity.name}`, 'SUCCESS');
-      console.log(res);
-      activity.volunteers = res.volunteers;
+      console.log(modifiedActivity);
+      activity.participation.push(modifiedActivity.participation);
     });
   }
 
@@ -110,6 +110,6 @@ export class EventInnerComponent implements OnInit {
   }
 
   isRegisteredToActivity(activity: ActivityInterface): boolean {
-    return !!activity.volunteers.find(volunteer => this.user._id === volunteer._id);
+    return !!activity.participation.find(({volunteer}) => this.user._id === volunteer._id);
   }
 }
