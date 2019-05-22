@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CalendarDateFormatter, CalendarEvent, CalendarView } from 'angular-calendar';
 import { TranslateService } from '@ngx-translate/core';
 import { CustomDateFormat } from '../custom-date-format.provider';
@@ -17,6 +17,7 @@ import { CustomDateFormat } from '../custom-date-format.provider';
 export class CalendarComponent implements OnInit {
   @Input() events: CalendarEvent[] = [];
   @Input() viewDate: Date = new Date();
+  @Output() eventClick: EventEmitter<any> = new EventEmitter();
   view: CalendarView = CalendarView.Month;
   calendarView = CalendarView;
   locale: string;
@@ -29,5 +30,9 @@ export class CalendarComponent implements OnInit {
     this.translateService.onLangChange.subscribe(({lang}) => {
       this.locale = lang;
     });
+  }
+
+  onEvent(event) {
+    this.eventClick.emit(event);
   }
 }

@@ -41,12 +41,12 @@
             >
               <article class="media">
                 <div class="media-content">
-                  <div class="content is-flex justify-content-between">
+                  <div class="content is-flex-desktop justify-content-between">
                     <div>
                       <div>
                         <h4 class="title is-5 mb-0">
                           {{activity.name}}
-<!--                          <small>({{activity.volunteers.length}} / {{activity.volunteersNeeded}})</small>-->
+                          <small>({{activity?.participation.length}} / {{activity?.volunteersNeeded}})</small>
                         </h4>
                         <time class="is-italic">
                           {{event.date.start | date}} - {{event.date.end| date}}
@@ -73,25 +73,6 @@
                       </ng-template>
                     </div>
                   </div>
-                  <!--                  <nav class="level is-mobile">-->
-                  <!--                    <div class="level-left">-->
-                  <!--                      <a class="level-item" aria-label="reply">-->
-                  <!--                        <span class="icon is-small">-->
-                  <!--                          <i class="fa fa-reply" aria-hidden="true"></i>-->
-                  <!--                        </span>-->
-                  <!--                      </a>-->
-                  <!--                      <a class="level-item" aria-label="retweet">-->
-                  <!--                        <span class="icon is-small">-->
-                  <!--                          <i class="fa fa-retweet" aria-hidden="true"></i>-->
-                  <!--                        </span>-->
-                  <!--                      </a>-->
-                  <!--                      <a class="level-item" aria-label="like">-->
-                  <!--                        <span class="icon is-small">-->
-                  <!--                          <i class="fa fa-heart" aria-hidden="true"></i>-->
-                  <!--                        </span>-->
-                  <!--                      </a>-->
-                  <!--                    </div>-->
-                  <!--                  </nav>-->
                 </div>
               </article>
             </div>
@@ -139,7 +120,7 @@
               </span>
               Event date
             </div>
-            <app-abstract-label [labels]="eventDateStatusLabels"></app-abstract-label>
+            <app-abstract-label [label]="eventDateStatusLabel"></app-abstract-label>
           </h4>
           Start: {{event.date?.start | date}}<br/>
           End: {{event.date?.end | date}}

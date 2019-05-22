@@ -14,6 +14,7 @@ import { RewardVolunteersComponent } from '../reward-volunteers/reward-volunteer
 import { ActivitiesService } from '../../activities/activities.service';
 import { ActivityInterface } from '../../activities/models/activity.interface';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
+import { EventDateStatusHelper } from '../../core/services/helpers/event-date-status.helper';
 
 @Component({
   selector: 'app-event-inner',
@@ -25,7 +26,7 @@ export class EventInnerComponent implements OnInit {
   isTagsEditEnabled: boolean;
   user: UserInterface;
   actionsRules = ActionsRules;
-  eventDateStatusLabels = [];
+  eventDateStatusLabel;
 
   constructor(
     private eventsService: EventsService,
@@ -33,47 +34,29 @@ export class EventInnerComponent implements OnInit {
     private modalService: NgbModal,
     private authService: AuthService,
     private activitiesService: ActivitiesService,
-    private headerMessage: HeaderMessageService
+    private headerMessage: HeaderMessageService,
+    private eventDateStatusHelper: EventDateStatusHelper
   ) {
   }
 
   ngOnInit() {
-    const convertDate = (date?) => {
-      if (!date) {
-        return new Date().setHours(0, 0, 0, 0);
-      }
-      return new Date(date).setHours(0, 0, 0, 0);
-    };
-
     this.route.params.pipe(
       switchMap(params => {
         return this.eventsService.getEvent(params['id']);
       })
     ).subscribe(event => {
       this.event = event;
-      this.eventDateStatusLabels = [
-        {
-          extraClass: 'is-info', name: 'Soon', condition: convertDate(this.event.date.start) > convertDate()
-        },
-        {
-          extraClass: 'is-primary',
-          name: 'Happening',
-          condition: convertDate(this.event.date.start) <= convertDate() && convertDate() <= convertDate(this.event.date.end)
-        },
-        {
-          extraClass: 'is-success', name: 'Finished', condition: convertDate() > convertDate(this.event.date.end)
-        },
-      ];
+      this.eventDateStatusLabel = this.eventDateStatusHelper.getEventStatusByDate(this.event.date);
     });
 
     this.authService.getCurrentUser(false).subscribe(user => this.user = user);
   }
 
   onJoinActivity(activity: ActivityInterface) {
-    this.activitiesService.register(activity._id).subscribe(modifiedActivity => {
+    this.activitiesService.register(activity._id).subscribe(participation => {
       this.headerMessage.show(`You have successfully signed up for activity - ${activity.name}`, 'SUCCESS');
-      console.log(modifiedActivity);
-      activity.participation.push(modifiedActivity.participation);
+      console.log(participation);
+      activity.participation.push(participation);
     });
   }
 

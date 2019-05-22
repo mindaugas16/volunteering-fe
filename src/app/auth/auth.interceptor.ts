@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { HeaderMessageService } from '../ui-elements/header-message/header-message.service';
-import { HeaderMessageStatus } from '../ui-elements/header-message/header-message.interface';
 
 export const AUTH_HEADER_INTERCEPTOR_PROVIDER = {
   provide: HTTP_INTERCEPTORS,
