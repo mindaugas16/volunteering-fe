@@ -29,4 +29,8 @@ export class EventsSearchPanelComponent implements OnInit {
     this.eventsSearchService.search(this.form.value);
   }
 
+  onResetFilters() {
+    this.eventsSearchService.resetFilters();
+  }
+
 }

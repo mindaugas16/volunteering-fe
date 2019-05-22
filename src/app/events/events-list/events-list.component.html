@@ -18,7 +18,7 @@
     <!--        </div>-->
     <ng-container [ngSwitch]="viewMode">
       <ng-container *ngSwitchCase="'GRID'">
-        <div class="columns is-desktop is-multiline mt-4">
+        <div class="columns is-desktop is-multiline">
 
           <div class="column is-4 is-flex" *ngFor="let event of events">
             <app-events-list-card [event]="event"

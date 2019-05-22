@@ -2,6 +2,7 @@
 
 :host {
   @extend .tag;
+  @extend .is-medium;
 }
 
 .hash-tag {

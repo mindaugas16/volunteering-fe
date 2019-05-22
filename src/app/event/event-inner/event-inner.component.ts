@@ -55,7 +55,6 @@ export class EventInnerComponent implements OnInit {
   onJoinActivity(activity: ActivityInterface) {
     this.activitiesService.register(activity._id).subscribe(participation => {
       this.headerMessage.show(`You have successfully signed up for activity - ${activity.name}`, 'SUCCESS');
-      console.log(participation);
       activity.participation.push(participation);
     });
   }

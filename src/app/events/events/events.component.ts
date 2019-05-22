@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { EventInterface, EventStatus } from '../../event/models/event.interface';
 import { EventsService } from '../services/events.service';
 import { EventsSearchService } from '../services/events-search/events-search.service';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
+import { TagsService } from '../../ui-elements/tags/tags.service';
+import { TagInterface } from '../../ui-elements/tag/tag.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -18,14 +21,22 @@ export class EventsComponent implements OnInit {
     {label: 'Created', value: 'createdAt'},
     {label: 'Updated', value: 'updatedAt'},
   ];
+  relatedTags: TagInterface[] = [];
 
   constructor(private eventsService: EventsService,
-              private eventsSearchService: EventsSearchService
+              private eventsSearchService: EventsSearchService,
+              private tagsService: TagsService,
+              private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    this.eventsSearchService.getSearchQueryAsObservable().pipe(
+    this.tagsService.getRelatedTags().subscribe(tags => {
+      this.relatedTags = tags;
+      console.log(this.relatedTags);
+    });
+
+    this.route.queryParams.pipe(
       switchMap(query => {
         this.loading = true;
         return this.eventsService.getEvents(query, null, [EventStatus.PUBLIC]);
@@ -45,5 +56,4 @@ export class EventsComponent implements OnInit {
       this.events = events;
     });
   }
-
 }

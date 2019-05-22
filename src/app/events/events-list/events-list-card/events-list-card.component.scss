@@ -23,6 +23,9 @@
     .card-header {
       .card-image {
         transform: scale(1.05);
+        .card-star {
+          display: flex;
+        }
       }
     }
   }
@@ -47,6 +50,8 @@
         position: absolute;
         top: 15px;
         left: 15px;
+        display: none;
+        transition: display .25s;
       }
     }
   }

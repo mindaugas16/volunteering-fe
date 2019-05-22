@@ -3,9 +3,11 @@
     <a class="card-image"
        [routerLink]="['/event', event._id]"
        [style.background-image]="'url('+(event.imagePath ? event.imagePath : 'https://bulma.io/images/placeholders/1280x960.png')+')'">
-      <!--      <a class="button is-primary is-outlined is-small card-star">-->
-      <!--        {{'COMMON.SAVE' | translate}}-->
-      <!--      </a>-->
+            <a class="icon is-large card-star is-primary"
+               appClickStopPropagation
+            >
+              <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+            </a>
     </a>
   </div>
   <div class="card-body">

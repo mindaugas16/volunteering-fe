@@ -1,6 +1,21 @@
-<app-events-search-panel></app-events-search-panel>
 <div class="section">
   <div class="container">
-    <app-events-list [events]="events" [loading]="loading" [viewMode]="'GRID'"></app-events-list>
+    <app-events-search-panel></app-events-search-panel>
+    <hr/>
+    <div class="columns">
+      <div class="column">
+        <app-events-list [events]="events" [loading]="loading" [viewMode]="'GRID'"></app-events-list>
+      </div>
+      <div class="column is-2-desktop">
+        <div>
+          <h4 class="title is-4">
+            {{'Tags'}}
+          </h4>
+          <app-tag *ngFor="let tag of relatedTags"
+                   [tag]="tag"
+          ></app-tag>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
