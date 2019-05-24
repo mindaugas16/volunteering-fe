@@ -22,7 +22,7 @@ export interface CreateUserInterface {
   lastName: string;
   postalCode: string;
 
-  name: string;
+  organizationName: string;
 }
 
 export interface UpdateUserInterface {

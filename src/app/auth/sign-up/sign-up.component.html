@@ -1,28 +1,94 @@
-<div class="section">
-  <div class="container">
-    <div class="columns is-desktop">
-      <div class="column is-three-fifths is-offset-one-fifth">
-        <h2 class="title">
-          Select user type
-        </h2>
-        <div class="columns">
-          <div class="column" *ngFor="let type of userTypes">
-            <div class="box">
-              <h4 class="title is-4">
-                {{type.title}}
-              </h4>
-              <p class="description mb-4">
-                {{type.description}}
-              </p>
-              <button class="button is-primary is-outlined"
-                      (click)="onSelectType(type.id)"
-              >
-                Continue
-              </button>
+<section class="hero"
+         id="selectType"
+>
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-desktop">
+        <div class="column is-three-fifths is-offset-one-fifth">
+
+          <div class="block">
+            <h2 class="title">
+              Select user type
+            </h2>
+            <div class="columns">
+              <div class="column" *ngFor="let type of userTypes">
+                <div class="box">
+                  <div>
+                    <h4 class="title is-4">
+                      {{type.title}}
+                    </h4>
+                    <p class="description mb-4">
+                      {{type.description}}
+                    </p>
+                  </div>
+                  <button class="button is-primary"
+                          [class.is-outlined]="selectedType !== type.id"
+                          (click)="onSelectType(type.id)"
+                  >
+                    {{'Select'}}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<ng-container *ngIf="selectedType">
+  <section class="hero is-fullheight-with-navbar"
+           id="generalForm"
+  >
+    <div class="hero-body">
+
+      <div class="container">
+        <div class="columns is-desktop">
+          <div class="column is-three-fifths is-offset-one-fifth">
+
+            <div class="block">
+
+              <app-general-sign-up-form [userType]="selectedType"
+                                        [form]="generalForm"
+                                        (formContinue)="onSubmitGeneralForm()"
+                                        (goBack)="onScrollTo()"
+              ></app-general-sign-up-form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-fullheight-with-navbar"
+           id="lastForm"
+           *ngIf="shouldShowLastForm"
+  >
+    <div class="hero-body">
+
+      <div class="container">
+        <div class="columns is-desktop">
+          <div class="column is-three-fifths is-offset-one-fifth">
+
+            <div class="block">
+              <ng-container [ngSwitch]="selectedType">
+                <app-sign-up-organization-form *ngSwitchCase="userRole.ORGANIZATION"
+                                               [form]="organizationForm"
+                                               (formSubmit)="onSubmitLastForm()"
+                                               (goBack)="onScrollTo('generalForm')"
+                ></app-sign-up-organization-form>
+              </ng-container>
+<!--              <app-general-sign-up-form [userType]="selectedType"-->
+<!--                                        (formSubmit)="onSubmitGeneralForm($event)"-->
+<!--                                        (goBack)="onScrollTo()"-->
+<!--              ></app-general-sign-up-form>-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>

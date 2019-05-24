@@ -1,73 +1,28 @@
-<app-generic-modal>
-  <form [formGroup]="form">
-    <ng-template appModalHeader>
-      {{'Organization registration form'}}
-    </ng-template>
-    <ng-template appModalContent>
-        <app-input class="field"
-                   formControlName="name"
-                   [formControl]="form.get('name')"
-                   placeholder="Organization name input"
-                   label="Organization Name"
-                   required="true"
-        ></app-input>
+<form [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+>
+  <h2 class="title">
+    Organization information
+  </h2>
+  <app-input class="field"
+             formControlName="organizationName"
+             [formControl]="form.get('organizationName')"
+             placeholder="Organization name"
+             label="Organization Name"
+             required="true"
+  ></app-input>
 
-        <div class="columns">
-          <app-input class="field column"
-                     formControlName="firstName"
-                     [formControl]="form.get('firstName')"
-                     placeholder="First name input"
-                     label="First Name"
-                     required="true"
-          ></app-input>
-
-          <app-input class="field column"
-                     formControlName="lastName"
-                     [formControl]="form.get('lastName')"
-                     placeholder="Last name input"
-                     label="Last Name"
-                     required="true"
-          ></app-input>
-        </div>
-        <app-input class="field"
-                   type="email"
-                   formControlName="email"
-                   [formControl]="form.get('email')"
-                   placeholder="Email input"
-                   label="Email"
-                   required="true"
-        ></app-input>
-
-        <app-input class="field"
-                   formControlName="postalCode"
-                   [formControl]="form.get('postalCode')"
-                   placeholder="Postal input"
-                   label="Postal Code"
-                   required="true"
-        ></app-input>
-        <app-input class="field"
-                   type="password"
-                   formControlName="password"
-                   [formControl]="form.get('password')"
-                   placeholder="Password input"
-                   label="Password"
-                   required="true"
-        ></app-input>
-
-    </ng-template>
-    <ng-template appModalFooter>
-      <div class="is-flex align-items-center">
-        <label class="checkbox mr-4 nowrap">
-          <input type="checkbox"
-                 formControlName="termsAndConditions">
-          I agree to the <a href="#">terms and conditions</a>
-        </label>
-        <button class="button is-fullwidth is-primary"
-                (click)="onSubmit()"
-        >
-          Register
-        </button>
-      </div>
-    </ng-template>
-  </form>
-</app-generic-modal>
+  <div class="buttons is-grouped is-grouped-right is-right">
+    <button class="button is-text"
+            type="button"
+            (click)="onBack()"
+    >
+      Back
+    </button>
+    <button class="button is-primary"
+            type="submit"
+    >
+      {{'Register'}}
+    </button>
+  </div>
+</form>

@@ -54,6 +54,10 @@
     <span *ngIf="formControl.errors.invalidCredentials">
       {{'Username or password is invalid value'}}
     </span>
+
+    <span *ngIf="formControl.errors.strong">
+      {{'Password at least should contain: min 8 characters, numbers, lowercase and uppercase letters'}}
+    </span>
   </div>
 
 </div>

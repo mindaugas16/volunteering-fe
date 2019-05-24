@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PasswordValidator } from '../validators/password.validator';
 
 @Component({
   selector: 'app-reset-password',
@@ -14,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ResetPasswordComponent implements OnInit {
   resetToken: string;
   form: FormGroup = new FormGroup({
-    password: new FormControl(null, Validators.required)
+    password: new FormControl(null, [Validators.required, PasswordValidator.strong])
   });
 
   constructor(private activeModal: NgbActiveModal,
