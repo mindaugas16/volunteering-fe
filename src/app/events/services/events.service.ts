@@ -18,8 +18,8 @@ export class EventsService {
   getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
     return this.apiService.query({
       query: `
-        query events($query: String, $location: String, $orderBy: String, $statuses: [Int], $tags: [String]) {
-          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses, tags: $tags) {
+        query events($query: String, $location: String, $orderBy: String, $statuses: [Int], $tags: [String], $organizationId: ID) {
+          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses, tags: $tags, organizationId: $organizationId) {
                 _id
                 title
                 description
@@ -49,8 +49,7 @@ export class EventsService {
         statuses
       }
     }).pipe(
-      map(({data}) => data),
-      map(({events}) => events),
+      map(({data}) => data.events),
       map((events) => {
         return events.map(e => {
           if (e.imagePath) {

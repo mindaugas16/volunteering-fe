@@ -25,20 +25,22 @@ export class AuthService {
   }
 
   static getToken() {
-    let storage = null;
-    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
-      storage = localStorage;
-    } else if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
-      storage = sessionStorage;
-    } else {
-      return null;
-    }
-    const user = JSON.parse(storage.getItem(LOCAL_STORAGE_TOKEN_KEY)) || null;
+    const user = JSON.parse(AuthService.getUsedBrowserStorage().getItem(LOCAL_STORAGE_TOKEN_KEY)) || null;
     return user ? user.token : null;
   }
 
   static getUser(): UserInterface {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER_KEY)) || null;
+    return JSON.parse(AuthService.getUsedBrowserStorage().getItem(LOCAL_STORAGE_USER_KEY)) || null;
+  }
+
+  static getUsedBrowserStorage() {
+    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+      return localStorage;
+    } else if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+      return sessionStorage;
+    } else {
+      return null;
+    }
   }
 
   signIn({email, password, rememberMe}): Observable<any> {

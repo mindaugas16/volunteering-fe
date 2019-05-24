@@ -14,7 +14,7 @@ export interface OrganizationInterface extends UserInterface {
 
 
 export interface UpdateOrganizationInterface {
-  name: string;
+  organizationName: string;
   location: LocationInterface;
   description: string;
 }

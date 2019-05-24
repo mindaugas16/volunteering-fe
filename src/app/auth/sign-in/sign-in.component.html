@@ -1,7 +1,7 @@
 <div class="section">
   <div class="container">
-    <div class="columns is-desktop">
-      <div class="column is-one-third is-offset-one-third">
+    <div class="columns">
+      <div class="column border-r section pt-0 pb-0">
         <h3 class="has-text-weight-semibold is-size-3">
           Log in
         </h3>
@@ -29,18 +29,9 @@
                      formControlName="password"
                      [formControl]="form.get('password')"
                      placeholder="Password"
+                     label="Password"
                      [showValidations]="false"
           >
-            <div class="level">
-              <span class='level-left'>
-                Password
-              </span>
-              <a class='level-right'
-                 (click)="onForgotPassword()"
-              >
-                Forgot password?
-              </a>
-            </div>
           </app-input>
 
           <div class="field">
@@ -55,14 +46,27 @@
 
           <div class="field">
             <div class="control">
-              <button class="button is-fullwidth mt-3 is-link"
+              <button class="button is-fullwidth mt-3 is-primary"
                       [class.is-loading]="loading"
                       type="submit">
                 Login
               </button>
             </div>
           </div>
+          <div class="is-flex justify-content-center">
+            <p>
+              Forgot password?
+            </p>
+            <a class='ml-2'
+               (click)="onForgotPassword()"
+            >
+              Reset password
+            </a>
+          </div>
         </form>
+      </div>
+      <div class="column section pt-0 pb-0 is-invisible-mobile is-invisible-tablet">
+        New user?
       </div>
     </div>
   </div>
