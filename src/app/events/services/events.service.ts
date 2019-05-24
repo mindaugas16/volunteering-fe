@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface, EventStatus } from '../../event/models/event.interface';
+import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
 import { environment } from '../../../environments/environment';
@@ -91,6 +91,10 @@ export class EventsService {
               _id
               label
            }
+           customFields {
+              title
+              value
+           }
            activities {
               _id
               name
@@ -169,27 +173,15 @@ export class EventsService {
     );
   }
 
-  createEvent(event: CreateEventInterface): Observable<any> {
+  createEvent(event: CreateEventInterface): Observable<EventInterface> {
     return this.apiService.query({
       query: `
         mutation createEvent($eventInput: EventInput!) {
             createEvent(eventInput: $eventInput) {
                _id
-               title
-               description
-               status
-               date {
-                start
-                end
-               }
-               imagePath
-               location {
+               customFields {
                 title
-                address
-                address2
-                city
-                country
-                zipCode
+                value
                }
              }
           }`
@@ -198,8 +190,7 @@ export class EventsService {
         eventInput: event
       }
     }).pipe(
-      map(({data}) => data),
-      map(({createEvent}) => createEvent),
+      map(({data}) => data.createEvent)
     );
   }
 

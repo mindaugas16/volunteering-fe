@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventInterface } from '../models/event.interface';
-import { UserInterface } from '../../auth/user.interface';
-import { EventsService } from '../../events/services/events.service';
-import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
+import { UserInterface } from '../../../auth/user.interface';
+import { EventsService } from '../../services/events.service';
+import { HeaderMessageService } from '../../../ui-elements/header-message/header-message.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 export interface BadgeCreateInterface {

@@ -1,4 +1,4 @@
-import { EventInterface } from '../event/models/event.interface';
+import { EventInterface } from '../events/event/models/event.interface';
 import { OrganizationInterface } from '../organizations/organization.interface';
 import { UserRole } from '../profile/user-type.enum';
 

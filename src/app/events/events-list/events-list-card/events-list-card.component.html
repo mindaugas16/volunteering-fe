@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header">
     <a class="card-image"
-       [routerLink]="['/event', event._id]"
+       [routerLink]="['details', event._id]"
        [style.background-image]="'url('+(event.imagePath ? event.imagePath : 'https://bulma.io/images/placeholders/1280x960.png')+')'">
             <a class="icon is-large card-star is-primary"
                appClickStopPropagation
@@ -11,7 +11,7 @@
     </a>
   </div>
   <div class="card-body">
-    <a [routerLink]="['/event', event._id]">
+    <a [routerLink]="['details', event._id]">
       <div class="card-title">
         {{event.title}}
       </div>
@@ -44,7 +44,7 @@
   <div class="card-footer">
     <a class="button is-primary is-outlined"
        *appHasPermission="{condition: actionsRules?.JOIN_EVENT, args: {}}"
-       [routerLink]="['/event', event._id]"
+       [routerLink]="['details', event._id]"
     >
       {{'Join now'}}
     </a>

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { EventStatus } from '../../../event/models/event.interface';
+import { EventStatus } from '../../../events/event/models/event.interface';
 
 @Component({
   selector: 'app-event-status-label',

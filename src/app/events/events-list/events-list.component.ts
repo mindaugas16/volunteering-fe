@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EventInterface } from '../../event/models/event.interface';
+import { EventInterface } from '../event/models/event.interface';
 
 @Component({
   selector: 'app-events-list',

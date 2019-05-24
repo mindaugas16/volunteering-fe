@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'activities',
-    loadChildren: '../activities/activities.module#ActivitiesModule'
+    loadChildren: '../../activities/activities.module#ActivitiesModule'
   },
 ];
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EventInterface } from '../../event/models/event.interface';
+import { EventInterface } from '../../events/event/models/event.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { ActivitiesService } from '../activities.service';
 import { ActivityCreateInterface, ActivityInterface, DateRangeInterface } from '../models/activity.interface';

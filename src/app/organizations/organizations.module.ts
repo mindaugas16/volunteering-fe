@@ -5,7 +5,7 @@ import { OrganizationsRoutingModule } from './organizations-routing.module';
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 import { OrganizationInnerComponent } from './organization-inner/organization-inner.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { EventModule } from '../event/event.module';
+import { EventModule } from '../events/event/event.module';
 import { SharedModule } from '../shared/shared.module';
 import { InviteUserModalModule } from '../ui-elements/invite-user-modal/invite-user-modal.module';
 import { InviteUserModalComponent } from '../ui-elements/invite-user-modal/invite-user-modal.component';

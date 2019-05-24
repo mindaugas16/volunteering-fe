@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateEventInterface, EventInterface, EventStatus } from '../models/event.interface';
+import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
-import { EventsService } from '../../events/services/events.service';
+import { EventsService } from '../services/events.service';
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { DateRangeInterface } from '../../activities/models/activity.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
@@ -10,6 +10,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { DateFormatHelper } from '../../core/services/helpers/date-format-helper.service';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
+import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-field.interface';
+import { Router } from '@angular/router';
+
+const CUSTOM_FIELDS_LIMIT = 4;
 
 @Component({
   selector: 'app-event-edit',
@@ -37,7 +41,8 @@ export class EventEditComponent implements OnInit {
       city: new FormControl(null),
       country: new FormControl(null),
       zipCode: new FormControl(null)
-    })
+    }),
+    customFields: new FormGroup({})
   });
   eventStatus = EventStatus;
   removeImage: boolean;
@@ -45,13 +50,17 @@ export class EventEditComponent implements OnInit {
   image;
 
   date;
+  shouldShowCustomFieldAddForm: boolean;
+  customFields: CustomFieldInterface[] = [];
+  customFieldsLimit = CUSTOM_FIELDS_LIMIT;
 
   constructor(
     private apiService: ApiService,
     private cd: ChangeDetectorRef,
     private eventsService: EventsService,
     private activeModal: NgbActiveModal,
-    private headerMessageService: HeaderMessageService
+    private headerMessageService: HeaderMessageService,
+    private router: Router
   ) {
   }
 
@@ -156,11 +165,39 @@ export class EventEditComponent implements OnInit {
 
 
   private createEvent(eventInput: CreateEventInterface, filePath: string) {
-    this.eventsService.createEvent({...eventInput, imagePath: filePath}).subscribe(event => {
+    const {customFields, ...rest} = eventInput;
+    const newEvent = {...rest, imagePath: filePath, customFields: this.customFields};
+    this.eventsService.createEvent(newEvent).subscribe(event => {
       this.eventChange.emit(event);
       this.onCloseModal();
       this.headerMessageService.show('Event created successfully', 'SUCCESS');
+      this.router.navigate(['/events', 'details', event._id]);
     }, () => FormControlsHelperService.invalidateFormControls(this.form));
   }
 
+  onAddCustomField(field: CustomFieldInterface): void {
+    const customFields = this.form.get('customFields') as FormGroup;
+    const size = this.customFields.length;
+    // Create unique random customField formControlName
+    field.id = `customField${size + Math.floor(1000 + Math.random() * 9000)}`;
+    customFields.addControl(field.id, new FormControl(field.value));
+    this.customFields.push(field);
+    this.hideCustomFieldForm();
+  }
+
+  onRemoveFormControl(id) {
+    const foundIndex = this.customFields.findIndex(c => c.id === id);
+    if (foundIndex > -1) {
+      (this.form.get('customFields') as FormGroup).removeControl(id);
+      this.customFields.splice(foundIndex, 1);
+    }
+  }
+
+  getCustomField(id): CustomFieldInterface {
+    return this.customFields.find(c => c.id === id);
+  }
+
+  hideCustomFieldForm() {
+    this.shouldShowCustomFieldAddForm = false;
+  }
 }

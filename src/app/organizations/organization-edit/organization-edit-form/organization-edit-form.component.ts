@@ -13,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class OrganizationEditFormComponent implements OnInit {
   form: FormGroup;
+  loading: boolean;
   @Input() organization: OrganizationInterface;
   @Output() update: EventEmitter<OrganizationInterface> = new EventEmitter();
 
@@ -25,6 +26,7 @@ export class OrganizationEditFormComponent implements OnInit {
 
   ngOnInit() {
     if (!this.organization) {
+      this.loading = true;
       this.authService.getCurrentUser().pipe(
         switchMap(user => {
           return this.organizationService.getOrganization(user._id);
@@ -32,6 +34,7 @@ export class OrganizationEditFormComponent implements OnInit {
       ).subscribe(organization => {
         this.organization = organization;
         this.assignCreatedForm();
+        this.loading = false;
       });
 
       return;

@@ -3,7 +3,7 @@ import { ProfileService } from '../profile.service';
 import { CalendarEvent } from 'angular-calendar';
 import { startOfDay } from 'date-fns';
 import { Router } from '@angular/router';
-import { EventInterface } from '../../event/models/event.interface';
+import { EventInterface } from '../../events/event/models/event.interface';
 import { ActivityInterface } from '../../activities/models/activity.interface';
 import { EventDateStatusHelper } from '../../core/services/helpers/event-date-status.helper';
 

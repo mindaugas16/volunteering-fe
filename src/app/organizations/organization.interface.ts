@@ -1,5 +1,5 @@
 import { UserInterface } from '../auth/user.interface';
-import { EventInterface } from '../event/models/event.interface';
+import { EventInterface } from '../events/event/models/event.interface';
 import { LocationInterface } from '../shared/models/location.interface';
 
 export interface OrganizationInterface extends UserInterface {

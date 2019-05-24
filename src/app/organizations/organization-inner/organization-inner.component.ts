@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/auth.service';
 import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EventEditComponent } from '../../event/event-edit/event-edit.component';
+import { EventEditComponent } from '../../events/event-edit/event-edit.component';
 import { ActionsRules } from '../../shared/permissions.config';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { OrganizationEditModalComponent } from '../organization-edit/organization-edit-modal/organization-edit-modal.component';

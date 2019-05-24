@@ -25,12 +25,14 @@ export class AuthService {
   }
 
   static getToken() {
-    const user = JSON.parse(AuthService.getUsedBrowserStorage().getItem(LOCAL_STORAGE_TOKEN_KEY)) || null;
+    const storage = AuthService.getUsedBrowserStorage();
+    const user = storage ? (JSON.parse(AuthService.getUsedBrowserStorage().getItem(LOCAL_STORAGE_TOKEN_KEY)) || null) : null;
     return user ? user.token : null;
   }
 
   static getUser(): UserInterface {
-    return JSON.parse(AuthService.getUsedBrowserStorage().getItem(LOCAL_STORAGE_USER_KEY)) || null;
+    const storage = AuthService.getUsedBrowserStorage();
+    return storage ? (JSON.parse(storage.getItem(LOCAL_STORAGE_USER_KEY)) || null) : null;
   }
 
   static getUsedBrowserStorage() {
@@ -38,9 +40,8 @@ export class AuthService {
       return localStorage;
     } else if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
       return sessionStorage;
-    } else {
-      return null;
     }
+    return null;
   }
 
   signIn({email, password, rememberMe}): Observable<any> {

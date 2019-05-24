@@ -17,12 +17,17 @@
     </div>
   </div>
   <div class="column">
-    <div class="is-flex mb-3">
-      <h4 class="is-4 title">
+    <div class="is-flex mb-3 justify-content-between">
+      <h4 class="is-4 title mb-0">
         {{'Events'}}
       </h4>
+      <a class="icon"
+         [routerLink]="['/events', 'new']"
+      >
+        <i class="fa fa-plus"></i>
+      </a>
 
     </div>
-    <app-events-list [events]="events" [viewMode]="'LIST'" [loading]="loading"></app-events-list>
+    <app-events-list [events]="organization?.events" [viewMode]="'LIST'" [loading]="loading"></app-events-list>
   </div>
 </div>

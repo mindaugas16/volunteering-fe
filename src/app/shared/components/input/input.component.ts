@@ -1,6 +1,8 @@
 import { Component, ContentChild, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputLabelDirective } from './directives/input-label.directive';
+import { ModalHeaderDirective } from '../../../ui-elements/generic-modal/directives/modal-header/modal-header.directive';
+import { InputButtonDirective } from './directives/input-button.directive';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -27,6 +29,9 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() fieldType: 'input' | 'textarea' = 'input';
   @Input() min: number;
   @Input() showValidations = true;
+
+  @ContentChild(InputLabelDirective, {read: TemplateRef}) labelTemplate;
+  @ContentChild(InputButtonDirective, {read: TemplateRef}) buttonTemplate;
 
   // The internal data model
   private innerValue: any = '';

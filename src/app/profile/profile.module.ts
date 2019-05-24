@@ -17,6 +17,8 @@ import { ProfileOrganizationsComponent } from './profile-organizations/profile-o
 import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
 import { ParticipationComponent } from './participation/participation.component';
 import { CalendarModule } from '../ui-elements/calendar/calendar.module';
+import { EventEditComponent } from '../events/event-edit/event-edit.component';
+import { EventModule } from '../events/event/event.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,11 @@ import { CalendarModule } from '../ui-elements/calendar/calendar.module';
     AuthModule,
     OrganizationEditModule,
     EventsModule,
-    CalendarModule
+    CalendarModule,
+    EventModule
+  ],
+  entryComponents: [
+    EventEditComponent
   ]
 })
 export class ProfileModule {

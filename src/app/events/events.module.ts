@@ -11,6 +11,9 @@ import { EventsListCardComponent } from './events-list/events-list-card/events-l
 import { EventsComponent } from './events/events.component';
 import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 import { TagModule } from '../ui-elements/tag/tag.module';
+import { EventEditComponent } from './event-edit/event-edit.component';
+import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
+import { CustomFieldModule } from '../ui-elements/custom-field/custom-field.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,7 @@ import { TagModule } from '../ui-elements/tag/tag.module';
     EventsSearchPanelComponent,
     EventsListCardComponent,
     EventsComponent,
+    EventEditComponent,
   ],
   exports: [
     EventsListComponent
@@ -30,7 +34,9 @@ import { TagModule } from '../ui-elements/tag/tag.module';
     ReactiveFormsModule,
     TranslateModule,
     EventStatusLabelModule,
-    TagModule
+    TagModule,
+    DateRangePickerModule,
+    CustomFieldModule,
   ]
 })
 export class EventsModule {

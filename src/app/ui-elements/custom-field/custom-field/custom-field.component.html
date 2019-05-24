@@ -1,0 +1,37 @@
+<form [formGroup]="form"
+      class="is-flex"
+      (ngSubmit)="onAdd()"
+>
+  <div class="columns auto-grow">
+    <div class="column is-4">
+      <app-input class="field"
+                 formControlName="title"
+                 [formControl]="form.get('title')"
+                 placeholder="Title"
+                 label="Title"
+      ></app-input>
+    </div>
+    <div class="column">
+      <app-input class="field"
+                 formControlName="value"
+                 [formControl]="form.get('value')"
+                 placeholder="Value"
+                 label="Value"
+      >
+        <ng-template appInputButton>
+          <button class="button icon is-success"
+                  type="submit"
+          >
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="button icon is-danger"
+                  type="button"
+                  (click)="onRemove()"
+          >
+            <i class="fa fa-close"></i>
+          </button>
+        </ng-template>
+      </app-input>
+    </div>
+  </div>
+</form>

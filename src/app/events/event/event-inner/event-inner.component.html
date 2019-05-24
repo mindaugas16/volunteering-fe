@@ -22,7 +22,16 @@
           </div>
         </div>
         <hr/>
-
+        <div class="mb-4" *ngIf="event?.customFields && event?.customFields.length">
+          <h4 class="title is-4">
+            {{'Additional information'}}
+          </h4>
+          <ul *ngFor="let customField of event.customFields">
+            <li>
+              <span class="has-text-weight-bold">{{customField.title}}</span>: <span>{{customField.value}}</span>
+            </li>
+          </ul>
+        </div>
         <div>
           <div class="is-flex align-items-center justify-content-between">
             <h4 class="title is-4">

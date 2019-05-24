@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../../events/services/events.service';
+import { EventsService } from '../../services/events.service';
 import { EventInterface } from '../models/event.interface';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { EventEditComponent } from '../event-edit/event-edit.component';
+import { EventEditComponent } from '../../event-edit/event-edit.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TagInterface } from '../../ui-elements/tag/tag.interface';
-import { ActionsRules } from '../../shared/permissions.config';
-import { AuthService } from '../../auth/auth.service';
-import { UserInterface } from '../../auth/user.interface';
-import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
+import { TagInterface } from '../../../ui-elements/tag/tag.interface';
+import { ActionsRules } from '../../../shared/permissions.config';
+import { AuthService } from '../../../auth/auth.service';
+import { UserInterface } from '../../../auth/user.interface';
+import { BreadcrumbInterface } from '../../../ui-elements/breadcrumb/breadcrumb.interface';
 import { RewardVolunteersComponent } from '../reward-volunteers/reward-volunteers.component';
-import { ActivitiesService } from '../../activities/activities.service';
-import { ActivityInterface } from '../../activities/models/activity.interface';
-import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
-import { EventDateStatusHelper } from '../../core/services/helpers/event-date-status.helper';
+import { ActivitiesService } from '../../../activities/activities.service';
+import { ActivityInterface } from '../../../activities/models/activity.interface';
+import { HeaderMessageService } from '../../../ui-elements/header-message/header-message.service';
+import { EventDateStatusHelper } from '../../../core/services/helpers/event-date-status.helper';
 
 @Component({
   selector: 'app-event-inner',

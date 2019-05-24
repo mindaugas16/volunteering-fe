@@ -1,6 +1,6 @@
 import { UserInterface } from '../../auth/user.interface';
 import { ParticipationInterface } from '../../shared/models/participation.interface';
-import { EventInterface } from '../../event/models/event.interface';
+import { EventInterface } from '../../events/event/models/event.interface';
 
 export interface DateRangeInterface {
   start: Date | string;

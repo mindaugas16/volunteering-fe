@@ -1,7 +1,8 @@
-import { OrganizationInterface } from '../../organizations/organization.interface';
-import { ActivityInterface, DateRangeInterface } from '../../activities/models/activity.interface';
-import { LocationInterface } from '../../shared/models/location.interface';
-import { TagInterface } from '../../ui-elements/tag/tag.interface';
+import { OrganizationInterface } from '../../../organizations/organization.interface';
+import { ActivityInterface, DateRangeInterface } from '../../../activities/models/activity.interface';
+import { LocationInterface } from '../../../shared/models/location.interface';
+import { TagInterface } from '../../../ui-elements/tag/tag.interface';
+import { CustomFieldInterface } from '../../../ui-elements/custom-field/custom-field.interface';
 
 export interface EventInterface {
   _id: string;
@@ -17,6 +18,7 @@ export interface EventInterface {
   createdAt: string;
   updatedAt: string;
   status: EventStatus;
+  customFields: CustomFieldInterface[];
 }
 
 export interface CreateEventInterface {
@@ -27,6 +29,7 @@ export interface CreateEventInterface {
   location?: LocationInterface;
   imagePath?: string;
   status: string;
+  customFields?: CustomFieldInterface[];
 }
 
 export enum EventStatus {
