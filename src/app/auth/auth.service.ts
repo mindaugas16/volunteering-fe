@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
 import { UserRole } from '../profile/user-type.enum';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -24,7 +23,15 @@ export class AuthService {
   }
 
   static getToken() {
-    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) || null;
+    let storage = null;
+    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+      storage = localStorage;
+    } else if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+      storage = sessionStorage;
+    } else {
+      return null;
+    }
+    const user = JSON.parse(storage.getItem(LOCAL_STORAGE_TOKEN_KEY)) || null;
     return user ? user.token : null;
   }
 
@@ -32,9 +39,14 @@ export class AuthService {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_USER_KEY)) || null;
   }
 
-  signIn(email: string, password: string): Observable<any> {
+  signIn({email, password, rememberMe}): Observable<any> {
+    let storage = sessionStorage;
+    if (rememberMe) {
+      storage = localStorage;
+    }
+
     const setSession = authResponse => {
-      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, JSON.stringify(
+      storage.setItem(LOCAL_STORAGE_TOKEN_KEY, JSON.stringify(
         {
           'token': authResponse.login.token,
           // 'expiresAt': expiresAt.valueOf()
@@ -142,9 +154,13 @@ export class AuthService {
       map(({data}) => data.currentUser),
       tap(user => {
         if (user) {
-          localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
+          let storage = sessionStorage;
+          if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+            storage = localStorage;
+          }
+          storage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
         } else {
-          this.router.navigate(['/auth', 'login']);
+          this.logout();
         }
       })
     );
@@ -159,8 +175,14 @@ export class AuthService {
   }
 
   public logout() {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
-    localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) || localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+      localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+      localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+    }
+    if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) || sessionStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+      sessionStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+      sessionStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+    }
     this.authenticated(false);
     this.router.navigate(['/auth/sign-in']);
   }

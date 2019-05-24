@@ -33,8 +33,7 @@ export class SignInComponent implements OnInit {
       this.isInvalid = true;
       return;
     }
-    const {email, password} = this.form.value;
-    this.authService.signIn(email, password).subscribe(() => {
+    this.authService.signIn(this.form.value).subscribe(() => {
         this.loading = false;
       },
       error => {
