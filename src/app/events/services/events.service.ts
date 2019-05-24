@@ -37,7 +37,7 @@ export class EventsService {
                 }
                 organization {
                   _id
-                  name
+                  organizationName
                 }
                 imagePath
                 status
@@ -86,7 +86,7 @@ export class EventsService {
            }
            organization {
               _id
-              name
+              organizationName
            }
            tags {
               _id

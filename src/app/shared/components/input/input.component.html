@@ -35,6 +35,14 @@
       {{'Email address is invalid'}}
     </span>
 
+    <span *ngIf="formControl.errors.notMatchToCurrent">
+      {{'Current password is wrong'}}
+    </span>
+
+    <span *ngIf="formControl.errors.notMatch">
+      {{'Not match to new password'}}
+    </span>
+
     <span *ngIf="formControl.errors.maxlength">
       {{'Field max length is'}} {{formControl.errors.maxlength.requiredLength}} {{' symbols'}}
     </span>

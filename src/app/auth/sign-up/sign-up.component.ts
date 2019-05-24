@@ -35,6 +35,10 @@ export class SignUpComponent implements OnInit {
     organizationName: new FormControl(null, [Validators.required]),
   });
 
+  sponsorForm: FormGroup = new FormGroup({
+    sponsorName: new FormControl(null, [Validators.required])
+  });
+
   userRole = UserRole;
 
   constructor(private viewportScroller: ViewportScroller,
@@ -71,7 +75,7 @@ export class SignUpComponent implements OnInit {
         values = {...values, ...this.organizationForm.value};
         break;
       case UserRole.SPONSOR:
-        values = values;
+        values = {...values, ...this.sponsorForm.value};
         break;
     }
     this.register(values);
@@ -91,13 +95,26 @@ export class SignUpComponent implements OnInit {
   }
 
   private register(values: CreateUserInterface) {
-    console.log(values);
+    let lastForm = null;
+
+    switch (this.selectedType) {
+      case UserRole.ORGANIZATION:
+        lastForm = this.organizationForm;
+        break;
+      case UserRole.SPONSOR:
+        lastForm = this.sponsorForm;
+        break;
+    }
+
     this.authService.signUp(values, this.selectedType).subscribe(() => {
         this.activeModal.close();
         this.router.navigate(['/auth', 'sign-in']);
       },
       error => {
         FormControlsHelperService.invalidateControlsByErrors(this.generalForm, error.data);
+        if (lastForm) {
+          FormControlsHelperService.invalidateControlsByErrors(lastForm, error.data);
+        }
       }
     );
   }

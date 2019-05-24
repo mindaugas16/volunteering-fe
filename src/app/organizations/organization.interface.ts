@@ -4,7 +4,7 @@ import { LocationInterface } from '../shared/models/location.interface';
 
 export interface OrganizationInterface extends UserInterface {
   _id: string;
-  name: string;
+  organizationName: string;
   description: string;
   creator: UserInterface;
   location: LocationInterface;

@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    const visibleOnlyForVolunteer = () => [UserRole.ORGANIZATION, UserRole.SPONSOR].indexOf(this.user.role) > -1;
     this.profileService.getUserInfo().subscribe(user => {
       this.user = user;
       this.tabs = [
@@ -42,7 +43,7 @@ export class ProfileComponent implements OnInit {
           title: 'Organizations',
           id: ProfileTabsEnum.ORGANIZATIONS,
           icon: 'fa-star',
-          isHidden: this.user && this.user.role === UserRole.ORGANIZATION,
+          isHidden: this.user && visibleOnlyForVolunteer(),
           link: ['organizations']
         },
         {
@@ -50,14 +51,14 @@ export class ProfileComponent implements OnInit {
           icon: 'fa-trophy',
           id: ProfileTabsEnum.ACHIEVEMENTS,
           link: ['achievements'],
-          isHidden: this.user && this.user.role !== UserRole.VOLUNTEER,
+          isHidden: this.user && visibleOnlyForVolunteer(),
         },
         {
           title: 'Participation',
           icon: 'fa-calendar',
           id: ProfileTabsEnum.PARTICIPATION,
           link: ['participation'],
-          isHidden: this.user && this.user.role !== UserRole.VOLUNTEER,
+          isHidden: this.user && visibleOnlyForVolunteer(),
         },
       ];
     });

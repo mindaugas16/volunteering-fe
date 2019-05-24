@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CreateUserInterface, UserInterface } from './user.interface';
 import { ApiService } from '../api.service';
 import { UserRole } from '../profile/user-type.enum';
+import { HeaderMessageService } from '../ui-elements/header-message/header-message.service';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private apiService: ApiService,
     private router: Router,
+    private headerMessage: HeaderMessageService
   ) {
     this.authenticated$.next(this.isAuthenticated());
   }
@@ -98,29 +100,8 @@ export class AuthService {
       map(({data}) => data),
       tap(() => {
         this.router.navigate(['/auth/sign-in']);
+        this.headerMessage.show('Congratulations! You have successfully registered', 'SUCCESS');
       })
-    );
-  }
-
-  registerOrganization(user: CreateUserInterface, organization) {
-    return this.apiService.query({
-      query: `
-        mutation registerOrganization($organizationInput: OrganizationInput!, $userInput: UserInput!) {
-          registerOrganization(organizationInput: $organizationInput, userInput: $userInput) {
-            email
-            firstName
-            lastName
-            name
-          }
-        }
-      `,
-      variables: {
-        organizationInput: organization,
-        userInput: user
-      }
-    }).pipe(
-      map(({data}) => data),
-      map(({registerOrganization}) => registerOrganization),
     );
   }
 

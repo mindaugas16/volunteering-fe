@@ -79,6 +79,11 @@
                                                (formSubmit)="onSubmitLastForm()"
                                                (goBack)="onScrollTo('generalForm')"
                 ></app-sign-up-organization-form>
+                <app-sign-up-sponsor-form *ngSwitchCase="userRole.SPONSOR"
+                                          [form]="sponsorForm"
+                                          (formSubmit)="onSubmitLastForm()"
+                                          (goBack)="onScrollTo('generalForm')"
+                ></app-sign-up-sponsor-form>
               </ng-container>
 <!--              <app-general-sign-up-form [userType]="selectedType"-->
 <!--                                        (formSubmit)="onSubmitGeneralForm($event)"-->

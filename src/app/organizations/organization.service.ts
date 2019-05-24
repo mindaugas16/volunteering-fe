@@ -21,7 +21,7 @@ export class OrganizationService {
         query organizations {
            organizations {
               _id
-              name
+              organizationName
               location {
                 address
               }
@@ -29,8 +29,7 @@ export class OrganizationService {
         }
       `,
     }).pipe(
-      map(({data}) => data),
-      map(({organizations}) => organizations),
+      map(({data}) => data.organizations)
     );
   }
 
@@ -40,7 +39,7 @@ export class OrganizationService {
         query organization($organizationId: ID!) {
            organization(organizationId: $organizationId) {
               _id
-              name
+              organizationName
               firstName
               lastName
               description
@@ -110,7 +109,7 @@ export class OrganizationService {
       query: `
         mutation updateOrganization($organizationInput: OrganizationInput!) {
           updateOrganization(organizationInput: $organizationInput) {
-            name
+            organizationName
             description
             location {
               address

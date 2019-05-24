@@ -25,7 +25,7 @@
       <div>
         <i class="fa fa-users mr-2"></i>
         <a [routerLink]="['/organizations', 'details', event.organization._id]">
-          {{event.organization.name}}
+          {{event.organization.organizationName}}
         </a>
       </div>
       <div *ngIf="event?.location">

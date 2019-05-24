@@ -1,71 +1,113 @@
-<form [formGroup]="form"
-      (submit)="onSaveChanges()"
->
-  <h3 class="title is-3">
-    {{'Edit profile'}}
-  </h3>
-  <app-form-message *ngIf="failureMessage"
-                    [message]="failureMessage"
-                    status="danger"
-                    (close)="failureMessage = null"
-  ></app-form-message>
+<div class="columns">
+  <div class="column">
+    <h3 class="title is-3">
+      {{'Edit profile'}}
+    </h3>
+    <form [formGroup]="form">
 
-  <app-form-message *ngIf="isChangesSaved"
-                    [message]="'Changes successfully saved'"
-                    status="success"
-                    (close)="isChangesSaved = false"
-  ></app-form-message>
-  <fieldset disabled>
-    <app-input class="field"
-               type="email"
-               formControlName="email"
-               [formControl]="form.get('email')"
-               placeholder="Email input"
-               label="Email"
-    ></app-input>
-  </fieldset>
+      <app-form-message *ngIf="failureMessage"
+                        [message]="failureMessage"
+                        status="danger"
+                        (close)="failureMessage = null"
+      ></app-form-message>
 
-  <div class="columns">
-    <div class="column">
+      <app-form-message *ngIf="isChangesSaved"
+                        [message]="'Changes successfully saved'"
+                        status="success"
+                        (close)="isChangesSaved = false"
+      ></app-form-message>
+      <fieldset disabled>
+        <app-input type="email"
+                   class="field"
+                   formControlName="email"
+                   [formControl]="form.get('email')"
+                   placeholder="Email input"
+                   label="Email"
+        ></app-input>
+      </fieldset>
+
+      <div class="columns">
+        <div class="column">
+          <app-input class="field"
+                     formControlName="firstName"
+                     [formControl]="form.get('firstName')"
+                     placeholder="First name input"
+                     label="First Name"
+          ></app-input>
+        </div>
+        <div class="column">
+          <app-input class="field"
+                     formControlName="lastName"
+                     [formControl]="form.get('lastName')"
+                     placeholder="Last name input"
+                     label="Last Name"
+          ></app-input>
+        </div>
+      </div>
+
       <app-input class="field"
-                 formControlName="firstName"
-                 [formControl]="form.get('firstName')"
-                 placeholder="First name input"
-                 label="First Name"
+                 formControlName="postalCode"
+                 [formControl]="form.get('postalCode')"
+                 placeholder="Postal input"
+                 label="Postal Code"
       ></app-input>
-    </div>
-    <div class="column">
+
+      <div class="buttons is-grouped is-right">
+        <button class="button is-text"
+                type="button"
+                (click)="onResetChanges()"
+        >
+          {{'COMMON.RESET' | translate}}
+        </button>
+        <button class="button is-link"
+                type="submit"
+                (click)="onSaveChanges()"
+        >
+          {{'COMMON.SAVE' | translate}}
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="column">
+    <h3 class="title is-3">
+      {{'Change password'}}
+    </h3>
+    <form [formGroup]="changePasswordForm"
+    >
       <app-input class="field"
-                 formControlName="lastName"
-                 [formControl]="form.get('lastName')"
-                 placeholder="Last name input"
-                 label="Last Name"
+                 type="password"
+                 formControlName="oldPassword"
+                 [formControl]="changePasswordForm.get('oldPassword')"
+                 placeholder="Current password"
+                 label="Current password"
       ></app-input>
-    </div>
+      <app-input class="field"
+                 type="password"
+                 formControlName="newPassword"
+                 [formControl]="changePasswordForm.get('newPassword')"
+                 placeholder="New password"
+                 label="New password"
+      ></app-input>
+      <app-input class="field"
+                 type="password"
+                 formControlName="repeatPassword"
+                 [formControl]="changePasswordForm.get('repeatPassword')"
+                 placeholder="Repeat new password"
+                 label="Repeat new password"
+      ></app-input>
+      <div class="buttons is-grouped is-right">
+        <button class="button is-text"
+                type="reset"
+        >
+          {{'COMMON.RESET' | translate}}
+        </button>
+        <button class="button is-link"
+                (click)="onChangePassword()"
+                [disabled]="changePasswordForm.invalid"
+        >
+          {{'COMMON.CHANGE' | translate}}
+        </button>
+      </div>
+    </form>
   </div>
-
-  <app-input class="field"
-             formControlName="postalCode"
-             [formControl]="form.get('postalCode')"
-             placeholder="Postal input"
-             label="Postal Code"
-  ></app-input>
-
-  <div class="field is-grouped is-grouped-right">
-    <div class="control">
-      <button class="button is-link"
-              type="submit"
-      >
-        {{'COMMON.SAVE' | translate}}
-      </button>
-    </div>
-    <div class="control">
-      <button class="button is-text"
-              type="button"
-              (click)="onResetChanges()"
-      >
-        {{'COMMON.RESET' | translate}}
-      </button>
-    </div>
-  </div>
-</form>
+</div>

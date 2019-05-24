@@ -25,10 +25,6 @@ export class ProfileService {
               postalCode
               contacts
               role
-              organizations {
-                name
-                _id
-              }
             }
            }
       `
@@ -100,6 +96,21 @@ export class ProfileService {
       `
     }).pipe(
       map(({data}) => data.participation),
+    );
+  }
+
+  changePassword(passwords): Observable<boolean> {
+    return this.apiService.query({
+      query: `
+      mutation changePassword($oldPassword: String!, $newPassword: String!, $repeatPassword: String!) {
+          changePassword(oldPassword: $oldPassword, newPassword: $newPassword, repeatPassword: $repeatPassword)
+           }
+      `,
+      variables: {
+        ...passwords
+      }
+    }).pipe(
+      map(({data}) => data.changePassword)
     );
   }
 }

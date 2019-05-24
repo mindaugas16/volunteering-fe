@@ -19,7 +19,7 @@ export class OrganizationEditService {
   createForm(organization: OrganizationInterface): FormGroup {
     this.form = new FormGroup({
       general: new FormGroup({
-        name: new FormControl(organization.name, Validators.required),
+        name: new FormControl(organization.organizationName, Validators.required),
         description: new FormControl(organization.description, Validators.maxLength(500))
       }),
       location: new FormGroup({
@@ -43,7 +43,7 @@ export class OrganizationEditService {
       }
 
       const organization: UpdateOrganizationInterface = {
-        name: this.form.value.general.name,
+        name: this.form.value.general.organizationName,
         description: this.form.value.general.description,
         location: this.form.value.location
       };
