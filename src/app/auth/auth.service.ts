@@ -166,6 +166,37 @@ export class AuthService {
     );
   }
 
+  requestResetToken(email: string): Observable<boolean> {
+    return this.apiService.query({
+      query: `
+      mutation getResetToken($email: String!) {
+          getResetToken(email: $email)
+           }
+      `,
+      variables: {
+        email
+      }
+    }).pipe(
+      map(({data}) => data.getResetToken)
+    );
+  }
+
+  resetPassword(token: string, password: string): Observable<boolean> {
+    return this.apiService.query({
+      query: `
+      mutation resetPassword($token: String!, $password: String!) {
+          resetPassword(token: $token, password: $password)
+           }
+      `,
+      variables: {
+        token,
+        password
+      }
+    }).pipe(
+      map(({data}) => data.resetPassword)
+    );
+  }
+
   private authenticated(authenticated: boolean) {
     this.authenticated$.next(authenticated);
   }

@@ -35,7 +35,9 @@
               <span class='level-left'>
                 Password
               </span>
-              <a class='level-right'>
+              <a class='level-right'
+                 (click)="onForgotPassword()"
+              >
                 Forgot password?
               </a>
             </div>
@@ -60,17 +62,6 @@
               </button>
             </div>
           </div>
-
-<!--          <div class="field">-->
-<!--            <p class="control">-->
-<!--              <a class="button is-fullwidth">-->
-<!--                <span class="icon mr-2">-->
-<!--                  <i class="fa fa-facebook"></i>-->
-<!--                </span>-->
-<!--                Login with Facebook-->
-<!--              </a>-->
-<!--            </p>-->
-<!--          </div>-->
         </form>
       </div>
     </div>

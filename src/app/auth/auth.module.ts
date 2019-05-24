@@ -10,6 +10,8 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
 import { SignUpVolunteerFormComponent } from './sign-up/sign-up-volunteer-form/sign-up-volunteer-form.component';
 import { SignUpOrganizationFormComponent } from './sign-up/sign-up-organization-form/sign-up-organization-form.component';
 import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-up-sponsor-form.component';
+import { ForgotPasswordModalComponent } from './forgot-password-modal/forgot-password-modal.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-
     SignUpVolunteerFormComponent,
     SignUpOrganizationFormComponent,
     SignUpSponsorFormComponent,
+    ForgotPasswordModalComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -36,7 +40,8 @@ import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-
   entryComponents: [
     SignUpVolunteerFormComponent,
     SignUpOrganizationFormComponent,
-    SignUpSponsorFormComponent
+    SignUpSponsorFormComponent,
+    ForgotPasswordModalComponent
   ]
 })
 export class AuthModule {

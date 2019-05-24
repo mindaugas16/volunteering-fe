@@ -31,7 +31,7 @@
   <div class="help is-danger"
        *ngIf="isInvalid()"
   >
-    <span *ngIf="formControl.errors.invalidEmail">
+    <span *ngIf="formControl.errors.invalidEmail || formControl.errors.email">
       {{'Email address is invalid'}}
     </span>
 

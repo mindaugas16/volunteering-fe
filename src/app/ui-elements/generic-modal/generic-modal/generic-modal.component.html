@@ -1,5 +1,5 @@
 <div class="modal-card">
-  <header class="modal-card-head" *ngIf="headerTemplate">
+  <header class="modal-card-head border-0" *ngIf="headerTemplate">
     <p class="modal-card-title">
       <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
     </p>
@@ -13,7 +13,7 @@
   <section class="modal-card-body">
     <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
   </section>
-  <footer class="modal-card-foot justify-content-end" *ngIf="footerTemplate">
+  <footer class="modal-card-foot justify-content-end border-0" *ngIf="footerTemplate">
     <div class="flex-basis-full">
       <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
     </div>
