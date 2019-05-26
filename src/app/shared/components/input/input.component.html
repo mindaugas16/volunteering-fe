@@ -66,6 +66,10 @@
       {{label + ' accepts only numbers'}}
     </span>
 
+    <span *ngIf="formControl.errors.alreadyTaken">
+      {{label + ' already taken'}}
+    </span>
+
     <span *ngIf="formControl.errors.invalid">
       {{'Invalid value'}}
     </span>

@@ -86,6 +86,7 @@ export class SignUpComponent implements OnInit {
       FormControlsHelperService.invalidateFormControls(this.generalForm);
       return;
     }
+
     if (this.selectedType === UserRole.VOLUNTEER) {
       this.register(this.generalForm.value);
       return;
@@ -106,6 +107,13 @@ export class SignUpComponent implements OnInit {
         break;
     }
 
+    if (lastForm && lastForm.invalid) {
+      FormControlsHelperService.invalidateFormControls(lastForm);
+      return;
+    }
+
+    console.log(lastForm);
+
     this.authService.signUp(values, this.selectedType).subscribe(() => {
         this.activeModal.close();
         this.router.navigate(['/auth', 'sign-in']);
@@ -113,7 +121,7 @@ export class SignUpComponent implements OnInit {
       error => {
         FormControlsHelperService.invalidateControlsByErrors(this.generalForm, error.data);
         if (lastForm) {
-          FormControlsHelperService.invalidateControlsByErrors(lastForm, error.data);
+          FormControlsHelperService.invalidateControlsByErrors(this.organizationForm, error.data);
         }
       }
     );

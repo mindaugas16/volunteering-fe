@@ -7,6 +7,8 @@ import { ProfileOrganizationsComponent } from './profile-organizations/profile-o
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
 import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
 import { ParticipationComponent } from './participation/participation.component';
+import { UserRole } from './user-type.enum';
+import { RoleGuard } from '../core/guards/role/role.guard';
 
 const routes: Routes = [
   {
@@ -20,6 +22,12 @@ const routes: Routes = [
       {
         path: 'my-organization',
         component: MyOrganizationComponent,
+        data: {
+          allowedRoles: [
+            UserRole.ORGANIZATION
+          ]
+        },
+        canActivate: [RoleGuard]
       },
       {
         path: 'settings',
@@ -28,14 +36,32 @@ const routes: Routes = [
       {
         path: 'organizations',
         component: ProfileOrganizationsComponent,
+        data: {
+          allowedRoles: [
+            UserRole.VOLUNTEER
+          ]
+        },
+        canActivate: [RoleGuard]
       },
       {
         path: 'achievements',
         component: ProfileAchievementsComponent,
+        data: {
+          allowedRoles: [
+            UserRole.VOLUNTEER
+          ]
+        },
+        canActivate: [RoleGuard]
       },
       {
         path: 'participation',
         component: ParticipationComponent,
+        data: {
+          allowedRoles: [
+            UserRole.VOLUNTEER
+          ]
+        },
+        canActivate: [RoleGuard]
       }
     ]
   }

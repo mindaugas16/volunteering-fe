@@ -92,6 +92,7 @@ export class EventsService {
               label
            }
            customFields {
+              id
               title
               value
            }
@@ -138,22 +139,6 @@ export class EventsService {
         mutation updateEvent($id: ID!, $eventInput: EventInput!) {
             updateEvent(id: $id, eventInput: $eventInput) {
                _id
-               title
-               status
-               description
-               date {
-                start
-                end
-               }
-               imagePath
-               location {
-                title
-                address
-                address2
-                city
-                country
-                zipCode
-               }
              }
           }`
       ,

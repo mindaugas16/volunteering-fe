@@ -9,7 +9,7 @@ import { FormControlsHelperService } from '../../../core/services/helpers/form-c
 })
 export class SignUpSponsorFormComponent implements OnInit {
   @Input() form: FormGroup;
-  @Output() formSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() formSubmit: EventEmitter<void> = new EventEmitter();
   @Output() goBack: EventEmitter<void> = new EventEmitter();
 
   constructor() {
@@ -19,11 +19,7 @@ export class SignUpSponsorFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) {
-      FormControlsHelperService.invalidateFormControls(this.form);
-      return;
-    }
-    this.formSubmit.emit(this.form.value);
+    this.formSubmit.emit();
   }
 
   onBack() {

@@ -101,14 +101,16 @@
             </span>
           </button>
 
-          <button class="button is-text" (click)="onEditDetails()">
+          <a class="button is-text"
+             [routerLink]="['edit']"
+          >
             <span class="icon mr-2">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </span>
             <span>
               {{'Edit details'}}
             </span>
-          </button>
+          </a>
         </div>
         <div class="box">
           <h4 class="title is-4">

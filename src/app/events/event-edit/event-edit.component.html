@@ -1,5 +1,7 @@
 <div class="section">
   <div class="container">
+    <app-breadcrumb *ngIf="breadcrumb.length" [items]="breadcrumb"></app-breadcrumb>
+
     <h1 class="title">
       {{event ? 'Edit event' : 'Create new event'}}
     </h1>

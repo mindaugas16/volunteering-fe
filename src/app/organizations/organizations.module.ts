@@ -5,7 +5,6 @@ import { OrganizationsRoutingModule } from './organizations-routing.module';
 import { OrganizationsListComponent } from './organizations-list/organizations-list.component';
 import { OrganizationInnerComponent } from './organization-inner/organization-inner.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { EventModule } from '../events/event/event.module';
 import { SharedModule } from '../shared/shared.module';
 import { InviteUserModalModule } from '../ui-elements/invite-user-modal/invite-user-modal.module';
 import { InviteUserModalComponent } from '../ui-elements/invite-user-modal/invite-user-modal.component';
@@ -14,6 +13,7 @@ import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.m
 import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 import { OrganizationEditModule } from './organization-edit/organization-edit.module';
+import { EventsModule } from '../events/events.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { OrganizationEditModule } from './organization-edit/organization-edit.mo
     ReactiveFormsModule,
     FormsModule,
     GenericModalModule,
-    EventModule,
+    EventsModule,
     BreadcrumbModule,
     EventStatusLabelModule,
     OrganizationEditModule

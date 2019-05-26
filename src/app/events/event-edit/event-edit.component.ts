@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { EventsService } from '../services/events.service';
-import { OrganizationInterface } from '../../organizations/organization.interface';
 import { DateRangeInterface } from '../../activities/models/activity.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +10,9 @@ import { Observable, of } from 'rxjs';
 import { DateFormatHelper } from '../../core/services/helpers/date-format-helper.service';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-field.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
 
 const CUSTOM_FIELDS_LIMIT = 4;
 
@@ -21,10 +22,6 @@ const CUSTOM_FIELDS_LIMIT = 4;
   styleUrls: ['./event-edit.component.scss']
 })
 export class EventEditComponent implements OnInit {
-  @Input() event: EventInterface;
-  @Input() organization: OrganizationInterface;
-  @Output() eventChange: EventEmitter<EventInterface> = new EventEmitter<EventInterface>();
-
   @ViewChild('inputImageElement') inputImageElement: ElementRef;
 
   form: FormGroup = new FormGroup({
@@ -54,28 +51,49 @@ export class EventEditComponent implements OnInit {
   customFields: CustomFieldInterface[] = [];
   customFieldsLimit = CUSTOM_FIELDS_LIMIT;
 
+  event: EventInterface;
+  breadcrumb: BreadcrumbInterface[] = [];
+
   constructor(
     private apiService: ApiService,
     private cd: ChangeDetectorRef,
     private eventsService: EventsService,
     private activeModal: NgbActiveModal,
     private headerMessageService: HeaderMessageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
   }
 
   ngOnInit() {
-    if (this.event) {
-      const {date, ...rest} = this.event;
-      this.form.patchValue({
-        ...rest,
-        startDate: date.start,
-        endDate: date.end
-      });
-      if (this.event.imagePath) {
-        this.image = this.event.imagePath;
+    this.route.params.pipe(
+      switchMap(params => {
+        return this.eventsService.getEvent(params.id);
+      })
+    ).subscribe(event => {
+      this.event = event;
+      if (this.event) {
+        const {date, ...rest} = this.event;
+        this.form.patchValue({
+          ...rest,
+          startDate: date.start,
+          endDate: date.end
+        });
+        if (this.event.customFields && this.event.customFields.length) {
+          this.event.customFields.forEach(field => {
+            this.appendCustomField(field);
+          });
+        }
+        if (this.event.imagePath) {
+          this.image = this.event.imagePath;
+        }
+        this.breadcrumb =  [
+          {title: 'Events', link: ['/events']},
+          {title: this.event.title, link: ['/events', 'details', this.event._id]},
+          {title: 'Edit', link: null}
+        ];
       }
-    }
+    });
   }
 
   onDateSelect({start, end}: DateRangeInterface) {
@@ -156,19 +174,21 @@ export class EventEditComponent implements OnInit {
 
 
   private updateEvent(eventInput: CreateEventInterface, filePath: string) {
-    this.eventsService.update(this.event._id, {...eventInput, imagePath: filePath}).subscribe(event => {
-      this.eventChange.emit(event);
+    const {customFields, ...rest} = eventInput;
+    const updateEvent = {...rest, imagePath: filePath, customFields: this.customFields};
+
+    this.eventsService.update(this.event._id, updateEvent).subscribe(event => {
       this.onCloseModal();
       this.headerMessageService.show('Event updated successfully', 'SUCCESS');
+      this.router.navigate(['/events', 'details', event._id]);
     }, () => FormControlsHelperService.invalidateFormControls(this.form));
   }
-
 
   private createEvent(eventInput: CreateEventInterface, filePath: string) {
     const {customFields, ...rest} = eventInput;
     const newEvent = {...rest, imagePath: filePath, customFields: this.customFields};
+
     this.eventsService.createEvent(newEvent).subscribe(event => {
-      this.eventChange.emit(event);
       this.onCloseModal();
       this.headerMessageService.show('Event created successfully', 'SUCCESS');
       this.router.navigate(['/events', 'details', event._id]);
@@ -176,13 +196,20 @@ export class EventEditComponent implements OnInit {
   }
 
   onAddCustomField(field: CustomFieldInterface): void {
-    const customFields = this.form.get('customFields') as FormGroup;
     const size = this.customFields.length;
     // Create unique random customField formControlName
     field.id = `customField${size + Math.floor(1000 + Math.random() * 9000)}`;
-    customFields.addControl(field.id, new FormControl(field.value));
-    this.customFields.push(field);
+    this.appendCustomField(field);
     this.hideCustomFieldForm();
+  }
+
+  /**
+   * Add custom field to formGroup and to customFields array
+   * @param field
+   */
+  private appendCustomField(field: CustomFieldInterface) {
+    (this.form.get('customFields') as FormGroup).addControl(field.id, new FormControl(field.value));
+    this.customFields.push(field);
   }
 
   onRemoveFormControl(id) {
