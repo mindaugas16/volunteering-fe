@@ -198,4 +198,8 @@ export class EventEditComponent implements OnInit {
   hideCustomFieldForm() {
     this.shouldShowCustomFieldAddForm = false;
   }
+
+  getCustomFieldsControls() {
+    return (this.form.get('customFields') as any).controls;
+  }
 }
