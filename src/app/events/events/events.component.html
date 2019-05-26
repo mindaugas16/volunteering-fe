@@ -3,17 +3,10 @@
     <app-events-search-panel></app-events-search-panel>
     <hr/>
     <div class="columns">
-      <div class="column is-2-desktop">
-        <div>
-          <h4 class="title is-4">
-            {{'Tags'}}
-          </h4>
-          <app-tag *ngFor="let tag of relatedTags"
-                   [tag]="tag"
-          ></app-tag>
-        </div>
+      <div class="column is-3 is-2-widescreen">
+        <app-events-filters></app-events-filters>
       </div>
-      <div class="column">
+      <div class="column is-9 is-10-widescreen">
         <app-events-list [events]="events"
                          [loading]="loading"
                          [viewMode]="'GRID'"

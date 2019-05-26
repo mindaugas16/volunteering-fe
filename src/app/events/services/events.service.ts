@@ -19,9 +19,9 @@ export class EventsService {
     return this.apiService.query({
       query: `
         query events($query: String, $location: String, $orderBy: String,
-         $statuses: [Int], $tags: [String], $organizationId: ID, $page: Int) {
+         $statuses: [Int], $tags: [String], $organizationIds: [ID], $page: Int) {
           events(query: $query, location: $location, orderBy: $orderBy,
-          statuses: $statuses, tags: $tags, organizationId: $organizationId, page: $page) {
+          statuses: $statuses, tags: $tags, organizationIds: $organizationIds, page: $page) {
                 totalCount
                 events {
                   _id

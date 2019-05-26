@@ -23,6 +23,7 @@ import { EventInnerComponent } from './event/event-inner/event-inner.component';
 import { RewardVolunteersComponent } from './event/reward-volunteers/reward-volunteers.component';
 import { UploadImageModule } from '../ui-elements/upload-image/upload-image.module';
 import { PaginationModule } from '../ui-elements/pagination/pagination.module';
+import { EventsFiltersComponent } from './events-filters/events-filters.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PaginationModule } from '../ui-elements/pagination/pagination.module';
     EventsComponent,
     EventEditComponent,
     EventInnerComponent,
-    RewardVolunteersComponent
+    RewardVolunteersComponent,
+    EventsFiltersComponent
   ],
   exports: [
     EventsListComponent

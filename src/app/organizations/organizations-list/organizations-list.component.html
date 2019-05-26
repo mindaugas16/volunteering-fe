@@ -23,5 +23,9 @@
         </div>
       </a>
     </div>
+    <app-pagination *ngIf="!loading && organizations.length"
+                    [totalCount]="totalCount"
+                    [type]="'ROUTE'"
+    ></app-pagination>
   </div>
 </div>

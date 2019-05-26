@@ -14,15 +14,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EventsComponent implements OnInit {
   events: EventInterface[] = [];
-  loading: boolean;
   sortItems: { label: string, value: string }[] = [
     {label: 'Date', value: 'date'},
     {label: 'Title', value: 'title'},
     {label: 'Created', value: 'createdAt'},
     {label: 'Updated', value: 'updatedAt'},
   ];
-  relatedTags: TagInterface[] = [];
   totalCount: number;
+  loading: boolean;
 
   constructor(private eventsService: EventsService,
               private eventsSearchService: EventsSearchService,
@@ -32,11 +31,6 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tagsService.getRelatedTags().subscribe(tags => {
-      this.relatedTags = tags;
-      console.log(this.relatedTags);
-    });
-
     this.route.queryParams.pipe(
       switchMap(query => {
         this.loading = true;

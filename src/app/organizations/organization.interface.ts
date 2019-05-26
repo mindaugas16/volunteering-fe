@@ -14,6 +14,11 @@ export interface OrganizationInterface extends UserInterface {
   organizationWebsite?: string;
 }
 
+export interface OrganizationsResultsInterface {
+  organizations: OrganizationInterface[];
+  totalCount: number;
+}
+
 
 export interface UpdateOrganizationInterface {
   organizationName: string;

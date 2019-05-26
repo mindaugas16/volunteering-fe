@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
@@ -72,7 +72,7 @@ export class EventEditComponent implements OnInit {
     ).subscribe(event => {
       this.event = event;
       if (this.event) {
-        const {date, ...rest} = this.event;
+        const {date, location, ...rest} = this.event;
         this.form.patchValue({
           ...rest,
           startDate: date.start,

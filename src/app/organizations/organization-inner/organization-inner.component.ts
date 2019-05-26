@@ -93,6 +93,6 @@ export class OrganizationInnerComponent implements OnInit {
   }
 
   onShowAllEvents() {
-    this.router.navigate(['/events'], {queryParams: {organizationId: this.organization._id}});
+    this.router.navigate(['/events'], {queryParams: {organizationIds: this.organization._id}});
   }
 }

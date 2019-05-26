@@ -11,6 +11,8 @@ import { switchMap } from 'rxjs/operators';
 })
 export class OrganizationsListComponent implements OnInit {
   organizations: OrganizationInterface[] = [];
+  totalCount: number;
+  loading: boolean;
 
   constructor(
     private organizationService: OrganizationService,
@@ -19,13 +21,18 @@ export class OrganizationsListComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.route.queryParams.pipe(
-      switchMap(params => {
-        return this.organizationService.getOrganizations(params);
+      switchMap(query => {
+        this.loading = true;
+        const {page, ...rest} = query;
+        return this.organizationService.getOrganizations({page: +page, ...rest});
       })
-    ).subscribe(organizations => {
+    ).subscribe(({organizations, totalCount}) => {
+      this.totalCount = totalCount;
       this.organizations = organizations;
-    });
+      this.loading = false;
+    }, () => this.loading = false);
   }
 
 }

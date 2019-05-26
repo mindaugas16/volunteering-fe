@@ -68,6 +68,15 @@ fieldset {
   height: 45px !important;
 }
 
+.menu {
+  .menu-label {
+    font-size: 1.375rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+}
+
 //// Set your brand colors
 //$purple: #8E51C7;
 //$purple-dark: #463853;

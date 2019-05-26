@@ -32,7 +32,7 @@ export class PaginationComponent implements OnInit {
 
   onPageChange(page) {
     if (this.type === 'ROUTE') {
-      this.router.navigate([], {relativeTo: this.route, queryParams: {page}});
+      this.router.navigate([], {relativeTo: this.route, queryParamsHandling: 'merge', queryParams: {page}});
     }
     this.pageChange.emit(this.currentPage);
   }

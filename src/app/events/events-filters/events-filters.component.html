@@ -1,0 +1,30 @@
+<div>
+  <ng-container *ngIf="!loading; else loader">
+    <div class="menu mb-2">
+      <h2 class="menu-label">
+        {{'Tags'}}
+      </h2>
+      <div class="menu-list">
+        <app-tag class="mr-2 mb-2" *ngFor="let tag of relatedTags"
+                 [tag]="tag"
+        ></app-tag>
+      </div>
+    </div>
+    <div class="menu">
+      <h2 class="menu-label">
+        {{'Organizations'}}
+      </h2>
+      <ul class="menu-list">
+        <li *ngFor="let org of organizations" class="mb-2">
+          <a class="filter" [class.is-active]="isOrganizationSelected(org._id)"
+             (click)="onOrganizationSelect(org._id)">
+            {{org.organizationName}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+</div>
