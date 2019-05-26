@@ -54,17 +54,7 @@ export class EventsService {
         statuses
       }
     }).pipe(
-      map(({data}) => data.events),
-      map((data) => {
-        return {
-          ...data, events: data.events.map(e => {
-            if (e.imagePath) {
-              e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-            }
-            return e;
-          })
-        };
-      })
+      map(({data}) => data.events)
     );
   }
 
@@ -129,14 +119,7 @@ export class EventsService {
         eventId: id
       }
     }).pipe(
-      map(({data}) => data),
-      map(({event}) => event),
-      map((e) => {
-        if (e.imagePath) {
-          e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-        }
-        return e;
-      })
+      map(({data}) => data.event)
     );
   }
 
@@ -154,14 +137,7 @@ export class EventsService {
         eventInput: event
       }
     }).pipe(
-      map(({data}) => data),
-      map(({updateEvent}) => updateEvent),
-      map((e) => {
-        if (e.imagePath) {
-          e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-        }
-        return e;
-      })
+      map(({data}) => data.updateEvent)
     );
   }
 
@@ -201,8 +177,7 @@ export class EventsService {
         tagLabel: label
       }
     }).pipe(
-      map(({data}) => data),
-      map(({addEventTag}) => addEventTag),
+      map(({data}) => data.addEventTag)
     );
   }
 
@@ -221,8 +196,7 @@ export class EventsService {
         tag
       }
     }).pipe(
-      map(({data}) => data),
-      map(({updateEventTag}) => updateEventTag),
+      map(({data}) => data.updateEventTag)
     );
   }
 
@@ -238,8 +212,7 @@ export class EventsService {
         tagId
       }
     }).pipe(
-      map(({data}) => data),
-      map(({deleteEventTag}) => deleteEventTag),
+      map(({data}) => data.deleteEventTag)
     );
   }
 

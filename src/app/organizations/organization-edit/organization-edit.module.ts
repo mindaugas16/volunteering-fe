@@ -6,6 +6,7 @@ import { GenericModalModule } from '../../ui-elements/generic-modal/generic-moda
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { UploadImageModule } from '../../ui-elements/upload-image/upload-image.module';
 
 @NgModule({
   declarations: [OrganizationEditModalComponent, OrganizationEditFormComponent],
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    UploadImageModule
   ],
   exports: [
     OrganizationEditFormComponent

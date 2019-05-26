@@ -23,6 +23,7 @@ export class OrganizationService {
               totalCount
               organizations {
                 _id
+                organizationLogo
                 organizationName
                 location {
                   address
@@ -43,6 +44,8 @@ export class OrganizationService {
         query organization($organizationId: ID!) {
            organization(organizationId: $organizationId) {
               _id
+              organizationLogo
+              organizationWebsite
               organizationName
               firstName
               lastName
@@ -77,8 +80,7 @@ export class OrganizationService {
         organizationId: id
       }
     }).pipe(
-      map(({data}) => data),
-      map(({organization}) => organization),
+      map(({data}) => data.organization)
     );
   }
 

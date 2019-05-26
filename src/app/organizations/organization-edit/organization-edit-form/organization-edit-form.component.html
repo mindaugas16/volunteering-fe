@@ -4,6 +4,11 @@
       <h4 class="is-4 title">
         {{'General'}}
       </h4>
+      <app-upload-image [image]="image"
+                        [shouldRemoveImage]="removeImage"
+                        (imageUpload)="onImageChange($event)"
+                        (removeImage)="removeImage = $event"
+      ></app-upload-image>
       <app-input class="field"
                  type="text"
                  formControlName="organizationName"
@@ -19,6 +24,14 @@
                  [formControl]="form.get('general').get('description')"
                  placeholder="Description"
                  label="Description"
+      ></app-input>
+
+      <app-input class="field"
+                 type="text"
+                 formControlName="organizationWebsite"
+                 [formControl]="form.get('general').get('organizationWebsite')"
+                 placeholder="http://www.example.com/"
+                 label="Organization website"
       ></app-input>
     </div>
     <hr/>

@@ -2,7 +2,7 @@
       (submit)="onSearch()"
       class="is-flex flex-column"
 >
-  <div class="columns">
+  <div class="columns justify-content-end">
     <div class="column is-4">
       <div class="control is-expanded has-icons-left">
         <input placeholder="Search events near you"
@@ -28,7 +28,7 @@
         </span>
       </div>
     </div>
-    <div class="column">
+    <div class="column no-grow">
       <div class="control">
         <button class="button is-primary"
                 type="submit"
@@ -37,13 +37,15 @@
         </button>
       </div>
     </div>
-  </div>
-  <div>
-    <button class="button is-text"
-            type="button"
-            (click)="onResetFilters()"
-    >
-      {{'Reset filters'}}
-    </button>
+    <div class="column no-grow">
+      <div class="control">
+        <button class="button is-text"
+                type="button"
+                (click)="onResetFilters()"
+        >
+          {{'Reset filters'}}
+        </button>
+      </div>
+    </div>
   </div>
 </form>

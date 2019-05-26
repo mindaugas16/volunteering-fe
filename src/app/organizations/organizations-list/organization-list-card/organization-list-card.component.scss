@@ -9,7 +9,6 @@
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
-  height: 100%;
   background-color: white;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -60,8 +59,6 @@
   .card-body {
     flex: 1;
     padding: 2rem 1.5rem;
-    flex-flow: column;
-    justify-content: space-between;
 
     .card-title {
       font-size: 1.375rem;

@@ -56,8 +56,6 @@ export class MyOrganizationComponent implements OnInit {
   }
 
   onSave() {
-    this.organizationEditService.update().subscribe(() => {
-      window.scroll(0, 0);
-    }, () => window.scroll(0, 0));
+    this.organizationEditService.update().subscribe();
   }
 }

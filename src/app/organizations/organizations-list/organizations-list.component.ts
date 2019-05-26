@@ -21,7 +21,6 @@ export class OrganizationsListComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.queryParams.pipe(
       switchMap(query => {
         this.loading = true;

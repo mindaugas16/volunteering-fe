@@ -15,11 +15,15 @@ import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-
 import { OrganizationEditModule } from './organization-edit/organization-edit.module';
 import { EventsModule } from '../events/events.module';
 import { PaginationModule } from '../ui-elements/pagination/pagination.module';
+import { OrganizationListCardComponent } from './organizations-list/organization-list-card/organization-list-card.component';
+import { OrganizationSearchPanelComponent } from './organization-search-panel/organization-search-panel.component';
 
 @NgModule({
   declarations: [
     OrganizationsListComponent,
     OrganizationInnerComponent,
+    OrganizationListCardComponent,
+    OrganizationSearchPanelComponent,
   ],
   imports: [
     CommonModule,

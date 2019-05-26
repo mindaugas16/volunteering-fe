@@ -14,6 +14,7 @@ import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-fiel
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, switchMap } from 'rxjs/operators';
 import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
+import { UploaderService } from '../../ui-elements/upload-image/uploader.service';
 
 const CUSTOM_FIELDS_LIMIT = 4;
 
@@ -59,7 +60,8 @@ export class EventEditComponent implements OnInit {
     private headerMessageService: HeaderMessageService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private uploaderService: UploaderService
   ) {
   }
 
@@ -137,17 +139,7 @@ export class EventEditComponent implements OnInit {
   }
 
   private uploadImage(image): Observable<string> {
-    if (!image) {
-      return of(null);
-    }
-    return new Observable(observer => {
-      const formData = new FormData();
-      formData.append('image', image);
-      this.apiService.upload(formData).subscribe(res => {
-        observer.next((res as any).fileName);
-        observer.complete();
-      });
-    });
+    return this.uploaderService.upload(image);
   }
 
   onCancel() {

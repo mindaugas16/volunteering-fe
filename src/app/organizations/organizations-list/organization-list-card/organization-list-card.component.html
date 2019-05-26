@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header">
+    <a class="card-image"
+       [routerLink]="['/organization', 'details', organization._id]"
+       [style.background-image]="'url('+(organization.organizationLogo)+')'">
+      <a class="icon is-large card-star is-primary"
+         appClickStopPropagation
+      >
+        <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+      </a>
+    </a>
+  </div>
+  <div class="card-body">
+    <a [routerLink]="['/organizations', 'details', organization._id]">
+      <div class="card-title">
+        {{organization.organizationName}}
+      </div>
+    </a>
+<!--    <div class="card-meta mt-2">-->
+<!--      <div>-->
+<!--        <i class="fa fa-calendar mr-2"></i>-->
+<!--        <span>{{event.date.start | date}}</span>-->
+<!--        <span *ngIf="event.date.end && event.date.end > event.date.start">- {{event.date.end | date:'MMM dd'}}</span>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <i class="fa fa-users mr-2"></i>-->
+<!--        <a [routerLink]="['/organizations', 'details', event.organization._id]">-->
+<!--          {{event.organization.organizationName}}-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div *ngIf="event?.location">-->
+<!--        <i class="fa fa-map-marker mr-2"></i>-->
+<!--        <span>-->
+<!--          {{event.location?.address}} {{event.location?.city}}-->
+<!--        </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="card-description is-hidden-mobile">-->
+<!--      <p>-->
+<!--        {{event.description | cutSentence:100}}-->
+<!--      </p>-->
+<!--    </div>-->
+  </div>
+</div>
