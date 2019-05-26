@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EventInterface } from '../../event/models/event.interface';
+import { EventInterface } from '../../events/event/models/event.interface';
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { ActivitiesService } from '../activities.service';
 import { ActivityCreateInterface, ActivityInterface, DateRangeInterface } from '../models/activity.interface';
@@ -56,7 +56,7 @@ export class ActivityEditModalComponent implements OnInit {
 
     const values = this.form.value;
     const activityInput: ActivityCreateInterface = {
-      name: values.name,
+      name: values.organizationName,
       description: values.description,
       volunteersNeeded: +values.volunteersNeeded,
       date: DateFormatHelper.changeDateFormat(this.form.value.startDate, this.form.value.endDate),

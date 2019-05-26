@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TagInterface } from '../../tag/tag.interface';
+import { AuthService } from '../../../auth/auth.service';
+import { UserInterface } from '../../../auth/user.interface';
+import { UserRole } from '../../../profile/user-type.enum';
 
 @Component({
   selector: 'app-tags',
@@ -15,8 +18,13 @@ export class TagsComponent implements OnInit {
   @Output() deleteTag: EventEmitter<number> = new EventEmitter();
 
   shouldShowAddTag: boolean;
+  user: UserInterface;
+  userRoles = UserRole;
 
-  constructor() {
+  constructor(private authService: AuthService) {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   ngOnInit() {

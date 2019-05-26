@@ -3,26 +3,58 @@
     <app-organization-edit-form></app-organization-edit-form>
     <div class="field is-grouped mt-4 is-grouped-right">
       <div class="control">
+        <button class="button is-text">
+          {{'COMMON.RESET' | translate}}
+        </button>
+      </div>
+      <div class="control">
         <button class="button is-primary"
                 (click)="onSave()"
         >
           {{'COMMON.SAVE' | translate}}
         </button>
       </div>
-      <div class="control">
-        <button class="button is-text">
-          {{'COMMON.RESET' | translate}}
-        </button>
-      </div>
     </div>
   </div>
   <div class="column">
-    <div class="is-flex mb-3">
-      <h4 class="is-4 title">
-        {{'Events'}}
+    <div class="is-flex mb-3 justify-content-between">
+      <h4 class="is-4 title mb-0">
+        {{'Events'}} ({{filteredEvents?.length}})
       </h4>
+      <a class="icon"
+         [routerLink]="['/events', 'new']"
+      >
+        <i class="fa fa-plus"></i>
+      </a>
 
     </div>
-    <app-events-list [events]="events" [viewMode]="'LIST'" [loading]="loading"></app-events-list>
+    <div class="buttons has-addons">
+      <button class="button"
+              [class.is-link]="isFilterActivated(eventStatus.PUBLIC)"
+              (click)="onFilterEvents(eventStatus.PUBLIC)"
+      >
+        {{'Public'}}
+      </button>
+      <button class="button"
+              [class.is-link]="isFilterActivated(eventStatus.PRIVATE)"
+              (click)="onFilterEvents(eventStatus.PRIVATE)"
+      >
+        {{'Private'}}
+      </button>
+      <button class="button"
+              [class.is-link]="isFilterActivated(eventStatus.DRAFT)"
+              (click)="onFilterEvents(eventStatus.DRAFT)"
+      >
+        {{'Draft'}}
+      </button>
+    </div>
+    <app-events-list [events]="filteredEvents | slice:((currentPage-1) * pageSize):(currentPage * pageSize)"
+                     [viewMode]="'LIST'"
+                     [loading]="loading"
+    ></app-events-list>
+    <app-pagination *ngIf="!loading && filteredEvents.length"
+                    [totalCount]="filteredEvents.length"
+                    (pageChange)="currentPage = $event"
+    ></app-pagination>
   </div>
 </div>

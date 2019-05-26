@@ -3,6 +3,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { SearchParamsInterface } from './search-params.interface';
+import { QueryParamsHandling } from '@angular/router/src/config';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,16 @@ export class EventsSearchService {
     });
   }
 
-  search(params: SearchParamsInterface) {
+  search(params: SearchParamsInterface, queryParamsHandling: QueryParamsHandling = 'merge') {
     this.query.next(params);
-    this.router.navigate([], {queryParams: params, relativeTo: this.route, queryParamsHandling: 'merge'});
+    this.router.navigate([], {queryParams: params, relativeTo: this.route, queryParamsHandling});
   }
 
   getSearchQueryAsObservable(): Observable<SearchParamsInterface> {
     return this.query.asObservable();
+  }
+
+  resetFilters() {
+    this.search({}, '');
   }
 }

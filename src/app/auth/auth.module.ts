@@ -7,17 +7,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
-import { SignUpVolunteerFormComponent } from './sign-up/sign-up-volunteer-form/sign-up-volunteer-form.component';
 import { SignUpOrganizationFormComponent } from './sign-up/sign-up-organization-form/sign-up-organization-form.component';
 import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-up-sponsor-form.component';
+import { ForgotPasswordModalComponent } from './forgot-password-modal/forgot-password-modal.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { GeneralSignUpFormComponent } from './sign-up/general-sign-up-form/general-sign-up-form.component';
 
 @NgModule({
   declarations: [
     SignInComponent,
     SignUpComponent,
-    SignUpVolunteerFormComponent,
     SignUpOrganizationFormComponent,
     SignUpSponsorFormComponent,
+    ForgotPasswordModalComponent,
+    ResetPasswordComponent,
+    GeneralSignUpFormComponent,
   ],
   imports: [
     CommonModule,
@@ -29,14 +33,13 @@ import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-
     GenericModalModule
   ],
   exports: [
-    SignUpVolunteerFormComponent,
     SignUpOrganizationFormComponent,
     SignUpSponsorFormComponent
   ],
   entryComponents: [
-    SignUpVolunteerFormComponent,
     SignUpOrganizationFormComponent,
-    SignUpSponsorFormComponent
+    SignUpSponsorFormComponent,
+    ForgotPasswordModalComponent
   ]
 })
 export class AuthModule {

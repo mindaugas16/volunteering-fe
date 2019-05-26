@@ -12,7 +12,8 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
-import { TranslateModule } from '@ngx-translate/core';
+import { KeysPipe } from './pipes/keys/keys.pipe';
+import { InputButtonDirective } from './components/input/directives/input-button.directive';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
     LoaderComponent,
     HasPermissionDirective,
     ConfirmModalComponent,
+    KeysPipe,
+    InputButtonDirective,
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,9 @@ import { TranslateModule } from '@ngx-translate/core';
     LogoComponent,
     LoaderComponent,
     HasPermissionDirective,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    KeysPipe,
+    InputButtonDirective,
   ],
   entryComponents: [
     ConfirmModalComponent

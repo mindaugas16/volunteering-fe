@@ -3,8 +3,10 @@ import { FormControlsHelperService } from '../../core/services/helpers/form-cont
 import { OrganizationInterface, UpdateOrganizationInterface } from '../organization.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrganizationService } from '../organization.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
+import { UploaderService } from '../../ui-elements/upload-image/uploader.service';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,18 @@ export class OrganizationEditService {
   private form: FormGroup;
 
   constructor(private organizationService: OrganizationService,
-              private headerMessageService: HeaderMessageService) {
+              private headerMessageService: HeaderMessageService,
+              private uploaderService: UploaderService
+  ) {
   }
 
   createForm(organization: OrganizationInterface): FormGroup {
     this.form = new FormGroup({
+      organizationLogo: new FormControl(null),
       general: new FormGroup({
-        name: new FormControl(organization.name, Validators.required),
-        description: new FormControl(organization.description, Validators.maxLength(500))
+        organizationName: new FormControl(organization.organizationName, Validators.required),
+        description: new FormControl(organization.description, Validators.maxLength(500)),
+        organizationWebsite: new FormControl(organization.organizationWebsite),
       }),
       location: new FormGroup({
         address: new FormControl(organization.location ? organization.location.address : null),
@@ -43,12 +49,21 @@ export class OrganizationEditService {
       }
 
       const organization: UpdateOrganizationInterface = {
-        name: this.form.value.general.name,
+        organizationName: this.form.value.general.organizationName,
+        organizationWebsite: this.form.value.general.organizationWebsite,
         description: this.form.value.general.description,
         location: this.form.value.location
       };
 
-      this.organizationService.update(organization).subscribe(res => {
+      let observable = of(null);
+
+      if (this.form.value.organizationLogo) {
+        observable = this.uploaderService.upload(this.form.value.organizationLogo);
+      }
+
+      observable.pipe(
+        switchMap(organizationLogo => this.organizationService.update({organizationLogo, ...organization}))
+      ).subscribe(res => {
         this.headerMessageService.show('Organization details updated successfully', 'SUCCESS');
         observer.next(res);
         observer.complete();

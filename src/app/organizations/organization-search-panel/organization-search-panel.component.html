@@ -1,0 +1,16 @@
+<form [formGroup]="form"
+      (submit)="onSearch()"
+      class="is-flex flex-column"
+>
+  <div class="control is-fullwidth is-expanded has-icons-left">
+    <input placeholder="Search organizations by name or text"
+           class="input"
+           formControlName="query"
+           type="text"
+    >
+    <span class="icon is-left">
+      <i class="fa fa-search"></i>
+    </span>
+  </div>
+</form>
+

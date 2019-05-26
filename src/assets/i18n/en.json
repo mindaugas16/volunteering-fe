@@ -4,7 +4,8 @@
     "CANCEL": "Cancel",
     "RESET": "Reset",
     "SEARCH": "Search",
-    "CREATE": "Create"
+    "CREATE": "Create",
+    "CHANGE": "Change"
   },
   "NAVIGATION": {
     "PROFILE": "Profile",

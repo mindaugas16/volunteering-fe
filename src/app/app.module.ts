@@ -13,10 +13,14 @@ import { ERRORS_INTERCEPTOR } from './core/services/error/error.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderMessageModule } from './ui-elements/header-message/header-message.module';
 import { ACCEPT_LANGUAGE_HEADER_INTERCEPTOR_PROVIDER } from './ui-elements/language-switch/services/accept-language.interceptor';
+import localeLt from '@angular/common/locales/lt';
+import { registerLocaleData } from '@angular/common';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
+registerLocaleData(localeLt);
 
 @NgModule({
   declarations: [

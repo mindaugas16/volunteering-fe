@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import "assets/scss/spacing";
 @import "assets/scss/helpers";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 body {
   margin: 0;
@@ -8,17 +9,17 @@ body {
 
 .modal {
   z-index: 1060 !important;
-  justify-content: flex-start!important;
+  justify-content: flex-start !important;
 }
 
 .modal-content {
-  max-height: 100vh!important;
-  margin: 0!important;
+  max-height: 100vh !important;
+  margin: 0 !important;
 }
 
 @media only screen and (max-width: 600px) {
   .modal-content {
-    width: 100vw!important;
+    width: 100vw !important;
   }
 }
 
@@ -55,6 +56,24 @@ body {
     span:not([style*="display: none"]) + span:not([style*="display: none"]):before {
       content: ' - ';
     }
+  }
+}
+
+fieldset {
+  display: contents;
+}
+
+.input-button {
+  width: 45px !important;
+  height: 45px !important;
+}
+
+.menu {
+  .menu-label {
+    font-size: 1.375rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
   }
 }
 

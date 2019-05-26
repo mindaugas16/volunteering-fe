@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EventInterface } from '../../../event/models/event.interface';
+import { EventInterface } from '../../event/models/event.interface';
 import { ActionsRules } from '../../../shared/permissions.config';
+import { ImagePathFormatterService } from '../../../core/services/helpers/image-path-formatter.service';
 
 @Component({
   selector: 'app-events-list-card',
@@ -15,6 +16,7 @@ export class EventsListCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.event.imagePath = ImagePathFormatterService.format(this.event.imagePath);
   }
 
 }

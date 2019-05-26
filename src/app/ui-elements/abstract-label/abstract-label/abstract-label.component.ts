@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export interface AbstractLabelInterface {
   extraClass?: string;
   name: string;
-  condition: boolean;
+  status?: number;
 }
 
 @Component({
@@ -12,16 +12,12 @@ export interface AbstractLabelInterface {
   styleUrls: ['./abstract-label.component.scss']
 })
 export class AbstractLabelComponent implements OnInit {
-  @Input() labels: AbstractLabelInterface[];
-  @Input() currentLabel: AbstractLabelInterface;
+  @Input() label: AbstractLabelInterface;
 
   constructor() {
   }
 
   ngOnInit() {
-    if (this.labels && this.labels.length) {
-      this.currentLabel = this.labels.find(label => label.condition);
-    }
   }
 
 }

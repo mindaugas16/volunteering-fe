@@ -5,20 +5,27 @@
     <ng-container *ngIf="label">
       {{label}}<span *ngIf="required">*</span>
     </ng-container>
-    <ng-content></ng-content>
+    <ng-container *ngIf="labelTemplate">
+      <ng-container *ngTemplateOutlet="labelTemplate"></ng-container>
+    </ng-container>
   </label>
 
   <ng-container [ngSwitch]="fieldType">
-    <input class="input"
-           *ngSwitchCase="'input'"
-           [id]="label"
-           [type]="type"
-           [placeholder]="placeholder"
-           [class.is-danger]="isInvalid()"
-           [(ngModel)]="value"
-           [min]="min"
-    />
-
+    <div *ngSwitchCase="'input'"
+         class="is-flex"
+    >
+      <input class="input"
+             [id]="label"
+             [type]="type"
+             [placeholder]="placeholder"
+             [class.is-danger]="isInvalid()"
+             [(ngModel)]="value"
+             [min]="min"
+      />
+      <div class="buttons ml-2 flex-shrink-0" *ngIf="buttonTemplate">
+        <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+      </div>
+    </div>
     <textarea class="textarea"
               *ngSwitchCase="'textarea'"
               [id]="label"
@@ -31,12 +38,24 @@
   <div class="help is-danger"
        *ngIf="isInvalid()"
   >
-    <span *ngIf="formControl.errors.invalidEmail">
+    <span *ngIf="formControl.errors.invalidEmail || formControl.errors.email">
       {{'Email address is invalid'}}
+    </span>
+
+    <span *ngIf="formControl.errors.notMatchToCurrent">
+      {{'Current password is wrong'}}
+    </span>
+
+    <span *ngIf="formControl.errors.notMatch">
+      {{'Not match to new password'}}
     </span>
 
     <span *ngIf="formControl.errors.maxlength">
       {{'Field max length is'}} {{formControl.errors.maxlength.requiredLength}} {{' symbols'}}
+    </span>
+
+    <span *ngIf="formControl.errors.unique">
+      {{label + ' should be unique!'}}
     </span>
 
     <span *ngIf="formControl.errors.required">
@@ -47,12 +66,20 @@
       {{label + ' accepts only numbers'}}
     </span>
 
+    <span *ngIf="formControl.errors.alreadyTaken">
+      {{label + ' already taken'}}
+    </span>
+
     <span *ngIf="formControl.errors.invalid">
       {{'Invalid value'}}
     </span>
 
     <span *ngIf="formControl.errors.invalidCredentials">
       {{'Username or password is invalid value'}}
+    </span>
+
+    <span *ngIf="formControl.errors.strong">
+      {{'Password at least should contain: min 8 characters, numbers, lowercase and uppercase letters'}}
     </span>
   </div>
 

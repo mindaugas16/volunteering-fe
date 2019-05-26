@@ -12,10 +12,12 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./organization-edit-form.component.scss']
 })
 export class OrganizationEditFormComponent implements OnInit {
-  form: FormGroup;
   @Input() organization: OrganizationInterface;
   @Output() update: EventEmitter<OrganizationInterface> = new EventEmitter();
-
+  loading: boolean;
+  form: FormGroup;
+  image;
+  removeImage: boolean;
 
   constructor(private organizationEditService: OrganizationEditService,
               private organizationService: OrganizationService,
@@ -25,6 +27,7 @@ export class OrganizationEditFormComponent implements OnInit {
 
   ngOnInit() {
     if (!this.organization) {
+      this.loading = true;
       this.authService.getCurrentUser().pipe(
         switchMap(user => {
           return this.organizationService.getOrganization(user._id);
@@ -32,6 +35,10 @@ export class OrganizationEditFormComponent implements OnInit {
       ).subscribe(organization => {
         this.organization = organization;
         this.assignCreatedForm();
+        this.loading = false;
+        if (this.organization.organizationLogo) {
+          this.image = this.organization.organizationLogo;
+        }
       });
 
       return;
@@ -42,5 +49,11 @@ export class OrganizationEditFormComponent implements OnInit {
 
   private assignCreatedForm() {
     this.form = this.organizationEditService.createForm(this.organization);
+  }
+
+  onImageChange(file) {
+    this.form.patchValue({
+      organizationLogo: file
+    });
   }
 }

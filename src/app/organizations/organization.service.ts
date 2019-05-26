@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrganizationInterface, UpdateOrganizationInterface } from './organization.interface';
+import { OrganizationInterface, OrganizationsResultsInterface, UpdateOrganizationInterface } from './organization.interface';
 import { SearchParamsInterface } from '../events/services/events-search/search-params.interface';
 
 @Injectable({
@@ -15,22 +15,26 @@ export class OrganizationService {
   ) {
   }
 
-  getOrganizations(params: SearchParamsInterface): Observable<OrganizationInterface[]> {
+  getOrganizations(params?: SearchParamsInterface): Observable<OrganizationsResultsInterface> {
     return this.apiService.query({
       query: `
-        query organizations {
-           organizations {
-              _id
-              name
-              location {
-                address
+        query organizations($query: String, $location: String, $page: Int) {
+           organizations(query: $query, location: $location, page: $page) {
+              totalCount
+              organizations {
+                _id
+                organizationLogo
+                organizationName
+                location {
+                  address
+                }
               }
            }
         }
       `,
+      variables: params
     }).pipe(
-      map(({data}) => data),
-      map(({organizations}) => organizations),
+      map(({data}) => data.organizations)
     );
   }
 
@@ -40,7 +44,9 @@ export class OrganizationService {
         query organization($organizationId: ID!) {
            organization(organizationId: $organizationId) {
               _id
-              name
+              organizationLogo
+              organizationWebsite
+              organizationName
               firstName
               lastName
               description
@@ -74,8 +80,7 @@ export class OrganizationService {
         organizationId: id
       }
     }).pipe(
-      map(({data}) => data),
-      map(({organization}) => organization),
+      map(({data}) => data.organization)
     );
   }
 
@@ -110,7 +115,7 @@ export class OrganizationService {
       query: `
         mutation updateOrganization($organizationInput: OrganizationInput!) {
           updateOrganization(organizationInput: $organizationInput) {
-            name
+            organizationName
             description
             location {
               address

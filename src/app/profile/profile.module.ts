@@ -15,6 +15,10 @@ import { EventsModule } from '../events/events.module';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
 import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
+import { ParticipationComponent } from './participation/participation.component';
+import { CalendarModule } from '../ui-elements/calendar/calendar.module';
+import { EventEditComponent } from '../events/event-edit/event-edit.component';
+import { PaginationModule } from '../ui-elements/pagination/pagination.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { ProfileAchievementsComponent } from './profile-achievements/profile-ach
     MyOrganizationComponent,
     ProfileSettingsComponent,
     ProfileOrganizationsComponent,
-    ProfileAchievementsComponent
+    ProfileAchievementsComponent,
+    ParticipationComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +41,12 @@ import { ProfileAchievementsComponent } from './profile-achievements/profile-ach
     TabsModule,
     AuthModule,
     OrganizationEditModule,
-    EventsModule
+    EventsModule,
+    CalendarModule,
+    PaginationModule,
+  ],
+  entryComponents: [
+    EventEditComponent
   ]
 })
 export class ProfileModule {

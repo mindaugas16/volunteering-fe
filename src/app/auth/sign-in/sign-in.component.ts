@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,8 +18,8 @@ export class SignInComponent implements OnInit {
   loading: boolean;
   isInvalid: boolean;
 
-  constructor(
-    private authService: AuthService
+  constructor(private authService: AuthService,
+              private modalService: NgbModal
   ) {
   }
 
@@ -33,13 +35,17 @@ export class SignInComponent implements OnInit {
       this.isInvalid = true;
       return;
     }
-    const {email, password} = this.form.value;
-    this.authService.signIn(email, password).subscribe(() => {
+    this.authService.signIn(this.form.value).subscribe(() => {
         this.loading = false;
       },
       error => {
         this.loading = false;
         this.isInvalid = true;
       });
+  }
+
+  onForgotPassword() {
+    const modalRef = this.modalService.open(ForgotPasswordModalComponent, {windowClass: 'modal is-active'});
+    // modalRef.componentInstance.userType = id;
   }
 }

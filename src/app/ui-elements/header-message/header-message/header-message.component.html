@@ -3,10 +3,15 @@
      [ngClass]="'is-' + message?.status?.toLowerCase()"
 >
   <div class="container">
-    <button class="delete"
-            (click)="onClose()"
-            *ngIf="message.options?.closeable"
-    ></button>
-    {{message?.message}}
+    <div class="is-flex align-items-center justify-content-between">
+      <span>
+        {{message?.message}}
+      </span>
+
+      <button class="delete"
+              (click)="onClose()"
+              *ngIf="message.options?.closeable"
+      ></button>
+    </div>
   </div>
 </div>

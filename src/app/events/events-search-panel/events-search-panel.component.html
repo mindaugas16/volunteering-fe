@@ -1,58 +1,51 @@
-<div class="hero is-white">
-  <div class="hero-body">
-    <div class="container">
-      <form [formGroup]="form"
-            (submit)="onSearch()"
-            class="is-flex flex-column"
-      >
-        <div class="columns">
-          <div class="column is-4">
-            <div class="control is-expanded has-icons-left">
-              <input placeholder="Search events near you"
-                     class="input"
-                     formControlName="query"
-                     type="text"
-              >
-              <span class="icon is-left">
-                <i class="fa fa-search"></i>
-              </span>
-            </div>
-          </div>
-          <div class="column is-4">
+<form [formGroup]="form"
+      (submit)="onSearch()"
+      class="is-flex flex-column"
+>
+  <div class="columns justify-content-end">
+    <div class="column is-4">
+      <div class="control is-expanded has-icons-left">
+        <input placeholder="Search events near you"
+               class="input"
+               formControlName="query"
+               type="text"
+        >
+        <span class="icon is-left">
+          <i class="fa fa-search"></i>
+        </span>
+      </div>
+    </div>
+    <div class="column is-4">
 
-            <div class="control is-expanded has-icons-left">
-              <input placeholder="Enter location"
-                     class="input"
-                     formControlName="location"
-                     type="text"
-              >
-              <span class="icon is-left">
-                <i class="fa fa-map-marker"></i>
-              </span>
-            </div>
-          </div>
-          <div class="column">
-            <div class="control">
-              <button class="button is-primary"
-                      type="submit"
-              >
-                {{'COMMON.SEARCH' | translate}}
-              </button>
-            </div>
-          </div>
-        </div>
-        <!--        <div>-->
-        <!--          <button class="button is-text"-->
-        <!--                  type="button"-->
-        <!--                  (click)="showFilters = !showFilters"-->
-        <!--          >-->
-        <!--            Advanced filters-->
-        <!--          </button>-->
-        <!--          <div *ngIf="showFilters">-->
-        <!--            Filtrai-->
-        <!--          </div>-->
-        <!--        </div>-->
-      </form>
+      <div class="control is-expanded has-icons-left">
+        <input placeholder="Enter location"
+               class="input"
+               formControlName="location"
+               type="text"
+        >
+        <span class="icon is-left">
+          <i class="fa fa-map-marker"></i>
+        </span>
+      </div>
+    </div>
+    <div class="column no-grow">
+      <div class="control">
+        <button class="button is-primary"
+                type="submit"
+        >
+          {{'COMMON.SEARCH' | translate}}
+        </button>
+      </div>
+    </div>
+    <div class="column no-grow">
+      <div class="control">
+        <button class="button is-text"
+                type="button"
+                (click)="onResetFilters()"
+        >
+          {{'Reset filters'}}
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>

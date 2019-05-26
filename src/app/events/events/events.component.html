@@ -1,6 +1,26 @@
-<app-events-search-panel></app-events-search-panel>
 <div class="section">
   <div class="container">
-    <app-events-list [events]="events" [loading]="loading" [viewMode]="'GRID'"></app-events-list>
+    <div class="is-flex">
+      <h1 class="title mr-4">
+        Events
+      </h1>
+      <app-events-search-panel class="is-block auto-grow"></app-events-search-panel>
+    </div>
+    <hr/>
+    <div class="columns">
+      <div class="column is-3 is-2-widescreen">
+        <app-events-filters></app-events-filters>
+      </div>
+      <div class="column is-9 is-10-widescreen">
+        <app-events-list [events]="events"
+                         [loading]="loading"
+                         [viewMode]="'GRID'"
+        ></app-events-list>
+        <app-pagination *ngIf="!loading && events.length"
+                        [totalCount]="totalCount"
+                        [type]="'ROUTE'"
+        ></app-pagination>
+      </div>
+    </div>
   </div>
 </div>

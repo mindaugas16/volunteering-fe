@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ImagePathFormatterService } from '../../../core/services/helpers/image-path-formatter.service';
 
 @Component({
   selector: 'app-logo',
@@ -13,6 +14,7 @@ export class LogoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.imagePath = ImagePathFormatterService.format(this.imagePath);
   }
 
 }

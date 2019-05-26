@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { UpdateUserInterface, UserInterface } from '../auth/user.interface';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../api.service';
+import { ParticipationInterface } from '../shared/models/participation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,6 @@ export class ProfileService {
               postalCode
               contacts
               role
-              organizations {
-                name
-                _id
-              }
             }
            }
       `
@@ -74,6 +71,46 @@ export class ProfileService {
     }).pipe(
       map(({data}) => data),
       map(({updateUserInfo}) => updateUserInfo)
+    );
+  }
+
+  getUserParticipation(): Observable<ParticipationInterface[]> {
+    return this.apiService.query({
+      query: `
+        query participation {
+          participation {
+            activity {
+              _id
+              name
+              date {
+                start
+                end
+              }
+              event {
+                _id
+                title
+              }
+            }
+          }
+        }
+      `
+    }).pipe(
+      map(({data}) => data.participation),
+    );
+  }
+
+  changePassword(passwords): Observable<boolean> {
+    return this.apiService.query({
+      query: `
+      mutation changePassword($oldPassword: String!, $newPassword: String!, $repeatPassword: String!) {
+          changePassword(oldPassword: $oldPassword, newPassword: $newPassword, repeatPassword: $repeatPassword)
+           }
+      `,
+      variables: {
+        ...passwords
+      }
+    }).pipe(
+      map(({data}) => data.changePassword)
     );
   }
 }

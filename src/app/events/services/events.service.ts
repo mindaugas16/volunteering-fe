@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface, EventStatus } from '../../event/models/event.interface';
+import { CreateEventInterface, EventInterface, EventsResponseInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
 import { environment } from '../../../environments/environment';
@@ -15,32 +15,37 @@ export class EventsService {
   constructor(private apiService: ApiService) {
   }
 
-  getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
+  getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventsResponseInterface> {
     return this.apiService.query({
       query: `
-        query events($query: String, $location: String, $orderBy: String, $statuses: [Int], $tags: [String]) {
-          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses, tags: $tags) {
-                _id
-                title
-                description
-                date {
-                  start
-                  end
-                }
-                location {
-                  title
-                  address
-                  address2
-                  city
-                  country
-                  zipCode
-                }
-                organization {
+        query events($query: String, $location: String, $orderBy: String,
+         $statuses: [Int], $tags: [String], $organizationIds: [ID], $page: Int) {
+          events(query: $query, location: $location, orderBy: $orderBy,
+          statuses: $statuses, tags: $tags, organizationIds: $organizationIds, page: $page) {
+                totalCount
+                events {
                   _id
-                  name
+                  title
+                  description
+                  date {
+                    start
+                    end
+                  }
+                  location {
+                    title
+                    address
+                    address2
+                    city
+                    country
+                    zipCode
+                  }
+                  organization {
+                    _id
+                    organizationName
+                  }
+                  imagePath
+                  status
                 }
-                imagePath
-                status
            }
         }`,
       variables: {
@@ -49,16 +54,7 @@ export class EventsService {
         statuses
       }
     }).pipe(
-      map(({data}) => data),
-      map(({events}) => events),
-      map((events) => {
-        return events.map(e => {
-          if (e.imagePath) {
-            e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-          }
-          return e;
-        });
-      })
+      map(({data}) => data.events)
     );
   }
 
@@ -86,11 +82,16 @@ export class EventsService {
            }
            organization {
               _id
-              name
+              organizationName
            }
            tags {
               _id
               label
+           }
+           customFields {
+              id
+              title
+              value
            }
            activities {
               _id
@@ -101,10 +102,13 @@ export class EventsService {
                 end
               }
               volunteersNeeded
-              volunteers {
+              participation {
                 _id
-                firstName
-                lastName
+                volunteer {
+                  _id
+                  firstName
+                  lastName
+                }
               }
               createdAt
            }
@@ -115,14 +119,7 @@ export class EventsService {
         eventId: id
       }
     }).pipe(
-      map(({data}) => data),
-      map(({event}) => event),
-      map((e) => {
-        if (e.imagePath) {
-          e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-        }
-        return e;
-      })
+      map(({data}) => data.event)
     );
   }
 
@@ -132,22 +129,6 @@ export class EventsService {
         mutation updateEvent($id: ID!, $eventInput: EventInput!) {
             updateEvent(id: $id, eventInput: $eventInput) {
                _id
-               title
-               status
-               description
-               date {
-                start
-                end
-               }
-               imagePath
-               location {
-                title
-                address
-                address2
-                city
-                country
-                zipCode
-               }
              }
           }`
       ,
@@ -156,38 +137,19 @@ export class EventsService {
         eventInput: event
       }
     }).pipe(
-      map(({data}) => data),
-      map(({updateEvent}) => updateEvent),
-      map((e) => {
-        if (e.imagePath) {
-          e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-        }
-        return e;
-      })
+      map(({data}) => data.updateEvent)
     );
   }
 
-  createEvent(event: CreateEventInterface): Observable<any> {
+  createEvent(event: CreateEventInterface): Observable<EventInterface> {
     return this.apiService.query({
       query: `
         mutation createEvent($eventInput: EventInput!) {
             createEvent(eventInput: $eventInput) {
                _id
-               title
-               description
-               status
-               date {
-                start
-                end
-               }
-               imagePath
-               location {
+               customFields {
                 title
-                address
-                address2
-                city
-                country
-                zipCode
+                value
                }
              }
           }`
@@ -196,8 +158,7 @@ export class EventsService {
         eventInput: event
       }
     }).pipe(
-      map(({data}) => data),
-      map(({createEvent}) => createEvent),
+      map(({data}) => data.createEvent)
     );
   }
 
@@ -216,8 +177,7 @@ export class EventsService {
         tagLabel: label
       }
     }).pipe(
-      map(({data}) => data),
-      map(({addEventTag}) => addEventTag),
+      map(({data}) => data.addEventTag)
     );
   }
 
@@ -236,8 +196,7 @@ export class EventsService {
         tag
       }
     }).pipe(
-      map(({data}) => data),
-      map(({updateEventTag}) => updateEventTag),
+      map(({data}) => data.updateEventTag)
     );
   }
 
@@ -253,8 +212,7 @@ export class EventsService {
         tagId
       }
     }).pipe(
-      map(({data}) => data),
-      map(({deleteEventTag}) => deleteEventTag),
+      map(({data}) => data.deleteEventTag)
     );
   }
 

@@ -1,0 +1,10 @@
+.border-r {
+  border-right: 1px solid lightgray;
+  @media screen and (max-width: 768.99px) {
+    border: 0;
+  }
+}
+
+.message-header {
+  border-radius: 3px;
+}
