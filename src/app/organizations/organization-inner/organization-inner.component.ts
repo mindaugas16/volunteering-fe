@@ -12,6 +12,8 @@ import { ActionsRules } from '../../shared/permissions.config';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { OrganizationEditModalComponent } from '../organization-edit/organization-edit-modal/organization-edit-modal.component';
 
+const ORGANIZATION_EVENTS_PER_PAGE = 8;
+
 @Component({
   selector: 'app-organization-inner',
   templateUrl: './organization-inner.component.html',
@@ -22,6 +24,7 @@ export class OrganizationInnerComponent implements OnInit {
   isUserJoinedOrganization: boolean;
   user: UserInterface;
   actionsRules = ActionsRules;
+  eventsPerPage = ORGANIZATION_EVENTS_PER_PAGE;
 
   constructor(
     private route: ActivatedRoute,
@@ -87,5 +90,9 @@ export class OrganizationInnerComponent implements OnInit {
   }
 
   onUserInvite() {
+  }
+
+  onShowAllEvents() {
+    this.router.navigate(['/events'], {queryParams: {organizationId: this.organization._id}});
   }
 }

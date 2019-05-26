@@ -4,9 +4,9 @@ import { OrganizationEditService } from '../../organizations/organization-edit/o
 import { AuthService } from '../../auth/auth.service';
 import { switchMap } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EventEditComponent } from '../../events/event-edit/event-edit.component';
 import { OrganizationInterface } from '../../organizations/organization.interface';
 import { OrganizationService } from '../../organizations/organization.service';
+import { EventInterface, EventStatus } from '../../events/event/models/event.interface';
 
 @Component({
   selector: 'app-my-organization',
@@ -16,6 +16,11 @@ import { OrganizationService } from '../../organizations/organization.service';
 export class MyOrganizationComponent implements OnInit {
   loading = true;
   organization: OrganizationInterface;
+  filteredEvents: EventInterface[] = [];
+  showEventStatuses: EventStatus[] = [];
+  eventStatus = EventStatus;
+  currentPage = 1;
+  pageSize = 12;
 
   constructor(private eventsService: EventsService,
               private organizationEditService: OrganizationEditService,
@@ -31,7 +36,23 @@ export class MyOrganizationComponent implements OnInit {
     })).subscribe(organization => {
       this.loading = false;
       this.organization = organization;
+      this.filteredEvents = this.organization.events;
     });
+  }
+
+  onFilterEvents(filter: EventStatus) {
+    const foundIndex = this.showEventStatuses.indexOf(filter);
+    if (foundIndex > -1) {
+      this.showEventStatuses.splice(foundIndex, 1);
+    } else {
+      this.showEventStatuses.push(filter);
+    }
+    this.filteredEvents = this.showEventStatuses.length ?
+      this.organization.events.filter(event => this.isFilterActivated(event.status)) : this.organization.events;
+  }
+
+  isFilterActivated(filter: EventStatus) {
+    return this.showEventStatuses.indexOf(filter) > -1;
   }
 
   onSave() {
@@ -39,13 +60,4 @@ export class MyOrganizationComponent implements OnInit {
       window.scroll(0, 0);
     }, () => window.scroll(0, 0));
   }
-
-  onAddEvent() {
-    const modalRef = this.modalService.open(EventEditComponent, {windowClass: 'modal is-active'});
-    modalRef.componentInstance.organization = this.organization;
-    modalRef.componentInstance.eventChange.subscribe(event => {
-      this.organization.events = [event, ...this.organization.events];
-    });
-  }
-
 }

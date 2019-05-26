@@ -10,6 +10,8 @@ export interface OrganizationInterface extends UserInterface {
   location: LocationInterface;
   members: UserInterface[];
   events: EventInterface[];
+  organizationLogo?: string;
+  organizationWebsite?: string;
 }
 
 
@@ -17,4 +19,6 @@ export interface UpdateOrganizationInterface {
   organizationName: string;
   location: LocationInterface;
   description: string;
+  organizationLogo?: string;
+  organizationWebsite?: string;
 }

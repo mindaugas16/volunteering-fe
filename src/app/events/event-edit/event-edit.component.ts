@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {Location} from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
@@ -11,7 +12,7 @@ import { DateFormatHelper } from '../../core/services/helpers/date-format-helper
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-field.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
 
 const CUSTOM_FIELDS_LIMIT = 4;
@@ -22,8 +23,6 @@ const CUSTOM_FIELDS_LIMIT = 4;
   styleUrls: ['./event-edit.component.scss']
 })
 export class EventEditComponent implements OnInit {
-  @ViewChild('inputImageElement') inputImageElement: ElementRef;
-
   form: FormGroup = new FormGroup({
     title: new FormControl(null, Validators.required),
     description: new FormControl(null),
@@ -42,9 +41,6 @@ export class EventEditComponent implements OnInit {
     customFields: new FormGroup({})
   });
   eventStatus = EventStatus;
-  removeImage: boolean;
-
-  image;
 
   date;
   shouldShowCustomFieldAddForm: boolean;
@@ -53,20 +49,23 @@ export class EventEditComponent implements OnInit {
 
   event: EventInterface;
   breadcrumb: BreadcrumbInterface[] = [];
+  image;
+  removeImage: boolean;
 
   constructor(
     private apiService: ApiService,
-    private cd: ChangeDetectorRef,
     private eventsService: EventsService,
     private activeModal: NgbActiveModal,
     private headerMessageService: HeaderMessageService,
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location
   ) {
   }
 
   ngOnInit() {
     this.route.params.pipe(
+      filter(params => !!params.id),
       switchMap(params => {
         return this.eventsService.getEvent(params.id);
       })
@@ -87,12 +86,18 @@ export class EventEditComponent implements OnInit {
         if (this.event.imagePath) {
           this.image = this.event.imagePath;
         }
-        this.breadcrumb =  [
+        this.breadcrumb = [
           {title: 'Events', link: ['/events']},
           {title: this.event.title, link: ['/events', 'details', this.event._id]},
           {title: 'Edit', link: null}
         ];
       }
+    });
+  }
+
+  onImageChange(file) {
+    this.form.patchValue({
+      image: file
     });
   }
 
@@ -145,40 +150,15 @@ export class EventEditComponent implements OnInit {
     });
   }
 
-  onRemoveImage() {
-    this.image = null;
-    this.removeImage = true;
-    this.inputImageElement.nativeElement.value = this.image;
+  onCancel() {
+    this.location.back();
   }
-
-  onCloseModal() {
-    this.activeModal.close();
-  }
-
-  onFileChange(event) {
-    const reader = new FileReader();
-
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        this.form.patchValue({
-          image: file
-        });
-        this.image = reader.result;
-        this.cd.markForCheck();
-      };
-    }
-  }
-
 
   private updateEvent(eventInput: CreateEventInterface, filePath: string) {
     const {customFields, ...rest} = eventInput;
     const updateEvent = {...rest, imagePath: filePath, customFields: this.customFields};
 
     this.eventsService.update(this.event._id, updateEvent).subscribe(event => {
-      this.onCloseModal();
       this.headerMessageService.show('Event updated successfully', 'SUCCESS');
       this.router.navigate(['/events', 'details', event._id]);
     }, () => FormControlsHelperService.invalidateFormControls(this.form));
@@ -189,7 +169,6 @@ export class EventEditComponent implements OnInit {
     const newEvent = {...rest, imagePath: filePath, customFields: this.customFields};
 
     this.eventsService.createEvent(newEvent).subscribe(event => {
-      this.onCloseModal();
       this.headerMessageService.show('Event created successfully', 'SUCCESS');
       this.router.navigate(['/events', 'details', event._id]);
     }, () => FormControlsHelperService.invalidateFormControls(this.form));

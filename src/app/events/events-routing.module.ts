@@ -13,7 +13,13 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    component: EventEditComponent
+    component: EventEditComponent,
+    data: {
+      allowedRoles: [
+        UserRole.ORGANIZATION
+      ]
+    },
+    canActivate: [RoleGuard]
   },
   {
     path: 'details/:id',

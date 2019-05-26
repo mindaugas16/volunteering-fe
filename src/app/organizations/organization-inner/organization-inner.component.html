@@ -60,11 +60,11 @@
               </a>
             </div>
           </div>
-          <div>
+          <div *ngIf="organization?.events && organization?.events.length; else eventsNotFound">
             <a
               class="box"
-              *ngFor="let event of organization?.events"
-              [routerLink]="['/event', event?._id]"
+              *ngFor="let event of (organization?.events | slice:0:eventsPerPage)"
+              [routerLink]="['/event', 'details', event?._id]"
             >
               <div class="is-flex align-items-center">
                 <app-event-status-label class="mr-2 is-block" [status]="event?.status"></app-event-status-label>
@@ -76,7 +76,16 @@
                 {{event?.date?.start | date}} - {{event?.date?.end | date}}
               </p>
             </a>
+            <button class="button is-fullwidth is-primary"
+                    *ngIf="organization.events.length > eventsPerPage"
+                    (click)="onShowAllEvents()"
+            >
+              {{'Show organizations all events'}}
+            </button>
           </div>
+          <ng-template #eventsNotFound>
+            {{'Organization events not found'}}
+          </ng-template>
         </div>
       </div>
       <div class="column">

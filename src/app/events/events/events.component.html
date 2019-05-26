@@ -3,9 +3,6 @@
     <app-events-search-panel></app-events-search-panel>
     <hr/>
     <div class="columns">
-      <div class="column">
-        <app-events-list [events]="events" [loading]="loading" [viewMode]="'GRID'"></app-events-list>
-      </div>
       <div class="column is-2-desktop">
         <div>
           <h4 class="title is-4">
@@ -15,6 +12,16 @@
                    [tag]="tag"
           ></app-tag>
         </div>
+      </div>
+      <div class="column">
+        <app-events-list [events]="events"
+                         [loading]="loading"
+                         [viewMode]="'GRID'"
+        ></app-events-list>
+        <app-pagination *ngIf="!loading && events.length"
+                        [totalCount]="totalCount"
+                        [type]="'ROUTE'"
+        ></app-pagination>
       </div>
     </div>
   </div>

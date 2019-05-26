@@ -13,49 +13,11 @@
           <h4 class="title is-5">
             {{'General information'}}
           </h4>
-          <div class="field">
-            <label class="label">
-              {{'Image'}}
-            </label>
-            <div class="is-flex-desktop">
-              <app-logo [imagePath]="image"></app-logo>
-              <div class="field is-grouped mt-4">
-                <div class="control">
-                  <div class="field">
-                    <div class="file is-primary">
-                      <label class="file-label">
-                        <input class="file-input"
-                               #inputImageElement
-                               type="file"
-                               accept="image/*"
-                               (change)="onFileChange($event)"
-                        >
-                        <span class="file-cta">
-                          <span class="file-icon">
-                            <i class="fa fa-upload"></i>
-                          </span>
-                          <span class="file-label">
-                            {{'Select image'}}
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <button class="button is-warning"
-                        *ngIf="image"
-                        (click)="onRemoveImage()"
-                >
-                  <span class="file-icon">
-                    <i class="fa fa-trash"></i>
-                  </span>
-                  <span>
-                    {{'Remove'}}
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <app-upload-image [image]="image"
+                            [shouldRemoveImage]="removeImage"
+                            (imageUpload)="onImageChange($event)"
+                            (removeImage)="removeImage = $event"
+          ></app-upload-image>
           <app-input class="field"
                      type="text"
                      formControlName="title"
@@ -214,7 +176,7 @@
             </div>
             <div class="buttons">
               <button class="button is-text"
-                      (click)="onCloseModal()"
+                      (click)="onCancel()"
               >
                 {{'COMMON.CANCEL' | translate}}
               </button>

@@ -4,6 +4,11 @@ import { LocationInterface } from '../../../shared/models/location.interface';
 import { TagInterface } from '../../../ui-elements/tag/tag.interface';
 import { CustomFieldInterface } from '../../../ui-elements/custom-field/custom-field.interface';
 
+export interface EventsResponseInterface {
+  totalCount: number;
+  events: EventInterface[];
+}
+
 export interface EventInterface {
   _id: string;
   title: string;

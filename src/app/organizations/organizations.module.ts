@@ -14,6 +14,7 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { EventStatusLabelModule } from '../ui-elements/event-status-label/event-status-label.module';
 import { OrganizationEditModule } from './organization-edit/organization-edit.module';
 import { EventsModule } from '../events/events.module';
+import { PaginationModule } from '../ui-elements/pagination/pagination.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { EventsModule } from '../events/events.module';
     EventsModule,
     BreadcrumbModule,
     EventStatusLabelModule,
-    OrganizationEditModule
+    OrganizationEditModule,
+    PaginationModule
   ],
   entryComponents: [
     InviteUserModalComponent,

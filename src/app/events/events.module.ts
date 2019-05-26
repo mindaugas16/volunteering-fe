@@ -21,6 +21,8 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { AbstractLabelModule } from '../ui-elements/abstract-label/abstract-label.module';
 import { EventInnerComponent } from './event/event-inner/event-inner.component';
 import { RewardVolunteersComponent } from './event/reward-volunteers/reward-volunteers.component';
+import { UploadImageModule } from '../ui-elements/upload-image/upload-image.module';
+import { PaginationModule } from '../ui-elements/pagination/pagination.module';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { RewardVolunteersComponent } from './event/reward-volunteers/reward-volu
     GenericModalModule,
     TagsModule,
     BreadcrumbModule,
-    AbstractLabelModule
+    AbstractLabelModule,
+    UploadImageModule,
+    PaginationModule
   ],
   entryComponents: [
     RewardVolunteersComponent

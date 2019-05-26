@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  events: EventInterface[];
+  events: EventInterface[] = [];
   loading: boolean;
   sortItems: { label: string, value: string }[] = [
     {label: 'Date', value: 'date'},
@@ -22,6 +22,7 @@ export class EventsComponent implements OnInit {
     {label: 'Updated', value: 'updatedAt'},
   ];
   relatedTags: TagInterface[] = [];
+  totalCount: number;
 
   constructor(private eventsService: EventsService,
               private eventsSearchService: EventsSearchService,
@@ -39,21 +40,13 @@ export class EventsComponent implements OnInit {
     this.route.queryParams.pipe(
       switchMap(query => {
         this.loading = true;
-        return this.eventsService.getEvents(query, null, [EventStatus.PUBLIC]);
+        const {page, ...rest} = query;
+        return this.eventsService.getEvents({page: +page, ...rest}, null, [EventStatus.PUBLIC]);
       })
-    ).subscribe(events => {
+    ).subscribe(({events, totalCount}) => {
+      this.totalCount = totalCount;
       this.events = events;
       this.loading = false;
     }, () => this.loading = false);
-  }
-
-  onSortChange(orderBy) {
-    this.fetch(orderBy);
-  }
-
-  fetch(orderBy?: string) {
-    this.eventsService.getEvents(null, orderBy).subscribe(events => {
-      this.events = events;
-    });
   }
 }

@@ -1,0 +1,29 @@
+<hr/>
+<nav class="pagination mt-4 mb-4"
+     role="navigation"
+     aria-label="pagination"
+>
+  <button class="pagination-previous"
+          title="This is the first page"
+          (click)="onPrev()"
+          [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
+  <ul class="pagination-list">
+    <li *ngFor="let page of pages">
+      <button class="pagination-link"
+              [class.is-current]="currentPage === page"
+              (click)="onPageChange(page)"
+      >
+        {{page}}
+      </button>
+    </li>
+  </ul>
+  <button class="pagination-next"
+          (click)="onNext()"
+          [disabled]="pages.length === currentPage"
+  >
+    Next page
+  </button>
+</nav>

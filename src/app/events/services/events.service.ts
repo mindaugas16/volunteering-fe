@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
+import { CreateEventInterface, EventInterface, EventsResponseInterface, EventStatus } from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
 import { environment } from '../../../environments/environment';
@@ -15,32 +15,37 @@ export class EventsService {
   constructor(private apiService: ApiService) {
   }
 
-  getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventInterface[]> {
+  getEvents(params?: SearchParamsInterface, orderBy?: string, statuses?: EventStatus[]): Observable<EventsResponseInterface> {
     return this.apiService.query({
       query: `
-        query events($query: String, $location: String, $orderBy: String, $statuses: [Int], $tags: [String], $organizationId: ID) {
-          events(query: $query, location: $location, orderBy: $orderBy, statuses: $statuses, tags: $tags, organizationId: $organizationId) {
-                _id
-                title
-                description
-                date {
-                  start
-                  end
-                }
-                location {
-                  title
-                  address
-                  address2
-                  city
-                  country
-                  zipCode
-                }
-                organization {
+        query events($query: String, $location: String, $orderBy: String,
+         $statuses: [Int], $tags: [String], $organizationId: ID, $page: Int) {
+          events(query: $query, location: $location, orderBy: $orderBy,
+          statuses: $statuses, tags: $tags, organizationId: $organizationId, page: $page) {
+                totalCount
+                events {
                   _id
-                  organizationName
+                  title
+                  description
+                  date {
+                    start
+                    end
+                  }
+                  location {
+                    title
+                    address
+                    address2
+                    city
+                    country
+                    zipCode
+                  }
+                  organization {
+                    _id
+                    organizationName
+                  }
+                  imagePath
+                  status
                 }
-                imagePath
-                status
            }
         }`,
       variables: {
@@ -50,13 +55,15 @@ export class EventsService {
       }
     }).pipe(
       map(({data}) => data.events),
-      map((events) => {
-        return events.map(e => {
-          if (e.imagePath) {
-            e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
-          }
-          return e;
-        });
+      map((data) => {
+        return {
+          ...data, events: data.events.map(e => {
+            if (e.imagePath) {
+              e.imagePath = `${environment.apiRest}assets/images/${e.imagePath}`;
+            }
+            return e;
+          })
+        };
       })
     );
   }
