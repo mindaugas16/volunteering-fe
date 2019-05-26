@@ -110,7 +110,7 @@
               </div>
             </div>
 
-            <div *ngFor="let control of this.form.get('customFields').controls | keys">
+            <div *ngFor="let control of getCustomFieldsControls() | keys">
 
               <app-input class="field"
                          type="text"
