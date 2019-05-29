@@ -43,7 +43,7 @@ export class RewardVolunteersComponent implements OnInit {
 
   ngOnInit() {
     this.volunteers = this.event.activities.reduce((acc, activity) => {
-      // acc.push(...activity.volunteers);
+      acc.push(...activity.participation.map(p => p.volunteer));
       return acc;
     }, []);
     console.log(this.volunteers);

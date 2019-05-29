@@ -116,7 +116,6 @@ export class AuthService {
         observer.complete();
       });
     }
-
     if (!fetch) {
       return of(null);
     }

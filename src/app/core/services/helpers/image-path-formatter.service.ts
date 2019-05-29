@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
-const IMAGE_PLACEHOLDER = 'https://bulma.io/images/placeholders/1280x960.png';
+const IMAGE_PLACEHOLDER = 'https://www.cidempanama.org/files/2019/04/import_placeholder-19.png';
 
 @Injectable({
   providedIn: 'root'
