@@ -56,7 +56,7 @@ export class ActivityEditModalComponent implements OnInit {
 
     const values = this.form.value;
     const activityInput: ActivityCreateInterface = {
-      name: values.organizationName,
+      name: values.name,
       description: values.description,
       volunteersNeeded: +values.volunteersNeeded,
       date: DateFormatHelper.changeDateFormat(this.form.value.startDate, this.form.value.endDate),
