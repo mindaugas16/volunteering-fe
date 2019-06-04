@@ -83,7 +83,7 @@ export class ActivitiesListComponent implements OnInit {
   getBreadcrumbItems(): BreadcrumbInterface[] {
     return [
       {title: 'Events', link: ['/events']},
-      {title: this.event.title, link: ['/event', this.event._id]},
+      {title: this.event.title, link: ['/events', 'details', this.event._id]},
       {title: 'Activities', link: null}
     ];
   }

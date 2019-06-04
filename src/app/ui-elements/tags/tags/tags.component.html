@@ -7,6 +7,7 @@
            (create)="onSaveTags($event)"
   ></app-tag>
   <span class="tag is-primary"
+        *ngIf="user?.role === userRoles.ORGANIZATION"
         (click)="onAddTag()"
   >
     <span class="icon">

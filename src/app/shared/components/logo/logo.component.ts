@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ImagePathFormatterService } from '../../../core/services/helpers/image-path-formatter.service';
 
 @Component({
@@ -6,14 +6,14 @@ import { ImagePathFormatterService } from '../../../core/services/helpers/image-
   templateUrl: './logo.component.html',
   styleUrls: ['./logo.component.scss']
 })
-export class LogoComponent implements OnInit {
+export class LogoComponent implements OnChanges {
   @Input() imagePath: string;
   @Input() extraClasses: string[];
 
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.imagePath = ImagePathFormatterService.format(this.imagePath);
   }
 

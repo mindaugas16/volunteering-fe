@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { UserRole } from '../../../profile/user-type.enum';
+import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TermsModalComponent } from '../../terms-modal/terms-modal.component';
 
 @Component({
   selector: 'app-general-sign-up-form',
@@ -15,7 +18,7 @@ export class GeneralSignUpFormComponent implements OnInit {
 
   userRole = UserRole;
 
-  constructor() {
+  constructor(private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -27,5 +30,9 @@ export class GeneralSignUpFormComponent implements OnInit {
 
   onBack() {
     this.goBack.emit();
+  }
+
+  onTerms() {
+    this.modalService.open(TermsModalComponent, {windowClass: 'modal is-active'});
   }
 }
