@@ -6,6 +6,9 @@ import { FormControlsHelperService } from '../../core/services/helpers/form-cont
 import { AuthService } from '../../auth/auth.service';
 import { PasswordValidator } from '../../auth/validators/password.validator';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { switchMap } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -30,7 +33,8 @@ export class EditProfileFormComponent implements OnInit {
 
   constructor(private profileService: ProfileService,
               private authService: AuthService,
-              private headerMessage: HeaderMessageService
+              private headerMessage: HeaderMessageService,
+              private modalService: NgbModal
   ) {
   }
 
@@ -85,6 +89,18 @@ export class EditProfileFormComponent implements OnInit {
     }, error => {
       FormControlsHelperService.invalidateControlsByErrors(this.changePasswordForm, error.data);
     });
+  }
+
+  onDeleteAccount() {
+    const modalRef = this.modalService.open(ConfirmModalComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.title = `Confirm`;
+    modalRef.componentInstance.message = `Are you really want to delete your account permanently. All data will be deleted?`;
+    modalRef.componentInstance.confirm.pipe(
+      switchMap(() => this.authService.deleteAccount())
+    )
+      .subscribe(() => {
+        this.authService.logout();
+      });
   }
 
 }

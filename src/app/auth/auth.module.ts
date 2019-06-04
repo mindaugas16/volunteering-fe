@@ -12,6 +12,7 @@ import { SignUpSponsorFormComponent } from './sign-up/sign-up-sponsor-form/sign-
 import { ForgotPasswordModalComponent } from './forgot-password-modal/forgot-password-modal.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { GeneralSignUpFormComponent } from './sign-up/general-sign-up-form/general-sign-up-form.component';
+import { TermsModalComponent } from './terms-modal/terms-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { GeneralSignUpFormComponent } from './sign-up/general-sign-up-form/gener
     ForgotPasswordModalComponent,
     ResetPasswordComponent,
     GeneralSignUpFormComponent,
+    TermsModalComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { GeneralSignUpFormComponent } from './sign-up/general-sign-up-form/gener
   entryComponents: [
     SignUpOrganizationFormComponent,
     SignUpSponsorFormComponent,
-    ForgotPasswordModalComponent
+    ForgotPasswordModalComponent,
+    TermsModalComponent
   ]
 })
 export class AuthModule {

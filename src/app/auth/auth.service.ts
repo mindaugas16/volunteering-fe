@@ -204,4 +204,16 @@ export class AuthService {
   public isAuthenticated() {
     return !!AuthService.getToken();
   }
+
+  deleteAccount() {
+    return this.apiService.query({
+      query: `
+      mutation deleteUser {
+          deleteUser
+           }
+      `
+    }).pipe(
+      map(({data}) => data.deleteUser)
+    );
+  }
 }

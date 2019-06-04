@@ -25,6 +25,11 @@ export class ProfileService {
               postalCode
               contacts
               role
+              organizations {
+                _id
+                organizationName
+                organizationLogo
+              }
             }
            }
       `

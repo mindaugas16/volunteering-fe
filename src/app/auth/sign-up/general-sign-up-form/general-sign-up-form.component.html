@@ -46,10 +46,15 @@
              required="true"
   ></app-input>
 
-  <label class="checkbox nowrap">
-    <input type="checkbox"
-           formControlName="termsAndConditions">
-    I agree to the <a href="#">terms and conditions</a>
+  <div class="is-flex flex-column">
+    <div class="is-flex align-items-center">
+      <label class="checkbox nowrap">
+        <input type="checkbox"
+               formControlName="termsAndConditions">
+        I agree to the
+      </label>
+      <a class="is-link ml-1" appClickStopPropagation (click)="onTerms()">terms and conditions</a>
+    </div>
     <div class="help is-danger"
          *ngIf="form.get('termsAndConditions').invalid &&
          (form.get('termsAndConditions').dirty || form.get('termsAndConditions').touched)"
@@ -58,7 +63,7 @@
         {{'Please read terms and conditions, before register'}}
       </span>
     </div>
-  </label>
+  </div>
   <div class="buttons is-grouped is-grouped-right is-right">
     <button class="button is-text"
             type="button"

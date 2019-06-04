@@ -64,7 +64,7 @@
             <a
               class="box"
               *ngFor="let event of (organization?.events | slice:0:eventsPerPage)"
-              [routerLink]="['/event', 'details', event?._id]"
+              [routerLink]="['/events', 'details', event?._id]"
             >
               <div class="is-flex align-items-center">
                 <app-event-status-label class="mr-2 is-block" [status]="event?.status"></app-event-status-label>
