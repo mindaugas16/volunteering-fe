@@ -12,11 +12,18 @@
             <a (click)="onActivity(activity)">
               {{activity.name}}
             </a>
-            <a class="icon"
-               [routerLink]="['/event', event._id]"
-            >
-              <i class="fa fa-external-link" aria-hidden="true"></i>
-            </a>
+            <div class="is-invisible">
+              <a class="icon"
+                 [routerLink]="['/events', 'details', event._id]"
+              >
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+              <a class="icon is-link"
+                 (click)="onDelete(event, activity)"
+              >
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -98,4 +98,19 @@ export class ActivitiesService {
       map(({data}) => data.deleteActivity)
     );
   }
+
+  deleteParticipation(activityId: string): Observable<boolean> {
+    return this.apiService.query({
+      query: `
+        mutation deleteParticipation($activityId: ID!) {
+          deleteParticipation(activityId: $activityId)
+        }
+      `,
+      variables: {
+        activityId
+      }
+    }).pipe(
+      map(({data}) => data.deleteParticipation)
+    );
+  }
 }

@@ -1,9 +1,25 @@
 <h4 class="title is-5">
-  Badges <small class="is-small" *ngIf="user?.achievements.length;">({{user?.achievements.length}})</small>
+  Badges
+  <small class="is-small" *ngIf="user?.achievements.length;">({{user?.achievements.length}})</small>
 </h4>
-<div>
-  <img *ngFor="let badge of user?.achievements" class="badge"
-       [id]="badge.id"
-       [src]="'assets/images/badges/' + badge.icon"
-  >
+<div class="is-flex">
+  <div *ngFor="let badge of user?.achievements">
+    <div class="dropdown is-hoverable">
+      <div class="dropdown-trigger">
+        <img class="badge"
+             [id]="badge.id"
+             [src]="'assets/images/badges/' + badge.icon"
+        >
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+        <div class="dropdown-content">
+          <div class="dropdown-item">
+            <span>
+              <b>Points: </b> {{badge?.points}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

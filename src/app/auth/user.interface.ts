@@ -13,6 +13,7 @@ export interface UserInterface {
   createdEvents: EventInterface[];
   createdActivities: any[];
   role: UserRole;
+  achievements: any[];
 }
 
 export interface CreateUserInterface {

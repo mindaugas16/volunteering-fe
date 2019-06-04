@@ -11,9 +11,21 @@
   <ng-template appModalContent>
     <div class="columns">
       <div class="column">
-        <h4 class="title is-5">
-          Volunteers <small class="is-small" *ngIf="selectedVolunteers.length;">({{selectedVolunteers.length}})</small>
-        </h4>
+        <div>
+          <h4 class="title is-5"
+              [class.has-text-danger]="errors.volunteers"
+          >
+            Volunteers
+            <small class="is-small" *ngIf="selectedVolunteers.length;">({{selectedVolunteers.length}})</small>
+          </h4>
+          <div class="help is-danger"
+               *ngIf="errors.volunteers"
+          >
+            <span>
+              {{'Select at least one volunteer.'}}
+            </span>
+          </div>
+        </div>
         <div>
           <div class="select is-multiple">
             <select multiple size="8" [(ngModel)]="selectedVolunteers">
@@ -27,9 +39,21 @@
         </div>
       </div>
       <div class="column">
-        <h4 class="title is-5">
-          Badges <small class="is-small" *ngIf="selectedBadges.length;">({{selectedBadges.length}})</small>
-        </h4>
+        <div>
+          <h4 class="title is-5"
+              [class.has-text-danger]="errors.badges"
+          >
+            Badges
+            <small class="is-small" *ngIf="selectedBadges.length;">({{selectedBadges.length}})</small>
+          </h4>
+          <div class="help is-danger"
+               *ngIf="errors.badges"
+          >
+            <span>
+              {{'Select at least one badge.'}}
+            </span>
+          </div>
+        </div>
         <div>
           <img *ngFor="let badge of badges" class="badge"
                [id]="badge.id"
@@ -53,12 +77,14 @@
   <ng-template appModalFooter>
     <div class="is-flex justify-content-end">
       <div>
+        <button class="button is-text"
+                (click)="onCancel()"
+        >
+          {{'COMMON.CANCEL' | translate}}
+        </button>
         <button class="button is-primary"
                 (click)="onReward()">
           {{'Reward'}}
-        </button>
-        <button class="button is-text">
-          {{'COMMON.CANCEL' | translate}}
         </button>
       </div>
     </div>

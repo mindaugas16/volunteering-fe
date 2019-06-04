@@ -34,6 +34,7 @@ export class RewardVolunteersComponent implements OnInit {
   ];
   selectedBadges = [];
   selectedVolunteers = [];
+  errors: {volunteers: boolean, badges: boolean} = {volunteers: false, badges: false};
 
   constructor(private eventsService: EventsService,
               private headerMessage: HeaderMessageService,
@@ -63,6 +64,19 @@ export class RewardVolunteersComponent implements OnInit {
   }
 
   onReward() {
+    if (!this.selectedBadges.length || !this.selectedVolunteers.length) {
+      if (!this.selectedVolunteers.length) {
+        this.errors.volunteers = true;
+      }
+
+      if (!this.selectedBadges.length) {
+        this.errors.badges = true;
+      }
+      setTimeout(() => {
+        this.errors = {volunteers: false, badges: false};
+      }, 3000);
+      return;
+    }
     const createBadges: BadgeCreateInterface[] = this.selectedBadges.map((badge) => {
       const {id, ...rest} = badge;
       return rest;
@@ -71,5 +85,9 @@ export class RewardVolunteersComponent implements OnInit {
       this.headerMessage.show('Volunteers reward succesfully', 'SUCCESS');
       this.activeModal.close();
     });
+  }
+
+  onCancel() {
+    this.activeModal.close();
   }
 }

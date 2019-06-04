@@ -38,7 +38,8 @@ export class ActivitiesListComponent implements OnInit {
       action: (activity: ActivityInterface) => {
         const modalRef = this.modalService.open(ConfirmModalComponent, {windowClass: 'modal is-active'});
         modalRef.componentInstance.title = `Confirm`;
-        modalRef.componentInstance.message = `Are you really want to delete activity ${activity.name}?`;
+        modalRef.componentInstance.confirmType = 'DELETE';
+        modalRef.componentInstance.message = `Are you really want to delete activity <b>${activity.name}</b>?`;
         modalRef.componentInstance.confirm.pipe(switchMap(() => this.activitiesService.delete(activity._id)))
           .subscribe(() => {
             this.event.activities = this.event.activities.filter(item => item._id !== activity._id);
