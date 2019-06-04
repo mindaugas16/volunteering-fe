@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ConfirmModalComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
+  @Input() confirmType: 'CONFIRM' | 'DELETE' = 'CONFIRM';
   @Output() confirm: EventEmitter<void> = new EventEmitter();
 
   constructor(private activeModal: NgbActiveModal) {

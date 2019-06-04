@@ -3,25 +3,28 @@
     {{title}}
   </ng-template>
   <ng-template appModalContent>
-    <p *ngIf="message">
-      {{message}}
-    </p>
+    <div *ngIf="message"
+         [innerHTML]="message"
+    ></div>
   </ng-template>
 
   <ng-template appModalFooter>
-    <button
-      class="button is-primary"
-      type="submit"
-      (click)="onConfirm()"
-    >
-      Confirm
-    </button>
-    <button
-      class="button is-text"
-      type="reset"
-      (click)="onClose()"
-    >
-      Cancel
-    </button>
+    <div class="is-flex justify-content-end align-items-center">
+      <button
+        class="button is-text"
+        type="reset"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        class="button"
+        [ngClass]="[confirmType === 'CONFIRM' ? 'is-primary' : 'is-danger']"
+        type="submit"
+        (click)="onConfirm()"
+      >
+        {{confirmType === 'CONFIRM' ? 'Confirm' : 'Delete'}}
+      </button>
+    </div>
   </ng-template>
 </app-generic-modal>

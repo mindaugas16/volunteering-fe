@@ -6,6 +6,11 @@ import { Router } from '@angular/router';
 import { EventInterface } from '../../events/event/models/event.interface';
 import { ActivityInterface } from '../../activities/models/activity.interface';
 import { EventDateStatusHelper } from '../../core/services/helpers/event-date-status.helper';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { switchMap } from 'rxjs/operators';
+import { ActivitiesService } from '../../activities/activities.service';
+import { ParticipationInterface } from '../../shared/models/participation.interface';
 
 const colors: any = {
   soon: {
@@ -32,11 +37,18 @@ export class ParticipationComponent implements OnInit {
 
   constructor(private profileService: ProfileService,
               private router: Router,
-              private eventDateStatusHelper: EventDateStatusHelper
+              private eventDateStatusHelper: EventDateStatusHelper,
+              private modalService: NgbModal,
+              private activitiesService: ActivitiesService
   ) {
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  private loadData() {
+    this.loading = true;
     const getColorByDate = (date) => {
       switch (this.eventDateStatusHelper.getEventStatusByDate(date).status) {
         case 0:
@@ -76,10 +88,21 @@ export class ParticipationComponent implements OnInit {
   }
 
   onEvent(event) {
-    this.router.navigate(['/event', event._id]);
+    this.router.navigate(['/events', 'details', event._id]);
   }
 
   onActivity(activity: ActivityInterface) {
     this.viewDate = new Date(activity.date.start);
+  }
+
+  onDelete(event: EventInterface, activity: ActivityInterface, participation: ParticipationInterface) {
+    const modalRef = this.modalService.open(ConfirmModalComponent, {windowClass: 'modal is-active'});
+    modalRef.componentInstance.title = `Confirm`;
+    modalRef.componentInstance.message = `Do you really want to sign out from <b>${event.title}</b> activity - <b>${activity.name}</b>?`;
+    modalRef.componentInstance.confirmType = 'DELETE';
+    modalRef.componentInstance.confirm.pipe(
+      switchMap(() => this.activitiesService.deleteParticipation(activity._id))
+    )
+      .subscribe(() => this.loadData());
   }
 }
