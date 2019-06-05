@@ -34,7 +34,7 @@ export class RewardVolunteersComponent implements OnInit {
   ];
   selectedBadges = [];
   selectedVolunteers = [];
-  errors: {volunteers: boolean, badges: boolean} = {volunteers: false, badges: false};
+  errors: { volunteers: boolean, badges: boolean } = {volunteers: false, badges: false};
 
   constructor(private eventsService: EventsService,
               private headerMessage: HeaderMessageService,
@@ -46,8 +46,11 @@ export class RewardVolunteersComponent implements OnInit {
     this.volunteers = this.event.activities.reduce((acc, activity) => {
       acc.push(...activity.participation.map(p => p.volunteer));
       return acc;
-    }, []);
-    console.log(this.volunteers);
+    }, []).filter((thing, index, self) =>
+      index === self.findIndex((t) => (
+        t._id === thing._id && t._id === thing._id
+      ))
+    );
   }
 
   toggleBadge(badge) {

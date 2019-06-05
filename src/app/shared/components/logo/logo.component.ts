@@ -9,12 +9,15 @@ import { ImagePathFormatterService } from '../../../core/services/helpers/image-
 export class LogoComponent implements OnChanges {
   @Input() imagePath: string;
   @Input() extraClasses: string[];
+  @Input() formatImage = true;
 
   constructor() {
   }
 
   ngOnChanges() {
-    this.imagePath = ImagePathFormatterService.format(this.imagePath);
+    if (this.formatImage) {
+      this.imagePath = ImagePathFormatterService.format(this.imagePath);
+    }
   }
 
 }
