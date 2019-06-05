@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrganizationInterface } from '../../organization.interface';
 import { OrganizationEditService } from '../organization-edit.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class OrganizationEditModalComponent implements OnInit {
   @Input() organization: OrganizationInterface;
+  @Output() update: EventEmitter<any> = new EventEmitter();
 
   constructor(private organizationEditService: OrganizationEditService,
               private activeModal: NgbActiveModal
@@ -20,8 +21,8 @@ export class OrganizationEditModalComponent implements OnInit {
   }
 
   onSave() {
-    this.organizationEditService.update().subscribe(res => {
-      console.log(res);
+    this.organizationEditService.update().subscribe(() => {
+      this.update.emit();
     });
   }
 

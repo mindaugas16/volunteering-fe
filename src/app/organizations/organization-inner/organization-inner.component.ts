@@ -72,14 +72,6 @@ export class OrganizationInnerComponent implements OnInit {
     });
   }
 
-  onEventAdd() {
-    const modalRef = this.modalService.open(EventEditComponent, {windowClass: 'modal is-active'});
-    modalRef.componentInstance.organization = this.organization;
-    modalRef.componentInstance.eventChange.subscribe(event => {
-      this.organization.events = [event, ...this.organization.events];
-    });
-  }
-
   onEditDetails() {
     const modalRef = this.modalService.open(OrganizationEditModalComponent, {windowClass: 'modal is-active'});
     modalRef.componentInstance.organization = this.organization;

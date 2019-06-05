@@ -7,11 +7,7 @@
       <div class="container">
         <div class="is-flex-desktop justify-content-between align-items-center">
           <div class="is-flex-desktop align-items-center">
-            <figure
-              class="image organization-logo mr-4"
-              [style.background-image]="'url('+('https://bulma.io/images/placeholders/1280x960.png')+')'"
-            >
-            </figure>
+            <app-logo [imagePath]="organization.organizationLogo"></app-logo>
             <div>
               <h1 class="title">
                 {{organization?.organizationName}}
@@ -54,7 +50,7 @@
               <a
                 class="icon"
                 *appHasPermission="{condition: actionsRules?.EDIT_ORGANIZATION_DETAILS, args: organization}"
-                (click)="onEventAdd()"
+                [routerLink]="['/events', 'new']"
               >
                 <i class="fa fa-plus"></i>
               </a>

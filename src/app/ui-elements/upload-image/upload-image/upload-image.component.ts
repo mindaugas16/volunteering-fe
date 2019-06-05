@@ -13,6 +13,8 @@ export class UploadImageComponent implements OnInit {
   @Output() removeImage: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('inputImageElement') inputImageElement: ElementRef;
 
+  formatImage = true;
+
   constructor(private cd: ChangeDetectorRef
   ) {
   }
@@ -38,6 +40,7 @@ export class UploadImageComponent implements OnInit {
         this.imageUpload.emit(file);
         this.image = reader.result;
         this.cd.markForCheck();
+        this.formatImage = false;
       };
     }
   }
