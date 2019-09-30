@@ -57,6 +57,13 @@
     }
   }
 
+  .card-meta {
+    &__block > i {
+      text-align: center;
+      width: 20px;
+    }
+  }
+
   .card-body {
     flex: 1;
     padding: 2rem 1.5rem;

@@ -1,54 +1,29 @@
-<div *ngIf="!loading; else loader">
-  <div class="results" *ngIf="events && events.length; else noEventsFound">
-    <!--        <div class="is-flex justify-content-between">-->
-    <!--          <div class="is-flex align-items-center">-->
-    <!--            <app-sort-->
-    <!--              [sortItems]="sortItems"-->
-    <!--              (sortChange)="onSortChange($event)"-->
-    <!--            ></app-sort>-->
-    <!--          </div>-->
-    <!--          <div class="is-flex align-items-center">-->
-    <!--            <span class="icon has-text-primary">-->
-    <!--              <i class="fa fa-th"></i>-->
-    <!--            </span>-->
-    <!--            <span class="icon mr-2">-->
-    <!--              <i class="fa fa-list"></i>-->
-    <!--            </span>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <ng-container [ngSwitch]="viewMode">
-      <ng-container *ngSwitchCase="'GRID'">
-        <div class="columns is-desktop is-multiline">
+<app-generic-list-wrapper [items]="events" [loading]="loading">
+  <ng-container [ngSwitch]="viewMode">
+    <ng-container *ngSwitchCase="'GRID'">
+      <div class="columns is-desktop is-multiline">
 
-          <div class="column is-4 is-flex" *ngFor="let event of events">
-            <app-events-list-card [event]="event"
-            ></app-events-list-card>
-          </div>
-        </div>
-      </ng-container>
-      <div class="list is-hoverable" *ngSwitchCase="'LIST'">
-        <div *ngFor="let event of events" class="list-item is-flex align-items-center justify-content-between">
-          <a [routerLink]="['/events', 'details', event._id]">
-            <app-event-status-label [status]="event?.status"></app-event-status-label>
-            <span>
-              {{event.title}}
-            </span>
-          </a>
-          <div>
-            <a class="icon is-small"
-               [routerLink]="['/events', 'details', event._id, 'edit']"
-            >
-              <i class="fa fa-pencil" aria-hidden="true"></i>
-            </a>
-          </div>
+        <div class="column is-4 is-flex" *ngFor="let event of events">
+          <app-events-list-card [event]="event"></app-events-list-card>
         </div>
       </div>
     </ng-container>
-  </div>
-  <ng-template #noEventsFound>
-    {{'No events found'}}
-  </ng-template>
-</div>
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>
+    <div class="list is-hoverable" *ngSwitchCase="'LIST'">
+      <div *ngFor="let event of events" class="list-item is-flex align-items-center justify-content-between">
+        <a [routerLink]="['/events', 'details', event._id]">
+          <app-event-status-label [status]="event?.status"></app-event-status-label>
+          <span>
+            {{event.title}}
+          </span>
+        </a>
+        <div>
+          <a class="icon is-small"
+             [routerLink]="['/events', 'details', event._id, 'edit']"
+          >
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</app-generic-list-wrapper>

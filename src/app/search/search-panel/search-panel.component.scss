@@ -1,14 +1,32 @@
-.input {
-  box-shadow: none;
-  border: 0;
-  padding: 0;
-}
+.hero {
+  .input {
+    box-shadow: none;
+    border: 0;
+    padding: 0;
+  }
 
-.box {
-  .column {
-    padding: 15px;
-    &:not(:last-child):not(:nth-last-child(2)) {
-      border-right: 1px solid lightgray;
+  .box {
+    background-color: rgba(255, 255, 255, 0.7);
+
+    input, select {
+      background: transparent;
+    }
+
+    &__block {
+      padding: 15px;
+
+      &:not(:last-child):not(:nth-last-child(2)) {
+        border-right: 1px solid lightgray;
+      }
+    }
+  }
+
+  button {
+    &.is-fullwidth {
+      height: 100%;
+      padding: 15px 30px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

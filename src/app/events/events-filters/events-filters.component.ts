@@ -16,7 +16,8 @@ import { isArray } from 'util';
 export class EventsFiltersComponent implements OnInit {
   relatedTags: TagInterface[] = [];
   organizations: OrganizationInterface[] = [];
-  selectedOrganizations: any[] = [];
+  selectedOrganizations: string[] = [];
+  selectedTags: string[] = [];
   loading = true;
 
   constructor(private tagsService: TagsService,
@@ -29,40 +30,50 @@ export class EventsFiltersComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.pipe(
       take(1),
-      filter(({organizationIds}) => !!organizationIds)
-    ).subscribe(({organizationIds}) => {
-      if (isArray(organizationIds)) {
-        this.selectedOrganizations = organizationIds;
-        return;
+      filter(params => !!params)
+    ).subscribe(({organizations, tags}) => {
+      if (organizations) {
+        this.selectedOrganizations = organizations.split(',');
       }
-      this.selectedOrganizations.push(organizationIds);
+      if (tags) {
+        this.selectedTags = tags.split(',');
+      }
     });
-    zip(this.tagsService.getRelatedTags(), this.organizationService.getOrganizations()).subscribe(([tags, {organizations}]) => {
-      this.relatedTags = tags;
-      this.organizations = organizations;
-      this.loading = false;
-    });
+    zip(this.tagsService.getRelatedTags(), this.organizationService.getOrganizations())
+      .subscribe(([tags, organizations]) => {
+        this.relatedTags = tags;
+        this.organizations = organizations;
+        this.loading = false;
+      });
   }
 
-  onOrganizationSelect(id: string) {
-    const foundIndex = this.selectedOrganizations.indexOf(id);
+  onOrganizationSelect(name: string) {
+    this.toggleSelect(this.selectedOrganizations, name, 'organizations');
+  }
+
+  onTagSelect(label: string) {
+    this.toggleSelect(this.selectedTags, label, 'tags');
+  }
+
+  private toggleSelect(selectedValues: any[], label: string, queryParamKey: string) {
+    const foundIndex = selectedValues.indexOf(label);
     if (foundIndex > -1) {
-      this.selectedOrganizations.splice(foundIndex, 1);
+      selectedValues.splice(foundIndex, 1);
     } else {
-      this.selectedOrganizations.push(id);
+      selectedValues.push(label);
     }
-    console.log(this.selectedOrganizations);
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        organizationIds: this.selectedOrganizations,
+        [queryParamKey]: selectedValues.toString() || null,
         page: 1
-      }
+      },
+      queryParamsHandling: 'merge'
     });
   }
 
-  isOrganizationSelected(id: string): boolean {
-    return this.selectedOrganizations.indexOf(id) > -1;
+  isSelected(array: any[], key: string | number): boolean {
+    return array.indexOf(key) > -1;
   }
 
 }

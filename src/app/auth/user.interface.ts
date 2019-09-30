@@ -1,6 +1,7 @@
 import { EventInterface } from '../events/event/models/event.interface';
 import { OrganizationInterface } from '../organizations/organization.interface';
 import { UserRole } from '../profile/user-type.enum';
+import { ParticipationInterface } from '../shared/models/participation.interface';
 
 export interface UserInterface {
   _id: string;
@@ -14,6 +15,7 @@ export interface UserInterface {
   createdActivities: any[];
   role: UserRole;
   achievements: any[];
+  participation: ParticipationInterface[];
 }
 
 export interface CreateUserInterface {

@@ -3,6 +3,11 @@
 :host {
   @extend .tag;
   @extend .is-medium;
+
+  &.is-active {
+    background-color: #3273dc;
+    color: #fff;
+  }
 }
 
 .hash-tag {

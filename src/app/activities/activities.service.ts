@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api.service';
-import { ActivityCreateInterface, ActivityInterface } from './models/activity.interface';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ApiService } from '../api.service';
+import { ActivityCreateInterface, ActivityInterface } from './models/activity.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,10 @@ import { map } from 'rxjs/operators';
 export class ActivitiesService {
 
   constructor(private apiService: ApiService) {
+  }
+
+  getAll() {
+    return this.apiService.get('activities');
   }
 
   create(activityInput: ActivityCreateInterface): Observable<ActivityInterface> {
@@ -35,7 +39,7 @@ export class ActivitiesService {
         activityInput
       }
     }).pipe(
-      map(({data}) => data.createActivity)
+      map(({ data }) => data.createActivity)
     );
   }
 
@@ -63,28 +67,12 @@ export class ActivitiesService {
         activityInput
       }
     }).pipe(
-      map(({data}) => data.updateActivity)
+      map(({ data }) => data.updateActivity)
     );
   }
 
   register(activityId: string) {
-    return this.apiService.query({
-      query: `
-       mutation registerToActivity($activityId: ID!) {
-          registerToActivity(activityId: $activityId) {
-              _id
-              volunteer {
-                _id
-              }
-          }
-        }
-        `,
-      variables: {
-        activityId
-      }
-    }).pipe(
-      map(({data}) => data.registerToActivity)
-    );
+    return this.apiService.post(`activities/${activityId}/register`, null);
   }
 
   delete(id: string): Observable<boolean> {
@@ -98,7 +86,7 @@ export class ActivitiesService {
         id,
       }
     }).pipe(
-      map(({data}) => data.deleteActivity)
+      map(({ data }) => data.deleteActivity)
     );
   }
 
@@ -113,7 +101,7 @@ export class ActivitiesService {
         activityId
       }
     }).pipe(
-      map(({data}) => data.deleteParticipation)
+      map(({ data }) => data.deleteParticipation)
     );
   }
 }

@@ -31,12 +31,12 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(request).pipe(
-      tap(_ => {
+      tap(() => {
       }, (error: any) => {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401 || error.error.errors && error.error.errors[0].status === 401) {
             authService.logout();
-            this.headerMessageService.show('Please login!', 'WARNING');
+            this.headerMessageService.show('Session expired. Please again login', 'WARNING');
           }
         }
       }));

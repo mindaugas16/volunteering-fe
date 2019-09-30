@@ -12,11 +12,16 @@ import { BreadcrumbModule } from '../ui-elements/breadcrumb/breadcrumb.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateRangePickerModule } from '../ui-elements/date-range-picker/date-range-picker.module';
 import { FormMessageModule } from '../ui-elements/form-message/form-message.module';
+import { ActivitiesComponent } from './activities/activities.component';
+import { ActivitiesSearchListComponent } from './activities/activities-search-list/activities-search-list.component';
+import { PaginationModule } from '../ui-elements/pagination/pagination.module';
 
 @NgModule({
   declarations: [
     ActivitiesListComponent,
-    ActivityEditModalComponent
+    ActivityEditModalComponent,
+    ActivitiesComponent,
+    ActivitiesSearchListComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +34,8 @@ import { FormMessageModule } from '../ui-elements/form-message/form-message.modu
     BreadcrumbModule,
     NgbModule,
     DateRangePickerModule,
-    FormMessageModule
+    FormMessageModule,
+    PaginationModule
   ],
   entryComponents: [
     ActivityEditModalComponent,

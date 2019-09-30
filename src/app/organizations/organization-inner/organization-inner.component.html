@@ -72,12 +72,13 @@
                 {{event?.date?.start | date}} - {{event?.date?.end | date}}
               </p>
             </a>
-            <button class="button is-fullwidth is-primary"
-                    *ngIf="organization.events.length > eventsPerPage"
-                    (click)="onShowAllEvents()"
+            <a class="button is-fullwidth is-primary"
+               *ngIf="organization.events.length > eventsPerPage"
+               [routerLink]="'/events'"
+               [queryParams]="{organizations: organization.organizationName}"
             >
               {{'Show organizations all events'}}
-            </button>
+            </a>
           </div>
           <ng-template #eventsNotFound>
             {{'Organization events not found'}}

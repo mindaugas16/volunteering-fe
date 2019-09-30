@@ -19,11 +19,11 @@
       </button>
       <button
         class="button"
-        [ngClass]="[confirmType === 'CONFIRM' ? 'is-primary' : 'is-danger']"
+        [ngClass]="[options?.cssClasses]"
         type="submit"
         (click)="onConfirm()"
       >
-        {{confirmType === 'CONFIRM' ? 'Confirm' : 'Delete'}}
+        {{options.submitButtonText}}
       </button>
     </div>
   </ng-template>

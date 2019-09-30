@@ -10,10 +10,11 @@
         </h3>
         <div class=" ">
           <form [formGroup]="form"
-                class="box p-0 columns"
+                class="box p-0 is-flex"
                 (submit)="onFind()"
           >
-            <div class="column">
+
+            <div class="auto-grow box__block">
               <div class="field">
                 <div class="control">
                   <label>
@@ -27,7 +28,7 @@
                 </div>
               </div>
             </div>
-            <div class="column">
+            <div class="auto-grow box__block">
               <div class="field">
                 <div class="control">
                   <label>
@@ -41,7 +42,7 @@
                 </div>
               </div>
             </div>
-            <div class="column">
+            <div class="box__block">
               <div class="field">
                 <div class="control">
                   <label>
@@ -54,19 +55,23 @@
                       Events
                     </option>
                     <option value="2">
+                      Activities
+                    </option>
+                    <option value="3">
                       Organizations
                     </option>
                   </select>
                 </div>
               </div>
             </div>
-            <div class="column is-flex align-items-center">
-              <button class="button is-fullwidth is-primary"
+            <div class="box__block is-flex align-items-center p-0">
+              <button class="button is-fullwidth is-primary is-large"
                       type="submit"
               >
-                {{'Find now'}}
+                {{'Find now!'}}
               </button>
             </div>
+
           </form>
         </div>
       </div>

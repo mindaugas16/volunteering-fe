@@ -3,6 +3,7 @@ import { ProfileService } from '../profile.service';
 import { UserInterface } from '../../auth/user.interface';
 import { TabInterface } from '../../ui-elements/tabs/tab.interface';
 import { UserRole } from '../user-type.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 enum ProfileTabsEnum {
   PROFILE,
@@ -22,8 +23,7 @@ export class ProfileComponent implements OnInit {
   user: UserInterface;
   tabs: TabInterface[] = [];
 
-  constructor(private profileService: ProfileService
-  ) {
+  constructor(private profileService: ProfileService) {
   }
 
   ngOnInit() {
@@ -31,33 +31,38 @@ export class ProfileComponent implements OnInit {
     this.profileService.getUserInfo().subscribe(user => {
       this.user = user;
       this.tabs = [
-        {title: 'Profile', id: ProfileTabsEnum.PROFILE, icon: 'fa-user', link: ['edit']},
+        {
+          title: 'Profile',
+          id: ProfileTabsEnum.PROFILE,
+          icon: 'fa-user',
+          path: 'edit'
+        },
         {
           title: 'My organization',
           id: ProfileTabsEnum.MY_ORGANIZATION,
           icon: 'fa-star',
           isHidden: this.user && this.user.role !== UserRole.ORGANIZATION,
-          link: ['my-organization']
+          path: 'my-organization'
         },
         {
           title: 'Organizations',
           id: ProfileTabsEnum.ORGANIZATIONS,
           icon: 'fa-star',
           isHidden: this.user && visibleOnlyForVolunteer(),
-          link: ['organizations']
+          path: 'organizations'
         },
         {
           title: 'Achievements',
           icon: 'fa-trophy',
           id: ProfileTabsEnum.ACHIEVEMENTS,
-          link: ['achievements'],
+          path: 'achievements',
           isHidden: this.user && visibleOnlyForVolunteer(),
         },
         {
           title: 'Participation',
           icon: 'fa-calendar',
           id: ProfileTabsEnum.PARTICIPATION,
-          link: ['participation'],
+          path: 'participation',
           isHidden: this.user && visibleOnlyForVolunteer(),
         },
       ];

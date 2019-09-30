@@ -2,10 +2,10 @@
       (submit)="onSearch()"
       class="is-flex flex-column"
 >
-  <div class="columns justify-content-end">
-    <div class="column is-4">
+  <div class="is-flex">
+    <div class="auto-grow mr-2">
       <div class="control is-expanded has-icons-left">
-        <input placeholder="Search events near you"
+        <input placeholder="Search events by title, description, organization and etc"
                class="input"
                formControlName="query"
                type="text"
@@ -15,8 +15,8 @@
         </span>
       </div>
     </div>
-    <div class="column is-4">
 
+    <div class="auto-grow mr-4">
       <div class="control is-expanded has-icons-left">
         <input placeholder="Enter location"
                class="input"
@@ -28,7 +28,8 @@
         </span>
       </div>
     </div>
-    <div class="column no-grow">
+
+    <div class="mr-2">
       <div class="control">
         <button class="button is-primary"
                 type="submit"
@@ -37,7 +38,7 @@
         </button>
       </div>
     </div>
-    <div class="column no-grow">
+    <div>
       <div class="control">
         <button class="button is-text"
                 type="button"

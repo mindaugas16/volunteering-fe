@@ -15,6 +15,7 @@ import { ActivitiesService } from '../../../activities/activities.service';
 import { ActivityInterface } from '../../../activities/models/activity.interface';
 import { HeaderMessageService } from '../../../ui-elements/header-message/header-message.service';
 import { EventDateStatusHelper } from '../../../core/services/helpers/event-date-status.helper';
+import { UserService } from '../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-event-inner',
@@ -53,10 +54,13 @@ export class EventInnerComponent implements OnInit {
   }
 
   onJoinActivity(activity: ActivityInterface) {
-    this.activitiesService.register(activity._id).subscribe(participation => {
-      this.headerMessage.show(`You have successfully signed up for activity - ${activity.name}`, 'SUCCESS');
-      activity.participation.push(participation);
-    });
+    this.activitiesService.register(activity._id)
+      .subscribe(participation => {
+        this.headerMessage.show(`You have successfully signed up for activity - ${activity.name}`, 'SUCCESS');
+        activity.participation.push(participation);
+        this.user.participation.push(participation);
+        AuthService.updateStorage(this.user);
+      });
   }
 
   onRewardVolunteers() {
@@ -92,6 +96,6 @@ export class EventInnerComponent implements OnInit {
   }
 
   isRegisteredToActivity(activity: ActivityInterface): boolean {
-    return !!activity.participation.find(({volunteer}) => this.user._id === volunteer._id);
+    return !!activity.participation.find(({volunteer}) => this.user._id === volunteer);
   }
 }

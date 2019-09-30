@@ -10,6 +10,7 @@ import { filter } from 'rxjs/operators';
 export class PaginationComponent implements OnInit {
   @Input() type: 'SIMPLE' | 'ROUTE' = 'SIMPLE';
   @Input() totalCount: number;
+  @Input() totalPages: number;
   @Input() perPage = 12;
   @Output() pageChange: EventEmitter<number> = new EventEmitter();
   currentPage = 1;
@@ -21,8 +22,7 @@ export class PaginationComponent implements OnInit {
   }
 
   ngOnInit() {
-    const arrayLength = Math.floor(this.totalCount / this.perPage); // get integer value of pages count
-    this.pages = Array.from({length: arrayLength}, (v, k) => k + 1); // create array of pages and increment values
+    this.pages = Array.from({length: this.totalPages}, (v, k) => k + 1); // create array of pages and increment values
     this.route.queryParams.pipe(
       filter(({page}) => !!page)
     ).subscribe(({page}) => {

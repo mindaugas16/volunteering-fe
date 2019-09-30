@@ -2,15 +2,25 @@
   {{'Organizations'}}
 </h4>
 <div>
-  <a *ngFor="let organization of user?.organizations"
-     class="is-flex align-items-center"
-     [routerLink]="['/organizations', 'details', organization._id]"
-  >
-    <app-logo [imagePath]="null"
-              [extraClasses]="'small'"
-    ></app-logo>
-    <span>
-      {{organization.organizationName}}
-    </span>
-  </a>
+  <ng-container *ngIf="!loading; else loader">
+    <div class="list border-0" *ngIf="organizations && organizations.length; else emptyList">
+      <a *ngFor="let organization of organizations"
+         class="is-flex align-items-center list-item"
+         [routerLink]="['/organizations', 'details', organization._id]"
+      >
+        <app-logo [imagePath]="null"
+                  [extraClasses]="'small'"
+        ></app-logo>
+        <span>
+          {{organization.organizationName}}
+        </span>
+      </a>
+    </div>
+    <ng-template #emptyList>
+      {{'You don\'t belong to any organization'}}
+    </ng-template>
+  </ng-container>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
 </div>

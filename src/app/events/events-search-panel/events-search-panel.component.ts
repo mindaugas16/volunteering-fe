@@ -26,7 +26,9 @@ export class EventsSearchPanelComponent implements OnInit {
   }
 
   onSearch() {
-    this.eventsSearchService.search(this.form.value);
+    const values = this.form.value;
+    Object.keys(values).forEach((key) => (values[key] === '') ? values[key] = null : null);
+    this.eventsSearchService.search(values);
   }
 
   onResetFilters() {

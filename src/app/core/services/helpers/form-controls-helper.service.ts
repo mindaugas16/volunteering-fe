@@ -22,9 +22,8 @@ export class FormControlsHelperService {
   }
 
   static invalidateControlsByErrors(form: FormGroup, errors: { [key: string]: string }[]) {
-    errors.forEach(value => {
-      const key = Object.keys(value)[0];
-      FormControlsHelperService.invalidateSingleFormControl(form.get(key), value[key]);
+    errors.forEach(({field, type}) => {
+      FormControlsHelperService.invalidateSingleFormControl(form.get(field), type);
     });
   }
 }

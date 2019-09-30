@@ -30,6 +30,10 @@ const routes: Routes = [
     loadChildren: './events/events.module#EventsModule'
   },
   {
+    path: 'activities',
+    loadChildren: './activities/activities.module#ActivitiesModule'
+  },
+  {
     path: 'organizations',
     loadChildren: './organizations/organizations.module#OrganizationsModule'
   },

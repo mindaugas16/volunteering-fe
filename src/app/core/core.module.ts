@@ -29,7 +29,8 @@ import { LanguageSwitchModule } from '../ui-elements/language-switch/language-sw
   ],
   exports: [
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    PageNotFoundComponent
   ],
 })
 export class CoreModule {

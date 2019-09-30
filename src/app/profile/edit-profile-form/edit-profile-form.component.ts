@@ -55,12 +55,14 @@ export class EditProfileFormComponent implements OnInit {
       return;
     }
     const {email, ...rest} = this.form.value;
-    this.profileService.updateUserInfo(rest).subscribe(() => {
-      this.isChangesSaved = true;
-    }, error => {
-      this.failureMessage = error.message;
-      FormControlsHelperService.invalidateControlsByErrors(this.form, error.data);
-    });
+    this.profileService.updateUserInfo(rest)
+      .subscribe(() => {
+        this.isChangesSaved = true;
+      }, ({error}) => {
+        const {message, data} = error;
+        this.failureMessage = message;
+        FormControlsHelperService.invalidateControlsByErrors(this.form, data);
+      });
   }
 
   private pathValueForm() {

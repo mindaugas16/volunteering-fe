@@ -1,41 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UpdateUserInterface, UserInterface } from '../auth/user.interface';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ApiService } from '../api.service';
 import { ParticipationInterface } from '../shared/models/participation.interface';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private authService: AuthService) {
   }
 
   getUserInfo(): Observable<UserInterface> {
-    return this.apiService.query({
-      query: `
-      query currentUser {
-          currentUser {
-              _id
-              email
-              firstName
-              lastName
-              postalCode
-              contacts
-              role
-              organizations {
-                _id
-                organizationName
-                organizationLogo
-              }
-            }
-           }
-      `
-    }).pipe(
-      map(({data}) => data),
-      map(({currentUser}) => currentUser)
+    return this.apiService.get('users/current').pipe(
+      catchError(err => {
+        this.authService.logout();
+        return of(err);
+      })
     );
   }
 
@@ -59,48 +43,11 @@ export class ProfileService {
     );
   }
 
-  updateUserInfo(user: UpdateUserInterface): Observable<UserInterface> {
-    return this.apiService.query({
-      query: `
-      mutation updateUserInfo($userInput: UserUpdateInput) {
-          updateUserInfo(userInput: $userInput) {
-              firstName
-              lastName
-              postalCode
-            }
-           }
-      `,
-      variables: {
-        userInput: user
-      }
-    }).pipe(
-      map(({data}) => data),
-      map(({updateUserInfo}) => updateUserInfo)
-    );
-  }
-
-  getUserParticipation(): Observable<ParticipationInterface[]> {
-    return this.apiService.query({
-      query: `
-        query participation {
-          participation {
-            activity {
-              _id
-              name
-              date {
-                start
-                end
-              }
-              event {
-                _id
-                title
-              }
-            }
-          }
-        }
-      `
-    }).pipe(
-      map(({data}) => data.participation),
+  updateUserInfo(body: UpdateUserInterface): Observable<UserInterface> {
+    return this.apiService.patch('users/update', body).pipe(
+      tap(user => {
+        AuthService.updateStorage(user);
+      })
     );
   }
 

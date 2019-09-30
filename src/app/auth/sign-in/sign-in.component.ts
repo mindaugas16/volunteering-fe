@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,7 +20,8 @@ export class SignInComponent implements OnInit {
   isInvalid: boolean;
 
   constructor(private authService: AuthService,
-              private modalService: NgbModal
+              private modalService: NgbModal,
+              private router: Router
   ) {
   }
 
@@ -35,10 +37,13 @@ export class SignInComponent implements OnInit {
       this.isInvalid = true;
       return;
     }
-    this.authService.signIn(this.form.value).subscribe(() => {
+    this.authService.signIn(this.form.value).subscribe((r) => {
+        console.log(r);
         this.loading = false;
+        this.router.navigate(['/']);
       },
       error => {
+      console.log(error);
         this.loading = false;
         this.isInvalid = true;
       });

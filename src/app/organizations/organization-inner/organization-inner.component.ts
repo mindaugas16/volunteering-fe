@@ -7,10 +7,10 @@ import { AuthService } from '../../auth/auth.service';
 import { zip } from 'rxjs/internal/observable/zip';
 import { UserInterface } from '../../auth/user.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EventEditComponent } from '../../events/event-edit/event-edit.component';
 import { ActionsRules } from '../../shared/permissions.config';
 import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { OrganizationEditModalComponent } from '../organization-edit/organization-edit-modal/organization-edit-modal.component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
 
 const ORGANIZATION_EVENTS_PER_PAGE = 8;
 
@@ -39,7 +39,10 @@ export class OrganizationInnerComponent implements OnInit {
   ngOnInit() {
     this.route.params.pipe(
       switchMap(params => {
-        return zip(this.organizationService.getOrganization(params['id']), this.authService.getCurrentUser(false));
+        return zip(
+          this.organizationService.getOrganization(params['id']),
+          this.authService.getCurrentUser(false)
+        );
       })
     ).subscribe(([organization, user]) => {
       this.organization = organization;
@@ -60,16 +63,34 @@ export class OrganizationInnerComponent implements OnInit {
     }
 
     if (this.isUserJoinedOrganization) {
-      this.organizationService.leaveOrganization(this.organization._id).subscribe(() => {
-        this.isUserJoinedOrganization = false;
-        this.organization.members.splice(this.organization.members.findIndex(member => member._id === this.user._id), 1);
-      });
+      const modalRef = this.modalService.open(ConfirmModalComponent, {windowClass: 'modal is-active'});
+      modalRef.componentInstance.title = `Confirm`;
+      modalRef.componentInstance.options = {
+        cssClasses: 'is-danger',
+        submitButtonText: 'Leave'
+      };
+      modalRef.componentInstance.message = `Are you really want to leave organization <b>${this.organization.organizationName}</b>?`;
+      modalRef.componentInstance.confirm
+        .pipe(
+          switchMap(() => this.organizationService.leaveOrganization(this.organization._id))
+        )
+        .subscribe(() => {
+          this.isUserJoinedOrganization = false;
+          this.organization.members
+            .splice(
+              this.organization.members.findIndex(member => member._id === this.user._id),
+              1
+            );
+          this.headerMessageService.show('You have successfully left organization', 'SUCCESS');
+        });
       return;
     }
-    this.organizationService.joinOrganization(this.organization._id).subscribe(() => {
-      this.isUserJoinedOrganization = true;
-      this.organization.members.push(this.user);
-    });
+    this.organizationService.joinOrganization(this.organization._id)
+      .subscribe(() => {
+        this.isUserJoinedOrganization = true;
+        this.organization.members.push(this.user);
+        this.headerMessageService.show('You have successfully joined organization', 'SUCCESS');
+      });
   }
 
   onEditDetails() {
@@ -82,9 +103,5 @@ export class OrganizationInnerComponent implements OnInit {
   }
 
   onUserInvite() {
-  }
-
-  onShowAllEvents() {
-    this.router.navigate(['/events'], {queryParams: {organizationIds: this.organization._id}});
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventsSearchService } from '../../events/services/events-search/events-search.service';
 
 @Component({
   selector: 'app-search-panel',
@@ -14,18 +15,33 @@ export class SearchPanelComponent implements OnInit {
     type: new FormControl(1)
   });
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private eventsSearchService: EventsSearchService) {
   }
 
   ngOnInit() {
   }
 
   onFind() {
-    let route = 'events';
-    if (+this.form.controls['type'].value === 2) {
-      route = 'organizations';
+    const {query, location} = this.form.value;
+    const params = {query, location};
+
+    let route;
+    switch (+this.form.controls['type'].value) {
+      case 1:
+        route = 'events';
+        this.eventsSearchService.setParams(params);
+        break;
+      case 2:
+        route = 'activities';
+        break;
+      case 3:
+        route = 'organizations';
+        break;
+      default:
+        route = 'events';
     }
-    this.router.navigate([route], {queryParams: {...this.form.value}});
+
+    this.router.navigate([route], {queryParams: params});
   }
 
 }

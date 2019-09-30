@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, HostBinding } from '@angular/core';
 import { TagInterface } from '../tag.interface';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-tag',
@@ -12,6 +13,11 @@ export class TagComponent implements OnInit {
   @Input() isTagsEditEnabled: boolean;
   @Input() actionType: 'add' | 'edit' = 'edit';
 
+  @Input('isActive')
+  set _isActive(value: boolean) {
+    this.isActive = value;
+  }
+
   @Output() create: EventEmitter<TagInterface> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() rename: EventEmitter<TagInterface> = new EventEmitter();
@@ -20,6 +26,8 @@ export class TagComponent implements OnInit {
 
   isRenameEnabled: boolean;
   tagLabel: string;
+
+  @HostBinding('class.is-active') isActive;
 
   @HostListener('keydown.enter')
   onSubmit() {
@@ -62,8 +70,6 @@ export class TagComponent implements OnInit {
       setTimeout(() => {
         this.inputElement.nativeElement.focus();
       }, 0);
-    } else {
-      this.router.navigate(['/events'], {queryParams: {tags: this.tag.label}});
     }
   }
 

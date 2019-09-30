@@ -13,14 +13,22 @@ export class EventsSearchService {
 
   constructor(private router: Router,
               private route: ActivatedRoute) {
-    this.route.queryParams.pipe(take(1)).subscribe(params => {
-      this.search(params as any);
-    });
+    this.route.queryParams
+      .pipe(
+        take(1)
+      )
+      .subscribe(params => {
+        this.search(params as any);
+      });
   }
 
   search(params: SearchParamsInterface, queryParamsHandling: QueryParamsHandling = 'merge') {
-    this.query.next(params);
+    this.setParams(params);
     this.router.navigate([], {queryParams: params, relativeTo: this.route, queryParamsHandling});
+  }
+
+  setParams(params: SearchParamsInterface) {
+    this.query.next(params);
   }
 
   getSearchQueryAsObservable(): Observable<SearchParamsInterface> {

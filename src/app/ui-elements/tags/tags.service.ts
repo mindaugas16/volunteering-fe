@@ -11,17 +11,6 @@ export class TagsService {
   }
 
   getRelatedTags() {
-    return this.apiService.query({
-      query: `
-        query relatedTags {
-            relatedTags {
-              _id
-              label
-            }
-          }
-        `
-    }).pipe(
-      map(({data}) => data.relatedTags)
-    );
+    return this.apiService.get('tags');
   }
 }

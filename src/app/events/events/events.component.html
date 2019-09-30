@@ -1,10 +1,14 @@
 <div class="section">
   <div class="container">
-    <div class="is-flex-desktop">
-      <h1 class="title mr-4">
-        Events
-      </h1>
-      <app-events-search-panel class="is-block auto-grow"></app-events-search-panel>
+    <div class="columns">
+      <div class="column is-3 is-2-widescreen">
+        <h1 class="title mr-4">
+          Events
+        </h1>
+      </div>
+      <div class="column is-9 is-10-widescreen">
+        <app-events-search-panel class="is-block"></app-events-search-panel>
+      </div>
     </div>
     <hr/>
     <div class="columns">
@@ -18,6 +22,7 @@
         ></app-events-list>
         <app-pagination *ngIf="!loading && events.length"
                         [totalCount]="totalCount"
+                        [totalPages]="totalPages"
                         [type]="'ROUTE'"
         ></app-pagination>
       </div>

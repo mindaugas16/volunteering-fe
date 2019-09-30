@@ -28,4 +28,10 @@
       Next page
     </button>
   </nav>
+  <div>
+    <p class="has-text-right">
+      Showing {{((currentPage - 1) * perPage) || 1}}
+      -{{currentPage * perPage < totalCount ? currentPage * perPage : totalCount }} of {{totalCount}}
+    </p>
+  </div>
 </ng-container>

@@ -112,13 +112,11 @@ export class SignUpComponent implements OnInit {
       return;
     }
 
-    console.log(lastForm);
-
     this.authService.signUp(values, this.selectedType).subscribe(() => {
         this.activeModal.close();
         this.router.navigate(['/auth', 'sign-in']);
       },
-      error => {
+      ({error}) => {
         FormControlsHelperService.invalidateControlsByErrors(this.generalForm, error.data);
         if (lastForm) {
           FormControlsHelperService.invalidateControlsByErrors(this.organizationForm, error.data);

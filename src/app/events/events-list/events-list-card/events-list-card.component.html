@@ -3,11 +3,11 @@
     <a class="card-image"
        [routerLink]="['details', event._id]"
        [style.background-image]="'url('+(event.imagePath)+')'">
-<!--      <a class="icon is-large card-star is-primary"-->
-<!--         appClickStopPropagation-->
-<!--      >-->
-<!--        <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>-->
-<!--      </a>-->
+      <!--      <a class="icon is-large card-star is-primary"-->
+      <!--         appClickStopPropagation-->
+      <!--      >-->
+      <!--        <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>-->
+      <!--      </a>-->
     </a>
   </div>
   <div class="card-body is-flex">
@@ -18,18 +18,18 @@
         </div>
       </a>
       <div class="card-meta mt-2">
-        <div>
+        <div class="card-meta__block">
           <i class="fa fa-calendar mr-2"></i>
           <span>{{event.date.start | date}}</span>
           <span *ngIf="event.date.end && event.date.end > event.date.start">- {{event.date.end | date:'MMM dd'}}</span>
         </div>
-        <div>
+        <div class="card-meta__block">
           <i class="fa fa-users mr-2"></i>
           <a [routerLink]="['/organizations', 'details', event.organization._id]">
             {{event.organization.organizationName}}
           </a>
         </div>
-        <div *ngIf="event?.location">
+        <div *ngIf="event?.location" class="card-meta__block">
           <i class="fa fa-map-marker mr-2"></i>
           <span>
             {{event.location?.address}} {{event.location?.city}}

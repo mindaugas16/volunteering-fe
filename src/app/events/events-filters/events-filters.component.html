@@ -5,7 +5,10 @@
         {{'Tags'}}
       </h2>
       <div class="menu-list">
-        <app-tag class="mr-2 mb-2" *ngFor="let tag of (relatedTags | slice:0:10)"
+        <app-tag class="mr-2 mb-2"
+                 *ngFor="let tag of (relatedTags | slice:0:10)"
+                 [isActive]="isSelected(selectedTags, tag.label)"
+                 (click)="onTagSelect(tag.label)"
                  [tag]="tag"
         ></app-tag>
       </div>
@@ -18,9 +21,12 @@
         <li *ngFor="let org of (organizations | slice:0:10)"
             class="mb-2"
         >
-          <a class="filter" [class.is-active]="isOrganizationSelected(org._id)"
-             (click)="onOrganizationSelect(org._id)">
-            {{org.organizationName}}
+          <a class="filter is-flex justify-content-between"
+             [class.is-active]="isSelected(selectedOrganizations, org.organizationName)"
+             (click)="onOrganizationSelect(org.organizationName)"
+          >
+            <span>{{org.organizationName}}</span>
+            <a class="delete" *ngIf="isSelected(selectedOrganizations, org.organizationName)"></a>
           </a>
         </li>
       </ul>

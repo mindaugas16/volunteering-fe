@@ -7,7 +7,7 @@ import { ApiService } from '../api.service';
 import { UserRole } from '../profile/user-type.enum';
 import { HeaderMessageService } from '../ui-elements/header-message/header-message.service';
 
-const LOCAL_STORAGE_TOKEN_KEY = 'token';
+const STORAGE_TOKEN_KEY = 'token';
 const LOCAL_STORAGE_USER_KEY = 'currentUser';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class AuthService {
 
   static getToken() {
     const storage = AuthService.getUsedBrowserStorage();
-    const user = storage ? (JSON.parse(AuthService.getUsedBrowserStorage().getItem(LOCAL_STORAGE_TOKEN_KEY)) || null) : null;
+    const user = storage ? (JSON.parse(AuthService.getUsedBrowserStorage().getItem(STORAGE_TOKEN_KEY)) || null) : null;
     return user ? user.token : null;
   }
 
@@ -36,12 +36,17 @@ export class AuthService {
   }
 
   static getUsedBrowserStorage() {
-    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+    if (localStorage.getItem(STORAGE_TOKEN_KEY)) {
       return localStorage;
-    } else if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+    } else if (sessionStorage.getItem(STORAGE_TOKEN_KEY)) {
       return sessionStorage;
     }
     return null;
+  }
+
+  static updateStorage(user: UserInterface) {
+    const storage = AuthService.getUsedBrowserStorage();
+    storage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
   }
 
   signIn({email, password, rememberMe}): Observable<any> {
@@ -50,57 +55,25 @@ export class AuthService {
       storage = localStorage;
     }
 
-    const setSession = authResponse => {
-      storage.setItem(LOCAL_STORAGE_TOKEN_KEY, JSON.stringify(
+    const setSession = ({token}) => {
+      storage.setItem(STORAGE_TOKEN_KEY, JSON.stringify(
         {
-          'token': authResponse.login.token,
+          'token': token,
           // 'expiresAt': expiresAt.valueOf()
         }
       ));
       this.authenticated(true);
     };
-    const body = {
-      query: `
-        query login($email: String!, $password: String!) {
-            login(email: $email, password: $password) {
-              userId
-              token
-              tokenExpiration
-            }
-           }
-      `,
-      variables: {
-        email: email,
-        password: password
-      }
-    };
-    return this.apiService.query(body).pipe(
-      map(({data}) => data),
+    const body = {email, password};
+    return this.apiService.post('auth/login', body).pipe(
       tap(res => {
         setSession(res);
-        this.router.navigate(['/']);
       })
     );
   }
 
   signUp(user: CreateUserInterface, userRole: UserRole) {
-    return this.apiService.query({
-      query: `
-        mutation createUser($userInput: UserInput!, $userRole: UserRole!) {
-          createUser(userInput: $userInput, userRole: $userRole) {
-            email
-            firstName
-            lastName
-            postalCode
-          }
-        }
-      `,
-      variables: {
-        userInput: user,
-        userRole
-      }
-    }).pipe(
-      map(({data}) => data),
+    return this.apiService.post('auth/sign-up', {...user, userRole}).pipe(
       tap(() => {
         this.router.navigate(['/auth/sign-in']);
         this.headerMessage.show('Congratulations! You have successfully registered', 'SUCCESS');
@@ -109,6 +82,10 @@ export class AuthService {
   }
 
   getCurrentUser(fetch = true): Observable<UserInterface> {
+    if (!this.isAuthenticated()) {
+      return of(null);
+    }
+
     const localUser = AuthService.getUser();
     if (localUser) {
       return new Observable(observer => {
@@ -120,25 +97,11 @@ export class AuthService {
       return of(null);
     }
 
-    return this.apiService.query({
-      query: `
-      query currentUser {
-          currentUser {
-              _id
-              email
-              firstName
-              lastName
-              postalCode
-              role
-            }
-           }
-      `
-    }).pipe(
-      map(({data}) => data.currentUser),
+    return this.apiService.get('users/current').pipe(
       tap(user => {
         if (user) {
           let storage = sessionStorage;
-          if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)) {
+          if (localStorage.getItem(STORAGE_TOKEN_KEY)) {
             storage = localStorage;
           }
           storage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
@@ -189,12 +152,12 @@ export class AuthService {
   }
 
   public logout() {
-    if (localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) || localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-      localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+    if (localStorage.getItem(STORAGE_TOKEN_KEY) || localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+      localStorage.removeItem(STORAGE_TOKEN_KEY);
       localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
     }
-    if (sessionStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) || sessionStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-      sessionStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
+    if (sessionStorage.getItem(STORAGE_TOKEN_KEY) || sessionStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+      sessionStorage.removeItem(STORAGE_TOKEN_KEY);
       sessionStorage.removeItem(LOCAL_STORAGE_USER_KEY);
     }
     this.authenticated(false);

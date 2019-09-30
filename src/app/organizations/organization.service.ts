@@ -15,99 +15,21 @@ export class OrganizationService {
   ) {
   }
 
-  getOrganizations(params?: SearchParamsInterface): Observable<OrganizationsResultsInterface> {
-    return this.apiService.query({
-      query: `
-        query organizations($query: String, $location: String, $page: Int) {
-           organizations(query: $query, location: $location, page: $page) {
-              totalCount
-              organizations {
-                _id
-                organizationLogo
-                organizationName
-                location {
-                  address
-                }
-              }
-           }
-        }
-      `,
-      variables: params
-    }).pipe(
-      map(({data}) => data.organizations)
-    );
+  getOrganizations(params?: SearchParamsInterface): Observable<OrganizationInterface[]> {
+    return this.apiService.get('organizations', params);
   }
 
   getOrganization(id: string): Observable<OrganizationInterface> {
-    return this.apiService.query({
-      query: `
-        query organization($organizationId: ID!) {
-           organization(organizationId: $organizationId) {
-              _id
-              organizationLogo
-              organizationWebsite
-              organizationName
-              firstName
-              lastName
-              description
-              location {
-                title
-                zipCode
-                address
-                city
-                country
-              }
-              members {
-                _id
-                firstName
-              }
-              events {
-                _id
-                title
-                date {
-                  start
-                  end
-                }
-                status
-                createdAt
-                updatedAt
-                imagePath
-              }
-           }
-        }
-      `,
-      variables: {
-        organizationId: id
-      }
-    }).pipe(
-      map(({data}) => data.organization)
-    );
+    return this.apiService.get(`organizations/${id}`);
   }
 
   joinOrganization(id: string): Observable<boolean> {
-    return this.apiService.query({
-      query: `
-        mutation joinOrganization($organizationId: ID!) {
-          joinOrganization(organizationId: $organizationId)
-        }
-      `,
-      variables: {
-        organizationId: id
-      }
-    });
+    return this.apiService.patch(`organizations/${id}/join`, null);
   }
 
   leaveOrganization(id: string): Observable<boolean> {
-    return this.apiService.query({
-      query: `
-        mutation leaveOrganization($organizationId: ID!) {
-          leaveOrganization(organizationId: $organizationId)
-        }
-      `,
-      variables: {
-        organizationId: id
-      }
-    });
+    return this.apiService.patch(`organizations/${id}/leave`, null);
+
   }
 
   update(updatedOrganization: UpdateOrganizationInterface): Observable<OrganizationInterface> {

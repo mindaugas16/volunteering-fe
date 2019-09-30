@@ -14,6 +14,7 @@ import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.
 import { GenericModalModule } from '../ui-elements/generic-modal/generic-modal.module';
 import { KeysPipe } from './pipes/keys/keys.pipe';
 import { InputButtonDirective } from './components/input/directives/input-button.directive';
+import { GenericListWrapperComponent } from './components/generic-list-wrapper/generic-list-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { InputButtonDirective } from './components/input/directives/input-button
     ConfirmModalComponent,
     KeysPipe,
     InputButtonDirective,
+    GenericListWrapperComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { InputButtonDirective } from './components/input/directives/input-button
     ConfirmModalComponent,
     KeysPipe,
     InputButtonDirective,
+    GenericListWrapperComponent,
   ],
   entryComponents: [
     ConfirmModalComponent

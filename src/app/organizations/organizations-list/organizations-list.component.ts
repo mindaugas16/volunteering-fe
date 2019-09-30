@@ -3,6 +3,7 @@ import { OrganizationService } from '../organization.service';
 import { OrganizationInterface } from '../organization.interface';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-organizations-list',
@@ -22,13 +23,17 @@ export class OrganizationsListComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.pipe(
-      switchMap(query => {
+      switchMap(({page, query}) => {
         this.loading = true;
-        const {page, ...rest} = query;
-        return this.organizationService.getOrganizations({page: +page, ...rest});
+        let params = new HttpParams().append('page', page || 1);
+
+        if (query) {
+          params = params.append('query', query);
+        }
+        return this.organizationService.getOrganizations(params);
       })
-    ).subscribe(({organizations, totalCount}) => {
-      this.totalCount = totalCount;
+    ).subscribe((organizations) => {
+      this.totalCount = 0;
       this.organizations = organizations;
       this.loading = false;
     }, () => this.loading = false);

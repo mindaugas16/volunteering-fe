@@ -23,7 +23,7 @@ export class OrganizationSearchPanelComponent implements OnInit {
       this.form.patchValue({query}, {emitEvent: false});
     });
     this.form.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(700),
       distinctUntilChanged()
     ).subscribe(({query}) => {
       this.router.navigate([], {relativeTo: this.route, queryParams: {query}});

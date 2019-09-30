@@ -17,13 +17,8 @@ export class TabsComponent implements OnInit {
 
   ngOnInit() {
     if (!this.selected && this.tabs && this.tabs.length) {
-      this.onTabSelect(this.tabs[0]);
+      // this.onTabSelect(this.tabs[0]);
     }
-  }
-
-  onTabSelect(tab: TabInterface) {
-    this.selected = tab;
-    this.select.emit(this.selected);
   }
 
 }

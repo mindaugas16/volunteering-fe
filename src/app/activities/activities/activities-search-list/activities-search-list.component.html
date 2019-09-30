@@ -1,0 +1,8 @@
+<app-generic-list-wrapper [items]="activities" [loading]="loading">
+  <div class="columns is-desktop is-multiline">
+
+    <div class="column is-4 is-flex" *ngFor="let activity of activities">
+      {{activity.name}}
+    </div>
+  </div>
+</app-generic-list-wrapper>

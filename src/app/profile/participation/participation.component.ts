@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '../profile.service';
 import { CalendarEvent } from 'angular-calendar';
 import { startOfDay } from 'date-fns';
 import { Router } from '@angular/router';
@@ -11,6 +10,7 @@ import { ConfirmModalComponent } from '../../shared/components/confirm-modal/con
 import { switchMap } from 'rxjs/operators';
 import { ActivitiesService } from '../../activities/activities.service';
 import { ParticipationInterface } from '../../shared/models/participation.interface';
+import { UserService } from '../../core/services/user/user.service';
 
 const colors: any = {
   soon: {
@@ -35,7 +35,7 @@ export class ParticipationComponent implements OnInit {
   groupedEvents: EventInterface[] = [];
   loading = true;
 
-  constructor(private profileService: ProfileService,
+  constructor(private userService: UserService,
               private router: Router,
               private eventDateStatusHelper: EventDateStatusHelper,
               private modalService: NgbModal,
@@ -60,19 +60,20 @@ export class ParticipationComponent implements OnInit {
       }
     };
 
-    this.profileService.getUserParticipation().subscribe(participation => {
-      this.events = participation.map(part => {
-        return {
-          start: startOfDay(new Date(part.activity.date.start)),
-          end: startOfDay(new Date(part.activity.date.end)),
-          title: part.activity.name,
-          _id: part.activity.event._id,
-          color: getColorByDate(part.activity.date)
-        };
+    this.userService.getCurrentUserParticipation()
+      .subscribe(participation => {
+        this.events = participation.map(part => {
+          return {
+            start: startOfDay(new Date(part.activity.date.start)),
+            end: startOfDay(new Date(part.activity.date.end)),
+            title: part.activity.name,
+            _id: part.activity.event._id,
+            color: getColorByDate(part.activity.date)
+          };
+        });
+        this.groupedEvents = this.groupParticipationByEvent(participation);
+        this.loading = false;
       });
-      this.groupedEvents = this.groupParticipationByEvent(participation);
-      this.loading = false;
-    });
   }
 
   private groupParticipationByEvent(participation): EventInterface[] {

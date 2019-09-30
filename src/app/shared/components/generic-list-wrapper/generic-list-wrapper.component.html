@@ -1,0 +1,11 @@
+<div *ngIf="!loading; else loader">
+  <div class="results" *ngIf="items && items.length; else emptyList">
+    <ng-content></ng-content>
+  </div>
+  <ng-template #emptyList>
+    {{'No results found! Try again'}}
+  </ng-template>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

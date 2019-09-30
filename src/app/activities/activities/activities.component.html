@@ -1,0 +1,32 @@
+<div class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-3 is-2-widescreen">
+        <h1 class="title mr-4">
+          Activities
+        </h1>
+      </div>
+      <div class="column is-9 is-10-widescreen">
+        Search will be here
+        <!--        <app-events-search-panel class="is-block"></app-events-search-panel>-->
+      </div>
+    </div>
+    <hr/>
+    <div class="columns">
+      <div class="column is-3 is-2-widescreen">
+        Filters will be here
+        <!--        <app-events-filters></app-events-filters>-->
+      </div>
+      <div class="column is-9 is-10-widescreen">
+        <app-activities-search-list [activities]="activities"
+                                    [loading]="loading"
+        ></app-activities-search-list>
+                <app-pagination *ngIf="!loading && activities.length"
+                                [totalCount]="totalCount"
+                                [totalPages]="totalPages"
+                                [type]="'ROUTE'"
+                ></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>
