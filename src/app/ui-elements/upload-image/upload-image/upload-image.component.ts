@@ -11,7 +11,7 @@ export class UploadImageComponent implements OnInit {
 
   @Output() imageUpload: EventEmitter<any> = new EventEmitter();
   @Output() removeImage: EventEmitter<boolean> = new EventEmitter();
-  @ViewChild('inputImageElement') inputImageElement: ElementRef;
+  @ViewChild('inputImageElement', { static: true }) inputImageElement: ElementRef;
 
   formatImage = true;
 

@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'details/:id/activities',
-    loadChildren: '../activities/activities.module#ActivitiesModule',
+    loadChildren: () => import('../activities/activities.module').then(m => m.ActivitiesModule),
     data: {
       allowedRoles: [
         UserRole.ORGANIZATION

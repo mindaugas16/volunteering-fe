@@ -22,7 +22,7 @@ export class TagComponent implements OnInit {
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() rename: EventEmitter<TagInterface> = new EventEmitter();
 
-  @ViewChild('inputElement') inputElement: ElementRef;
+  @ViewChild('inputElement', { static: false }) inputElement: ElementRef;
 
   isRenameEnabled: boolean;
   tagLabel: string;

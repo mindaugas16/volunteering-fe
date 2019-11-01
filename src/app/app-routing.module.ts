@@ -18,28 +18,28 @@ const routes: Routes = [
   {
     path: 'auth',
     canActivate: [AuthGuard],
-    loadChildren: './auth/auth.module#AuthModule'
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'profile',
     canActivate: [UserGuard],
-    loadChildren: './profile/profile.module#ProfileModule'
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
   },
   {
     path: 'events',
-    loadChildren: './events/events.module#EventsModule'
+    loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
   },
   {
     path: 'activities',
-    loadChildren: './activities/activities.module#ActivitiesModule'
+    loadChildren: () => import('./activities/activities.module').then(m => m.ActivitiesModule)
   },
   {
     path: 'organizations',
-    loadChildren: './organizations/organizations.module#OrganizationsModule'
+    loadChildren: () => import('./organizations/organizations.module').then(m => m.OrganizationsModule)
   },
   {
     path: 'search',
-    loadChildren: './global-search/global-search.module#GlobalSearchModule'
+    loadChildren: () => import('./global-search/global-search.module').then(m => m.GlobalSearchModule)
   },
   {
     path: '**',

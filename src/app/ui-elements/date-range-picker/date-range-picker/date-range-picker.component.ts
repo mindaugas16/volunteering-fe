@@ -9,7 +9,7 @@ import { DateRangeInterface } from '../../../activities/models/activity.interfac
   encapsulation: ViewEncapsulation.None
 })
 export class DateRangePickerComponent implements OnInit {
-  @ViewChild('dp') dp;
+  @ViewChild('dp', { static: true }) dp;
   @Input() dateRange: DateRangeInterface;
   @Input() minDate?: Date | string;
   @Input() maxDate?: Date | string;

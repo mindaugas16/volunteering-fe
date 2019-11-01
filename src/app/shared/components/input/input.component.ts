@@ -1,8 +1,7 @@
 import { Component, ContentChild, forwardRef, Input, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputLabelDirective } from './directives/input-label.directive';
-import { ModalHeaderDirective } from '../../../ui-elements/generic-modal/directives/modal-header/modal-header.directive';
 import { InputButtonDirective } from './directives/input-button.directive';
+import { InputLabelDirective } from './directives/input-label.directive';
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -14,12 +13,10 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
-  providers: [
-    CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR
-  ]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
-  @ContentChild(InputLabelDirective, {read: TemplateRef}) inputLabel;
+  @ContentChild(InputLabelDirective, { read: TemplateRef, static: false }) inputLabel;
 
   @Input() type = 'text';
   @Input() label: string;
@@ -30,8 +27,8 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() min: number;
   @Input() showValidations = true;
 
-  @ContentChild(InputLabelDirective, {read: TemplateRef}) labelTemplate;
-  @ContentChild(InputButtonDirective, {read: TemplateRef}) buttonTemplate;
+  @ContentChild(InputLabelDirective, { read: TemplateRef, static: false }) labelTemplate;
+  @ContentChild(InputButtonDirective, { read: TemplateRef, static: false }) buttonTemplate;
 
   // The internal data model
   private innerValue: any = '';
@@ -54,14 +51,16 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   isInvalid() {
-    return this.showValidations && this.formControl.invalid && (this.formControl.dirty || this.formControl.touched);
+    return (
+      this.showValidations &&
+      this.formControl.invalid &&
+      (this.formControl.dirty || this.formControl.touched)
+    );
   }
 
   writeValue(value: any) {

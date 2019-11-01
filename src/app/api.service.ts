@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   get(path, params?, responseType?, headers?): Observable<any> {
     return this.request('GET', path, params, null, headers, responseType);
@@ -32,17 +31,19 @@ export class ApiService {
   }
 
   private request(method, path, params?, body?, headers?, responseType?) {
-    return this.http.request(method, environment.api + path, {params, body, headers, responseType}).pipe(
-      map(
-        res => {
-          return res;
-        },
-        err => {
-          this.handleError(err);
-          return err;
-        }
-      )
-    );
+    return this.http
+      .request(method, environment.api + path, { params, body, headers, responseType })
+      .pipe(
+        map(
+          res => {
+            return res;
+          },
+          err => {
+            this.handleError(err);
+            return err;
+          }
+        )
+      );
   }
 
   private handleError(error) {
@@ -52,7 +53,7 @@ export class ApiService {
   }
 
   // @TODO: remove query function after refactore
-  query(body: { query: string, variables?: Object }): Observable<any> {
+  query(body: { query: string; variables?: Object }): Observable<any> {
     return this.http.post(environment.api, body);
   }
 
