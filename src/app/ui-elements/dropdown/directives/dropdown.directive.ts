@@ -16,7 +16,7 @@ import { DropdownToggleDirective } from './dropdown-toggle.directive';
   selector: '[appDropdown]'
 })
 export class DropdownDirective implements OnChanges {
-  @Input('appDropdownIsOpen') appDropdownIsOpen: boolean;
+  @Input() appDropdownIsOpen: boolean;
 
   constructor(private elRef: ElementRef) {}
 

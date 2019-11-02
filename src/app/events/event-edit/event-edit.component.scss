@@ -2,8 +2,32 @@
   text-decoration: none;
 }
 
-.button-custom-field {
-  height: 45px;
-  width: 45px;
-  margin-bottom: 0;
+.button {
+  &--add-custom-field {
+    border: 1px dashed;
+    &:hover {
+      border-color: #276cda !important;
+    }
+  }
+}
+
+.drop-list__drag-item {
+  cursor: move;
+  flex-flow: column;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 15px 0;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.2;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drop-list__drag-item
+  .drop-list.cdk-drop-list-dragging
+  .drop-list__drag-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

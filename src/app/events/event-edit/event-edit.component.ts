@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateEventInterface, EventInterface, EventStatus } from '../event/models/event.interface';
-import { ApiService } from '../../api.service';
-import { EventsService } from '../services/events.service';
-import { DateRangeInterface } from '../../activities/models/activity.interface';
-import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, of } from 'rxjs';
-import { DateFormatHelper } from '../../core/services/helpers/date-format-helper.service';
-import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
-import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-field.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { DateRangeInterface } from '../../activities/models/activity.interface';
+import { DateFormatHelper } from '../../core/services/helpers/date-format-helper.service';
+import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
+import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-field.interface';
+import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { UploaderService } from '../../ui-elements/upload-image/uploader.service';
+import {
+  CreateEventInterface,
+  EventInterface,
+  EventStatus,
+  OrganizationEvent
+} from '../event/models/event.interface';
+import { EventsService } from '../services/events.service';
 
 const CUSTOM_FIELDS_LIMIT = 4;
 
@@ -38,63 +42,60 @@ export class EventEditComponent implements OnInit {
       city: new FormControl(null),
       country: new FormControl(null),
       zipCode: new FormControl(null)
-    }),
-    customFields: new FormGroup({})
+    })
   });
   eventStatus = EventStatus;
 
   date;
   shouldShowCustomFieldAddForm: boolean;
-  customFields: CustomFieldInterface[] = [];
   customFieldsLimit = CUSTOM_FIELDS_LIMIT;
 
   event: EventInterface;
   breadcrumb: BreadcrumbInterface[] = [];
   image;
   removeImage: boolean;
+  isDirty: boolean;
 
   constructor(
-    private apiService: ApiService,
     private eventsService: EventsService,
-    private activeModal: NgbActiveModal,
     private headerMessageService: HeaderMessageService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     private uploaderService: UploaderService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.route.params.pipe(
-      filter(params => !!params.id),
-      switchMap(params => {
-        return this.eventsService.getEvent(params.id);
-      })
-    ).subscribe(event => {
-      this.event = event;
-      if (this.event) {
-        const {date, location, ...rest} = this.event;
+    this.route.params
+      .pipe(
+        switchMap(params => {
+          if (params.id) {
+            return this.eventsService.getEvent(params.id);
+          }
+          return of(null);
+        })
+      )
+      .subscribe(event => {
+        this.event = event ? event : new OrganizationEvent();
+        const { date, location, ...rest } = this.event;
         this.form.patchValue({
           ...rest,
-          startDate: date.start,
-          endDate: date.end
+          startDate: date ? date.start : null,
+          endDate: date ? date.end : null
         });
-        if (this.event.customFields && this.event.customFields.length) {
-          this.event.customFields.forEach(field => {
-            this.appendCustomField(field);
-          });
-        }
         if (this.event.imagePath) {
           this.image = this.event.imagePath;
         }
         this.breadcrumb = [
-          {title: 'Events', link: ['/events']},
-          {title: this.event.title, link: ['/events', 'details', this.event._id]},
-          {title: 'Edit', link: null}
+          { title: 'Events', link: ['/events'] },
+          { title: this.event.title, link: ['/events', 'details', this.event._id] },
+          { title: 'Edit', link: null }
         ];
-      }
-    });
+
+        if (this.event.customFields && this.event.customFields.length) {
+          this.event.customFields.sort((a, b) => a.position - b.position);
+        }
+      });
   }
 
   onImageChange(file) {
@@ -103,7 +104,7 @@ export class EventEditComponent implements OnInit {
     });
   }
 
-  onDateSelect({start, end}: DateRangeInterface) {
+  onDateSelect({ start, end }: DateRangeInterface) {
     this.form.patchValue({
       startDate: start,
       endDate: end
@@ -118,7 +119,7 @@ export class EventEditComponent implements OnInit {
 
     let uploadObservable = of(this.removeImage ? 'remove' : null);
 
-    const {image, startDate, endDate, ...eventInput} = this.form.value;
+    const { image, startDate, endDate, ...eventInput } = this.form.value;
     eventInput.date = DateFormatHelper.changeDateFormat(startDate, endDate);
     if (eventInput.status) {
       eventInput.status = +eventInput.status;
@@ -128,9 +129,19 @@ export class EventEditComponent implements OnInit {
       uploadObservable = this.uploadImage(image);
     }
 
+    if (this.event.customFields && this.event.customFields.length) {
+      this.event.customFields = this.event.customFields.map(
+        (field: CustomFieldInterface, index: number) => {
+          const { isOpen, ...rest } = field;
+          rest.position = index;
+          return rest;
+        }
+      );
+    }
+
     uploadObservable.subscribe(imagePath => {
       if (this.event) {
-        this.updateEvent(eventInput, imagePath);
+        this.updateEvent({ ...eventInput, customFields: this.event.customFields }, imagePath);
         return;
       }
 
@@ -147,59 +158,62 @@ export class EventEditComponent implements OnInit {
   }
 
   private updateEvent(eventInput: CreateEventInterface, filePath: string) {
-    const {customFields, ...rest} = eventInput;
-    const updateEvent = {...rest, imagePath: filePath, customFields: this.customFields};
+    const { customFields, ...rest } = eventInput;
+    const updateEvent = { ...rest, imagePath: filePath, customFields: this.event.customFields };
 
-    this.eventsService.update(this.event._id, updateEvent).subscribe(event => {
-      this.headerMessageService.show('Event updated successfully', 'SUCCESS');
-      this.router.navigate(['/events', 'details', event._id]);
-    }, () => FormControlsHelperService.invalidateFormControls(this.form));
+    this.eventsService.update(this.event._id, updateEvent).subscribe(
+      event => {
+        this.headerMessageService.show('Event updated successfully', 'SUCCESS');
+        this.router.navigate(['/events', 'details', event._id]);
+      },
+      () => FormControlsHelperService.invalidateFormControls(this.form)
+    );
   }
 
   private createEvent(eventInput: CreateEventInterface, filePath: string) {
-    const {customFields, ...rest} = eventInput;
-    const newEvent = {...rest, imagePath: filePath, customFields: this.customFields};
+    const { customFields, ...rest } = eventInput;
+    const newEvent = { ...rest, imagePath: filePath, customFields: this.event.customFields };
 
-    this.eventsService.createEvent(newEvent).subscribe(event => {
-      this.headerMessageService.show('Event created successfully', 'SUCCESS');
-      this.router.navigate(['/events', 'details', event._id]);
-    }, () => FormControlsHelperService.invalidateFormControls(this.form));
+    this.eventsService.createEvent(newEvent).subscribe(
+      event => {
+        this.headerMessageService.show('Event created successfully', 'SUCCESS');
+        this.router.navigate(['/events', 'details', event._id]);
+      },
+      () => FormControlsHelperService.invalidateFormControls(this.form)
+    );
   }
 
   onAddCustomField(field: CustomFieldInterface): void {
-    const size = this.customFields.length;
+    const size = this.event.customFields.length;
     // Create unique random customField formControlName
     field.id = `customField${size + Math.floor(1000 + Math.random() * 9000)}`;
-    this.appendCustomField(field);
+    field.position = size;
+    this.event.customFields.push(field);
+
     this.hideCustomFieldForm();
   }
 
-  /**
-   * Add custom field to formGroup and to customFields array
-   * @param field
-   */
-  private appendCustomField(field: CustomFieldInterface) {
-    (this.form.get('customFields') as FormGroup).addControl(field.id, new FormControl(field.value));
-    this.customFields.push(field);
-  }
-
-  onRemoveFormControl(id) {
-    const foundIndex = this.customFields.findIndex(c => c.id === id);
-    if (foundIndex > -1) {
-      (this.form.get('customFields') as FormGroup).removeControl(id);
-      this.customFields.splice(foundIndex, 1);
+  onEditCustomField(id: string, field: CustomFieldInterface) {
+    const found = this.event.customFields.find(eventField => eventField.id === id);
+    if (found) {
+      found.title = field.title;
+      found.value = field.value;
+      found.isOpen = false;
     }
   }
 
-  getCustomField(id): CustomFieldInterface {
-    return this.customFields.find(c => c.id === id);
+  onRemoveCustomField(id: string) {
+    const foundIndex = this.event.customFields.findIndex(c => c.id === id);
+    if (foundIndex > -1) {
+      this.event.customFields.splice(foundIndex, 1);
+    }
   }
 
   hideCustomFieldForm() {
     this.shouldShowCustomFieldAddForm = false;
   }
 
-  getCustomFieldsControls() {
-    return (this.form.get('customFields') as any).controls;
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.event.customFields, event.previousIndex, event.currentIndex);
   }
 }

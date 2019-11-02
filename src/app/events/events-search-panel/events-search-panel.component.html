@@ -1,15 +1,13 @@
-<form [formGroup]="form"
-      (submit)="onSearch()"
-      class="is-flex flex-column"
->
+<form [formGroup]="form" (submit)="onSearch()" class="is-flex flex-column">
   <div class="is-flex">
     <div class="auto-grow mr-2">
       <div class="control is-expanded has-icons-left">
-        <input placeholder="Search events by title, description, organization and etc"
-               class="input"
-               formControlName="query"
-               type="text"
-        >
+        <input
+          placeholder="Search events by title, description, organization and etc"
+          class="input"
+          formControlName="query"
+          type="text"
+        />
         <span class="icon is-left">
           <i class="fa fa-search"></i>
         </span>
@@ -18,11 +16,7 @@
 
     <div class="auto-grow mr-4">
       <div class="control is-expanded has-icons-left">
-        <input placeholder="Enter location"
-               class="input"
-               formControlName="location"
-               type="text"
-        >
+        <input placeholder="Enter location" class="input" formControlName="location" type="text" />
         <span class="icon is-left">
           <i class="fa fa-map-marker"></i>
         </span>
@@ -31,14 +25,12 @@
 
     <div class="mr-2">
       <div class="control">
-        <button class="button is-primary"
-                type="submit"
-        >
-          {{'COMMON.SEARCH' | translate}}
+        <button class="button is-primary" type="submit">
+          {{ 'COMMON.SEARCH' | translate }}
         </button>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <div class="control">
         <button class="button is-text"
                 type="button"
@@ -47,6 +39,6 @@
           {{'Reset filters'}}
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </form>

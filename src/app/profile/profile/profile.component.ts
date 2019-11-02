@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '../profile.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserInterface } from '../../auth/user.interface';
 import { TabInterface } from '../../ui-elements/tabs/tab.interface';
+import { ProfileService } from '../profile.service';
 import { UserRole } from '../user-type.enum';
-import { ActivatedRoute, Router } from '@angular/router';
+import { EditProfilePhotoModalComponent } from './edit-profile-photo-modal/edit-profile-photo-modal.component';
 
 enum ProfileTabsEnum {
   PROFILE,
@@ -23,11 +24,11 @@ export class ProfileComponent implements OnInit {
   user: UserInterface;
   tabs: TabInterface[] = [];
 
-  constructor(private profileService: ProfileService) {
-  }
+  constructor(private profileService: ProfileService, private modalService: NgbModal) {}
 
   ngOnInit() {
-    const visibleOnlyForVolunteer = () => [UserRole.ORGANIZATION, UserRole.SPONSOR].indexOf(this.user.role) > -1;
+    const visibleOnlyForVolunteer = () =>
+      [UserRole.ORGANIZATION, UserRole.SPONSOR].indexOf(this.user.role) > -1;
     this.profileService.getUserInfo().subscribe(user => {
       this.user = user;
       this.tabs = [
@@ -56,16 +57,20 @@ export class ProfileComponent implements OnInit {
           icon: 'fa-trophy',
           id: ProfileTabsEnum.ACHIEVEMENTS,
           path: 'achievements',
-          isHidden: this.user && visibleOnlyForVolunteer(),
+          isHidden: this.user && visibleOnlyForVolunteer()
         },
         {
           title: 'Participation',
           icon: 'fa-calendar',
           id: ProfileTabsEnum.PARTICIPATION,
           path: 'participation',
-          isHidden: this.user && visibleOnlyForVolunteer(),
-        },
+          isHidden: this.user && visibleOnlyForVolunteer()
+        }
       ];
     });
+  }
+
+  onProfileImageChange() {
+    this.modalService.open(EditProfilePhotoModalComponent, { windowClass: 'modal is-active' });
   }
 }

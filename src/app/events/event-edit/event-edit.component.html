@@ -3,96 +3,105 @@
     <app-breadcrumb *ngIf="breadcrumb.length" [items]="breadcrumb"></app-breadcrumb>
 
     <h1 class="title">
-      {{event ? 'Edit event' : 'Create new event'}}
+      {{ event ? 'Edit event' : 'Create new event' }}
     </h1>
-    <hr/>
+    <hr />
     <div class="columns">
-
       <div class="column is-three-fifths-desktop is-offset-one-fifth-desktop">
         <form [formGroup]="form">
           <h4 class="title is-5">
-            {{'General information'}}
+            {{ 'General information' }}
           </h4>
-          <app-upload-image [image]="image"
-                            [shouldRemoveImage]="removeImage"
-                            (imageUpload)="onImageChange($event)"
-                            (removeImage)="removeImage = $event"
+          <app-upload-image
+            [image]="image"
+            [shouldRemoveImage]="removeImage"
+            (imageUpload)="onImageChange($event)"
+            (removeImage)="removeImage = $event"
           ></app-upload-image>
-          <app-input class="field"
-                     type="text"
-                     formControlName="title"
-                     [formControl]="form.get('title')"
-                     placeholder="Title"
-                     label="Title"
-                     [required]="true"
+          <app-input
+            class="field"
+            type="text"
+            formControlName="title"
+            [formControl]="form.get('title')"
+            placeholder="Title"
+            label="Title"
+            [required]="true"
           ></app-input>
 
-          <app-input class="field"
-                     type="text"
-                     formControlName="description"
-                     fieldType="textarea"
-                     [formControl]="form.get('description')"
-                     placeholder="Description"
-                     label="Description"
+          <app-input
+            class="field"
+            type="text"
+            formControlName="description"
+            fieldType="textarea"
+            [formControl]="form.get('description')"
+            placeholder="Description"
+            label="Description"
           ></app-input>
           <div class="field">
             <div class="control">
               <label class="label">
-                {{'Event date'}}
+                {{ 'Event date' }}
               </label>
-              <app-date-range-picker [dateRange]="event?.date"
-                                     (dateSelect)="onDateSelect($event)"
+              <app-date-range-picker
+                [dateRange]="event?.date"
+                (dateSelect)="onDateSelect($event)"
               ></app-date-range-picker>
             </div>
           </div>
+          <hr />
           <div formGroupName="location">
             <h4 class="title is-5">
-              {{'Location information'}}
+              {{ 'Location information' }}
             </h4>
-            <app-input class="field"
-                       type="text"
-                       formControlName="title"
-                       [formControl]="form.get('location').get('title')"
-                       placeholder="Title"
-                       label="Title"
+            <app-input
+              class="field"
+              type="text"
+              formControlName="title"
+              [formControl]="form.get('location').get('title')"
+              placeholder="Title"
+              label="Title"
             ></app-input>
-            <app-input class="field"
-                       type="text"
-                       formControlName="address"
-                       [formControl]="form.get('location').get('address')"
-                       placeholder="Address"
-                       label="Address"
+            <app-input
+              class="field"
+              type="text"
+              formControlName="address"
+              [formControl]="form.get('location').get('address')"
+              placeholder="Address"
+              label="Address"
             ></app-input>
             <div class="columns">
-              <app-input class="field column is-half m-0"
-                         type="text"
-                         formControlName="city"
-                         [formControl]="form.get('location').get('city')"
-                         placeholder="City"
-                         label="City"
+              <app-input
+                class="field column is-half m-0"
+                type="text"
+                formControlName="city"
+                [formControl]="form.get('location').get('city')"
+                placeholder="City"
+                label="City"
               ></app-input>
-              <app-input class="field column is-half m-0"
-                         type="text"
-                         formControlName="country"
-                         [formControl]="form.get('location').get('country')"
-                         placeholder="Country"
-                         label="Country"
+              <app-input
+                class="field column is-half m-0"
+                type="text"
+                formControlName="country"
+                [formControl]="form.get('location').get('country')"
+                placeholder="Country"
+                label="Country"
               ></app-input>
             </div>
-            <app-input class="field"
-                       type="number"
-                       formControlName="zipCode"
-                       [formControl]="form.get('location').get('zipCode')"
-                       placeholder="Zip Code"
-                       label="Zip Code"
+            <app-input
+              class="field"
+              type="number"
+              formControlName="zipCode"
+              [formControl]="form.get('location').get('zipCode')"
+              placeholder="Zip Code"
+              label="Zip Code"
             >
             </app-input>
           </div>
-          <hr/>
-          <div formArrayName="customFields">
+          <hr />
+          <div>
             <div class="mb-3 is-flex">
               <h4 class="title is-5 mb-0">
-                {{'Additional information'}}
+                {{ 'Additional information' }}
               </h4>
               <div class="dropdown is-hoverable">
                 <div class="dropdown-trigger">
@@ -104,44 +113,67 @@
                   <div class="dropdown-content">
                     <div class="dropdown-item">
                       Here should be information about <b>custom fields</b>.
-
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div *ngFor="let control of getCustomFieldsControls() | keys">
-
-              <app-input class="field"
-                         type="text"
-                         [formControlName]="control"
-                         [formControl]="form.get('customFields').get(control)"
-                         [placeholder]="getCustomField(control).title"
-                         [label]="getCustomField(control).title"
+            <div class="drop-list" cdkDropList (cdkDropListDropped)="drop($event)">
+              <div
+                *ngFor="let customField of event.customFields"
+                class="drop-list__drag-item is-fullwidth"
+                cdkDrag
               >
-                <ng-template appInputButton>
-                  <button class="button is-text input-button"
-                          (click)="onRemoveFormControl(control)"
-                  >
-                    <span class="icon">
-                      <i class="fa fa-close"></i>
-                    </span>
-                  </button>
+                <div
+                  class="is-flex align-items-center justify-content-between auto-grow"
+                  *ngIf="!customField.isOpen; else editCustomField"
+                >
+                  <div class="is-flex auto-grow">
+                    <b>{{ customField.title }}</b>
+                    : {{ customField.value }}
+                  </div>
+                  <div>
+                    <button
+                      class="button is-text"
+                      (click)="customField.isOpen = true"
+                      appClickStopPropagation
+                    >
+                      <span class="icon">
+                        <i class="fa fa-pencil"></i>
+                      </span>
+                    </button>
+                    <button
+                      class="button is-text"
+                      (click)="onRemoveCustomField(customField.id)"
+                      appClickStopPropagation
+                    >
+                      <span class="icon" (click)="onRemoveCustomField(customField.id)">
+                        <i class="fa fa-close"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <ng-template #editCustomField>
+                  <app-custom-field
+                    [customField]="customField"
+                    (add)="onEditCustomField(customField.id, $event)"
+                    (remove)="customField.isOpen = false"
+                  ></app-custom-field>
                 </ng-template>
-              </app-input>
+              </div>
             </div>
 
-
-            <app-custom-field *ngIf="shouldShowCustomFieldAddForm"
-                              [customFields]="customFields"
-                              (add)="onAddCustomField($event)"
-                              (remove)="hideCustomFieldForm()"
+            <app-custom-field
+              *ngIf="shouldShowCustomFieldAddForm"
+              (add)="onAddCustomField($event)"
+              (remove)="hideCustomFieldForm()"
             ></app-custom-field>
             <div>
-              <button class="button is-link mt-4"
-                      (click)="shouldShowCustomFieldAddForm = true"
-                      [disabled]="customFields.length > customFieldsLimit"
+              <button
+                class="button mt-4 is-fullwidth is-link is-light button--add-custom-field"
+                (click)="shouldShowCustomFieldAddForm = true"
+                [disabled]="event.customFields.length >= customFieldsLimit"
               >
                 <span class="icon">
                   <i class="fa fa-plus"></i>
@@ -150,44 +182,39 @@
                   Add custom field
                 </span>
               </button>
-              <p class="is-size-7" *ngIf="customFields.length > customFieldsLimit">
-                Allowed add max <b>{{customFieldsLimit}}</b> custom fields
+              <p class="is-size-7" *ngIf="event.customFields.length >= customFieldsLimit">
+                Allowed max <b>{{ customFieldsLimit }}</b> custom fields
               </p>
             </div>
           </div>
 
-          <hr/>
+          <hr />
           <div class="is-flex justify-content-between">
-            <div class="select"
-                 [class.is-danger]="form.get('status')?.dirty && form.get('status')?.errors"
+            <div
+              class="select"
+              [class.is-danger]="form.get('status')?.dirty && form.get('status')?.errors"
             >
               <select formControlName="status">
-                <option [value]="null">Select status...</option>
                 <option [value]="eventStatus.DRAFT">Draft</option>
                 <option [value]="eventStatus.PUBLIC">Public</option>
                 <option [value]="eventStatus.PRIVATE">Private</option>
               </select>
-              <div class="help is-danger"
-                   *ngIf="form.get('status')?.dirty && form.get('status')?.errors"
+              <div
+                class="help is-danger"
+                *ngIf="form.get('status')?.dirty && form.get('status')?.errors"
               >
                 <span>
-                  {{'Event status is required'}}
+                  {{ 'Event status is required' }}
                 </span>
               </div>
             </div>
             <div class="buttons">
-              <button class="button is-text"
-                      (click)="onCancel()"
-              >
-                {{'COMMON.CANCEL' | translate}}
+              <button class="button is-text" (click)="onCancel()">
+                {{ (event ? 'COMMON.RESET' : 'COMMON.CANCEL') | translate }}
               </button>
-              <button class="button is-primary"
-                      type="submit"
-                      (click)="onSubmit()"
-              >
-                {{(event ? 'COMMON.SAVE' : 'COMMON.CREATE') | translate}}
+              <button class="button is-primary" type="submit" (click)="onSubmit()">
+                {{ (event ? 'COMMON.SAVE' : 'COMMON.CREATE') | translate }}
               </button>
-
             </div>
           </div>
         </form>

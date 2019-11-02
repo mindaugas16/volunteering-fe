@@ -9,16 +9,15 @@ import { TabInterface } from '../tab.interface';
 export class TabsComponent implements OnInit {
   @Input() tabs: TabInterface[];
   @Input() selected: TabInterface;
+  @Input() extraClasses: string;
 
   @Output() select: EventEmitter<TabInterface> = new EventEmitter();
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     if (!this.selected && this.tabs && this.tabs.length) {
       // this.onTabSelect(this.tabs[0]);
     }
   }
-
 }

@@ -11,11 +11,10 @@ export class EventsSearchPanelComponent implements OnInit {
   showFilters: boolean;
   form: FormGroup = new FormGroup({
     query: new FormControl(''),
-    location: new FormControl(''),
+    location: new FormControl('')
   });
 
-  constructor(private eventsSearchService: EventsSearchService) {
-  }
+  constructor(private eventsSearchService: EventsSearchService) {}
 
   ngOnInit() {
     this.eventsSearchService.getSearchQueryAsObservable().subscribe(params => {
@@ -27,12 +26,15 @@ export class EventsSearchPanelComponent implements OnInit {
 
   onSearch() {
     const values = this.form.value;
-    Object.keys(values).forEach((key) => (values[key] === '') ? values[key] = null : null);
+    Object.keys(values).forEach(key => (values[key] === '' ? (values[key] = null) : null));
     this.eventsSearchService.search(values);
   }
 
   onResetFilters() {
     this.eventsSearchService.resetFilters();
+    this.form.reset({
+      query: '',
+      location: ''
+    });
   }
-
 }

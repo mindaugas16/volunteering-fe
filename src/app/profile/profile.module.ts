@@ -1,24 +1,26 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent } from './profile/profile.component';
-import { ProfileRoutingModule } from './profile-routing.module';
-import { SharedModule } from '../shared/shared.module';
-import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormMessageModule } from '../ui-elements/form-message/form-message.module';
-import { TabsModule } from '../ui-elements/tabs/tabs.module';
-import { MyOrganizationComponent } from './my-organization/my-organization.component';
 import { AuthModule } from '../auth/auth.module';
-import { OrganizationEditModule } from '../organizations/organization-edit/organization-edit.module';
-import { EventsModule } from '../events/events.module';
-import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
-import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
-import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
-import { ParticipationComponent } from './participation/participation.component';
-import { CalendarModule } from '../ui-elements/calendar/calendar.module';
 import { EventEditComponent } from '../events/event-edit/event-edit.component';
+import { EventsModule } from '../events/events.module';
+import { OrganizationEditModule } from '../organizations/organization-edit/organization-edit.module';
+import { SharedModule } from '../shared/shared.module';
+import { CalendarModule } from '../ui-elements/calendar/calendar.module';
+import { FormMessageModule } from '../ui-elements/form-message/form-message.module';
 import { PaginationModule } from '../ui-elements/pagination/pagination.module';
+import { TabsModule } from '../ui-elements/tabs/tabs.module';
+import { GenericModalModule } from './../ui-elements/generic-modal/generic-modal.module';
+import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
+import { MyOrganizationComponent } from './my-organization/my-organization.component';
+import { ParticipationComponent } from './participation/participation.component';
+import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
+import { ProfileOrganizationsComponent } from './profile-organizations/profile-organizations.component';
+import { ProfileRoutingModule } from './profile-routing.module';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
+import { EditProfilePhotoModalComponent } from './profile/edit-profile-photo-modal/edit-profile-photo-modal.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { PaginationModule } from '../ui-elements/pagination/pagination.module';
     ProfileSettingsComponent,
     ProfileOrganizationsComponent,
     ProfileAchievementsComponent,
-    ParticipationComponent
+    ParticipationComponent,
+    EditProfilePhotoModalComponent
   ],
   imports: [
     CommonModule,
@@ -44,10 +47,8 @@ import { PaginationModule } from '../ui-elements/pagination/pagination.module';
     EventsModule,
     CalendarModule,
     PaginationModule,
+    GenericModalModule
   ],
-  entryComponents: [
-    EventEditComponent
-  ]
+  entryComponents: [EventEditComponent, EditProfilePhotoModalComponent]
 })
-export class ProfileModule {
-}
+export class ProfileModule {}

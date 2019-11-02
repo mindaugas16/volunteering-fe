@@ -1,12 +1,34 @@
+<div class="section profile-background pb-0">
+  <div class="container">
+    <div class="is-flex align-items-center">
+      <div class="logo-wrapper mr-4">
+        <figure
+          class="logo-wrapper__image"
+          [style.background-image]="
+            'url(' +
+            (imagePath ? imagePath : 'https://bulma.io/images/placeholders/1280x960.png') +
+            ')'
+          "
+        ></figure>
+        <button
+          class="button is-primary logo-wrapper__edit-button"
+          (click)="onProfileImageChange()"
+        >
+          Change
+        </button>
+      </div>
+
+      <h2 class="title is-2">{{ user?.firstName }} {{ user?.lastName }}</h2>
+    </div>
+    <app-tabs
+      [tabs]="tabs"
+      class="is-block mb-4"
+      [extraClasses]="'is-right is-boxed is-borderless'"
+    ></app-tabs>
+  </div>
+</div>
 <div class="section">
   <div class="container" *ngIf="user">
-    <h2 class="title is-2">
-      {{user.firstName}} {{user.lastName}}
-    </h2>
-    <hr/>
-    <app-tabs [tabs]="tabs"
-              class="is-block mb-4"
-    ></app-tabs>
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,0 +1,12 @@
+.tabs {
+  &.is-borderless {
+    li:hover > a {
+      color: black;
+    }
+
+    ul,
+    li > a {
+      border: 0;
+    }
+  }
+}

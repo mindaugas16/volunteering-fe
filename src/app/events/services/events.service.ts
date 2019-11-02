@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  CreateEventInterface,
-  EventInterface,
-  EventsResponseInterface,
-  EventStatus
-} from '../event/models/event.interface';
 import { ApiService } from '../../api.service';
 import { TagInterface } from '../../ui-elements/tag/tag.interface';
-import { environment } from '../../../environments/environment';
+import { CreateEventInterface, EventInterface } from '../event/models/event.interface';
 import { SearchParamsInterface } from './events-search/search-params.interface';
 
 @Injectable({
@@ -18,11 +12,7 @@ import { SearchParamsInterface } from './events-search/search-params.interface';
 export class EventsService {
   constructor(private apiService: ApiService) {}
 
-  getEvents(
-    params?: SearchParamsInterface,
-    orderBy?: string,
-    statuses?: EventStatus[]
-  ): Observable<any> {
+  getEvents(params?: SearchParamsInterface, orderBy?: string): Observable<any> {
     return this.apiService.get('events', params);
   }
 
@@ -31,40 +21,11 @@ export class EventsService {
   }
 
   update(id: string, event: CreateEventInterface): Observable<any> {
-    return this.apiService
-      .query({
-        query: `
-        mutation updateEvent($id: ID!, $eventInput: EventInput!) {
-            updateEvent(id: $id, eventInput: $eventInput) {
-               _id
-             }
-          }`,
-        variables: {
-          id,
-          eventInput: event
-        }
-      })
-      .pipe(map(({ data }) => data.updateEvent));
+    return this.apiService.patch(`events/${id}/edit`, event);
   }
 
   createEvent(event: CreateEventInterface): Observable<EventInterface> {
-    return this.apiService
-      .query({
-        query: `
-        mutation createEvent($eventInput: EventInput!) {
-            createEvent(eventInput: $eventInput) {
-               _id
-               customFields {
-                title
-                value
-               }
-             }
-          }`,
-        variables: {
-          eventInput: event
-        }
-      })
-      .pipe(map(({ data }) => data.createEvent));
+    return this.apiService.post(`events/create`, event);
   }
 
   addTags(id: string, { label }: TagInterface): Observable<any> {

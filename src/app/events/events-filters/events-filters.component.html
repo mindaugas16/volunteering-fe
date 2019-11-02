@@ -2,31 +2,42 @@
   <ng-container *ngIf="!loading; else loader">
     <div class="menu mb-2">
       <h2 class="menu-label">
-        {{'Tags'}}
+        <div class="is-flex align-items-center justify-content-between">
+          <span>{{ 'Tags' }}</span>
+          <a class="delete is-small" (click)="onClearTags()" *ngIf="selectedTags.length"></a>
+        </div>
       </h2>
       <div class="menu-list">
-        <app-tag class="mr-2 mb-2"
-                 *ngFor="let tag of (relatedTags | slice:0:10)"
-                 [isActive]="isSelected(selectedTags, tag.label)"
-                 (click)="onTagSelect(tag.label)"
-                 [tag]="tag"
+        <app-tag
+          class="mr-2 mb-2"
+          *ngFor="let tag of relatedTags | slice: 0:10"
+          [isActive]="isSelected(selectedTags, tag.label)"
+          (click)="onTagSelect(tag.label)"
+          [tag]="tag"
         ></app-tag>
       </div>
     </div>
     <div class="menu">
       <h2 class="menu-label">
-        {{'Organizations'}}
+        <div class="is-flex align-items-center justify-content-between">
+          <span>
+            {{ 'Organizations' }}
+          </span>
+          <a
+            class="delete is-small"
+            (click)="onClearOrganizations()"
+            *ngIf="selectedOrganizations.length"
+          ></a>
+        </div>
       </h2>
       <ul class="menu-list">
-        <li *ngFor="let org of (organizations | slice:0:10)"
-            class="mb-2"
-        >
-          <a class="filter is-flex justify-content-between"
-             [class.is-active]="isSelected(selectedOrganizations, org.organizationName)"
-             (click)="onOrganizationSelect(org.organizationName)"
+        <li *ngFor="let org of organizations | slice: 0:10" class="mb-2">
+          <a
+            class="filter is-flex justify-content-between"
+            [class.is-active]="isSelected(selectedOrganizations, org.organizationName)"
+            (click)="onOrganizationSelect(org.organizationName)"
           >
-            <span>{{org.organizationName}}</span>
-            <a class="delete" *ngIf="isSelected(selectedOrganizations, org.organizationName)"></a>
+            <span>{{ org.organizationName }}</span>
           </a>
         </li>
       </ul>

@@ -1,8 +1,10 @@
 <div class="card">
   <div class="card-header">
-    <a class="card-image"
-       [routerLink]="['details', event._id]"
-       [style.background-image]="'url('+(event.imagePath)+')'">
+    <a
+      class="card-image"
+      [routerLink]="['details', event._id]"
+      [style.background-image]="'url(' + event.imagePath + ')'"
+    >
       <!--      <a class="icon is-large card-star is-primary"-->
       <!--         appClickStopPropagation-->
       <!--      >-->
@@ -14,42 +16,38 @@
     <div>
       <a [routerLink]="['details', event._id]">
         <div class="card-title">
-          {{event.title}}
+          {{ event.title }}
         </div>
       </a>
       <div class="card-meta mt-2">
         <div class="card-meta__block">
           <i class="fa fa-calendar mr-2"></i>
-          <span>{{event.date.start | date}}</span>
-          <span *ngIf="event.date.end && event.date.end > event.date.start">- {{event.date.end | date:'MMM dd'}}</span>
+          <span>{{ event.date.start | date }}</span>
+          <span *ngIf="event.date.end && event.date.end > event.date.start"
+            >- {{ event.date.end | date: 'MMM dd' }}</span
+          >
         </div>
         <div class="card-meta__block">
           <i class="fa fa-users mr-2"></i>
           <a [routerLink]="['/organizations', 'details', event.organization._id]">
-            {{event.organization.organizationName}}
+            {{ event.organization.organizationName }}
           </a>
         </div>
         <div *ngIf="event?.location" class="card-meta__block">
           <i class="fa fa-map-marker mr-2"></i>
-          <span>
-            {{event.location?.address}} {{event.location?.city}}
-          </span>
+          <span> {{ event.location?.address }} {{ event.location?.city }} </span>
         </div>
       </div>
     </div>
     <div class="card-description is-hidden-mobile">
       <p>
-        {{event.description | cutSentence:100}}
+        {{ event.description | cutSentence: 100 }}
       </p>
     </div>
   </div>
-  <div class="card-footer"
-       *appHasPermission="{condition: actionsRules?.JOIN_EVENT, args: {}}"
-  >
-    <a class="button is-primary is-outlined"
-       [routerLink]="['details', event._id]"
-    >
-      {{'Join now'}}
+  <div class="card-footer" *appHasPermission="{ condition: actionsRules?.JOIN_EVENT, args: {} }">
+    <a class="button is-primary is-outlined" [routerLink]="['details', event._id]">
+      {{ 'Join now' }}
     </a>
   </div>
 </div>

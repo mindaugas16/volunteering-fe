@@ -2,92 +2,94 @@
   <form *ngIf="form" [formGroup]="form">
     <div formGroupName="general">
       <h4 class="is-4 title">
-        {{'General'}}
+        {{ 'General' }}
       </h4>
-      <app-upload-image [image]="image"
-                        [shouldRemoveImage]="removeImage"
-                        (imageUpload)="onImageChange($event)"
-                        (removeImage)="removeImage = $event"
-      ></app-upload-image>
-      <app-input class="field"
-                 type="text"
-                 formControlName="organizationName"
-                 [formControl]="form.get('general').get('organizationName')"
-                 placeholder="Organization name"
-                 label="Organization name"
+      <app-input
+        class="field"
+        type="text"
+        formControlName="organizationName"
+        [formControl]="form.get('general').get('organizationName')"
+        placeholder="Organization name"
+        label="Organization name"
       ></app-input>
 
-      <app-input class="field"
-                 fieldType="textarea"
-                 type="text"
-                 formControlName="description"
-                 [formControl]="form.get('general').get('description')"
-                 placeholder="Description"
-                 label="Description"
+      <app-input
+        class="field"
+        fieldType="textarea"
+        type="text"
+        formControlName="description"
+        [formControl]="form.get('general').get('description')"
+        placeholder="Description"
+        label="Description"
       ></app-input>
 
-      <app-input class="field"
-                 type="text"
-                 formControlName="organizationWebsite"
-                 [formControl]="form.get('general').get('organizationWebsite')"
-                 placeholder="http://www.example.com/"
-                 label="Organization website"
+      <app-input
+        class="field"
+        type="text"
+        formControlName="organizationWebsite"
+        [formControl]="form.get('general').get('organizationWebsite')"
+        placeholder="http://www.example.com/"
+        label="Organization website"
       ></app-input>
     </div>
-    <hr/>
+    <hr />
     <div formGroupName="location">
       <h4 class="is-4 title">
-        {{'Location'}}
+        {{ 'Location' }}
       </h4>
-      <app-input class="field"
-                 type="text"
-                 formControlName="title"
-                 [formControl]="form.get('location').get('title')"
-                 placeholder="Title"
-                 label="Title"
+      <app-input
+        class="field"
+        type="text"
+        formControlName="title"
+        [formControl]="form.get('location').get('title')"
+        placeholder="Title"
+        label="Title"
       ></app-input>
       <div class="columns">
         <div class="column">
-          <app-input class="field"
-                     type="text"
-                     formControlName="city"
-                     [formControl]="form.get('location').get('city')"
-                     placeholder="City"
-                     label="City"
+          <app-input
+            class="field"
+            type="text"
+            formControlName="city"
+            [formControl]="form.get('location').get('city')"
+            placeholder="City"
+            label="City"
           ></app-input>
         </div>
         <div class="column">
-          <app-input class="field"
-                     type="text"
-                     formControlName="address"
-                     [formControl]="form.get('location').get('address')"
-                     placeholder="Address"
-                     label="Address"
+          <app-input
+            class="field"
+            type="text"
+            formControlName="address"
+            [formControl]="form.get('location').get('address')"
+            placeholder="Address"
+            label="Address"
           ></app-input>
         </div>
       </div>
 
       <div class="columns">
         <div class="column">
-          <app-input class="field"
-                     type="text"
-                     formControlName="country"
-                     [formControl]="form.get('location').get('country')"
-                     placeholder="Country"
-                     label="Country"
+          <app-input
+            class="field"
+            type="text"
+            formControlName="country"
+            [formControl]="form.get('location').get('country')"
+            placeholder="Country"
+            label="Country"
           ></app-input>
         </div>
         <div class="column">
-          <app-input class="field"
-                     type="text"
-                     formControlName="zipCode"
-                     [formControl]="form.get('location').get('zipCode')"
-                     placeholder="Zip Code"
-                     label="Zip Code"
+          <app-input
+            class="field"
+            type="text"
+            formControlName="zipCode"
+            [formControl]="form.get('location').get('zipCode')"
+            placeholder="Zip Code"
+            label="Zip Code"
           ></app-input>
         </div>
       </div>
-
     </div>
   </form>
 </ng-container>

@@ -5,4 +5,5 @@ export interface SearchParamsInterface extends Params {
   location?: string;
   organizationIds?: string;
   page?: number;
+  statuses?: string;
 }

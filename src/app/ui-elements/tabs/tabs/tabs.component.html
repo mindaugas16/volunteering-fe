@@ -1,9 +1,13 @@
-<div class="tabs">
+<div class="tabs" [ngClass]="extraClasses">
   <ul>
     <ng-container *ngFor="let tab of tabs">
-      <li *ngIf="tab.path && !tab.isHidden" [routerLink]="tab.path" [routerLinkActive]="'is-active'">
+      <li
+        *ngIf="tab.path && !tab.isHidden"
+        [routerLink]="tab.path"
+        [routerLinkActive]="'is-active'"
+      >
         <a>
-          <ng-container *ngTemplateOutlet="tabButton; context: {$implicit: tab}"></ng-container>
+          <ng-container *ngTemplateOutlet="tabButton; context: { $implicit: tab }"></ng-container>
         </a>
       </li>
     </ng-container>
@@ -12,10 +16,9 @@
 
 <ng-content></ng-content>
 
-
 <ng-template #tabButton let-tab>
   <span class="icon is-small" *ngIf="tab?.icon">
     <i class="fa" [ngClass]="tab?.icon" aria-hidden="true"></i>
   </span>
-  <span>{{tab?.title}}</span>
+  <span>{{ tab?.title }}</span>
 </ng-template>
