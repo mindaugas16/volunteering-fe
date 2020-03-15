@@ -1,43 +1,42 @@
 <div class="field">
   <label class="label">
-    {{'Image'}}
+    {{ 'Image' }}
   </label>
   <div class="is-flex-desktop">
-    <app-logo [imagePath]="image"
-              [formatImage]="formatImage"
+    <app-logo
+      [imagePath]="formatImage ? (image | imagePath) : image"
+      [formatImage]="formatImage"
     ></app-logo>
     <div class="field is-grouped mt-4">
       <div class="control">
         <div class="field">
           <div class="file is-primary">
             <label class="file-label">
-              <input class="file-input"
-                     #inputImageElement
-                     type="file"
-                     accept="image/*"
-                     (change)="onFileChange($event)"
-              >
+              <input
+                class="file-input"
+                #inputImageElement
+                type="file"
+                accept="image/*"
+                (change)="onFileChange($event)"
+              />
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fa fa-upload"></i>
                 </span>
                 <span class="file-label">
-                  {{'Select image'}}
+                  {{ 'Select image' }}
                 </span>
               </span>
             </label>
           </div>
         </div>
       </div>
-      <button class="button is-warning"
-              *ngIf="image"
-              (click)="onRemoveImage()"
-      >
+      <button class="button is-warning" *ngIf="image" (click)="onRemoveImage()">
         <span class="file-icon">
           <i class="fa fa-trash"></i>
         </span>
         <span>
-          {{'Remove'}}
+          {{ 'Remove' }}
         </span>
       </button>
     </div>

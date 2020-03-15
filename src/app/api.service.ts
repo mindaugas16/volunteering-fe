@@ -58,6 +58,6 @@ export class ApiService {
   }
 
   upload(body: FormData) {
-    return this.http.post(`${environment.apiRest}upload`, body);
+    return this.http.post(`${environment.api}files/upload`, body);
   }
 }

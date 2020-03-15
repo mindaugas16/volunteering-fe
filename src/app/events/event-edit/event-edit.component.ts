@@ -1,5 +1,4 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,15 +9,10 @@ import { DateFormatHelper } from '../../core/services/helpers/date-format-helper
 import { FormControlsHelperService } from '../../core/services/helpers/form-controls-helper.service';
 import { BreadcrumbInterface } from '../../ui-elements/breadcrumb/breadcrumb.interface';
 import { CustomFieldInterface } from '../../ui-elements/custom-field/custom-field.interface';
-import { HeaderMessageService } from '../../ui-elements/header-message/header-message.service';
 import { UploaderService } from '../../ui-elements/upload-image/uploader.service';
-import {
-  CreateEventInterface,
-  EventInterface,
-  EventStatus,
-  OrganizationEvent
-} from '../event/models/event.interface';
+import { EventInterface, EventStatus, OrganizationEvent } from '../event/models/event.interface';
 import { EventsService } from '../services/events.service';
+import { HeaderMessageService } from './../../ui-elements/header-message/header-message.service';
 
 const CUSTOM_FIELDS_LIMIT = 4;
 
@@ -34,7 +28,7 @@ export class EventEditComponent implements OnInit {
     startDate: new FormControl(null, []),
     endDate: new FormControl(0, []),
     image: new FormControl(null),
-    status: new FormControl(null, Validators.required),
+    status: new FormControl(EventStatus.DRAFT, Validators.required),
     location: new FormGroup({
       title: new FormControl(null),
       address: new FormControl(null),
@@ -52,7 +46,6 @@ export class EventEditComponent implements OnInit {
 
   event: EventInterface;
   breadcrumb: BreadcrumbInterface[] = [];
-  image;
   removeImage: boolean;
   isDirty: boolean;
 
@@ -61,7 +54,6 @@ export class EventEditComponent implements OnInit {
     private headerMessageService: HeaderMessageService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
     private uploaderService: UploaderService
   ) {}
 
@@ -76,26 +68,34 @@ export class EventEditComponent implements OnInit {
         })
       )
       .subscribe(event => {
-        this.event = event ? event : new OrganizationEvent();
-        const { date, location, ...rest } = this.event;
-        this.form.patchValue({
-          ...rest,
-          startDate: date ? date.start : null,
-          endDate: date ? date.end : null
-        });
-        if (this.event.imagePath) {
-          this.image = this.event.imagePath;
+        this.event = event || new OrganizationEvent();
+
+        this.initForm();
+
+        this.breadcrumb = [{ title: 'Events', link: ['/events'] }];
+
+        if (this.event._id) {
+          this.breadcrumb.push(
+            { title: this.event.title, link: ['/events', 'details', this.event._id] },
+            { title: 'Edit' }
+          );
+        } else {
+          this.breadcrumb.push({ title: 'Create' });
         }
-        this.breadcrumb = [
-          { title: 'Events', link: ['/events'] },
-          { title: this.event.title, link: ['/events', 'details', this.event._id] },
-          { title: 'Edit', link: null }
-        ];
 
         if (this.event.customFields && this.event.customFields.length) {
           this.event.customFields.sort((a, b) => a.position - b.position);
         }
       });
+  }
+
+  private initForm() {
+    const { date, location, ...rest } = this.event;
+    this.form.patchValue({
+      ...rest,
+      startDate: date ? date.start : null,
+      endDate: date ? date.end : null
+    });
   }
 
   onImageChange(file) {
@@ -114,10 +114,11 @@ export class EventEditComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) {
       FormControlsHelperService.invalidateFormControls(this.form);
+      this.scrollToTop();
       return;
     }
 
-    let uploadObservable = of(this.removeImage ? 'remove' : null);
+    let uploadObservable = of(this.removeImage ? null : this.event.imagePath);
 
     const { image, startDate, endDate, ...eventInput } = this.form.value;
     eventInput.date = DateFormatHelper.changeDateFormat(startDate, endDate);
@@ -140,12 +141,23 @@ export class EventEditComponent implements OnInit {
     }
 
     uploadObservable.subscribe(imagePath => {
-      if (this.event) {
-        this.updateEvent({ ...eventInput, customFields: this.event.customFields }, imagePath);
-        return;
+      const { customFields, ...rest } = eventInput;
+      const body = { ...rest, imagePath, customFields: this.event.customFields };
+
+      let observable = this.eventsService.createEvent(body);
+      if (this.event._id) {
+        observable = this.eventsService.update(this.event._id, body);
       }
 
-      this.createEvent(eventInput, imagePath);
+      observable.subscribe(
+        event => {
+          this.router.navigate(['/events', 'details', event._id]);
+        },
+        ({ error }) => {
+          FormControlsHelperService.invalidateControlsByErrors(this.form, error.data);
+          this.scrollToTop();
+        }
+      );
     });
   }
 
@@ -153,34 +165,22 @@ export class EventEditComponent implements OnInit {
     return this.uploaderService.upload(image);
   }
 
-  onCancel() {
-    this.location.back();
+  onReset() {
+    const { date, location, ...rest } = this.event;
+    this.form.reset({
+      ...rest,
+      startDate: date ? date.start : null,
+      endDate: date ? date.end : null
+    });
+    window.scrollTo({ top: 0 });
+    this.headerMessageService.show('Form was reseted succesfully', 'SUCCESS', {
+      closeable: true,
+      closeAfter: 2000
+    });
   }
 
-  private updateEvent(eventInput: CreateEventInterface, filePath: string) {
-    const { customFields, ...rest } = eventInput;
-    const updateEvent = { ...rest, imagePath: filePath, customFields: this.event.customFields };
-
-    this.eventsService.update(this.event._id, updateEvent).subscribe(
-      event => {
-        this.headerMessageService.show('Event updated successfully', 'SUCCESS');
-        this.router.navigate(['/events', 'details', event._id]);
-      },
-      () => FormControlsHelperService.invalidateFormControls(this.form)
-    );
-  }
-
-  private createEvent(eventInput: CreateEventInterface, filePath: string) {
-    const { customFields, ...rest } = eventInput;
-    const newEvent = { ...rest, imagePath: filePath, customFields: this.event.customFields };
-
-    this.eventsService.createEvent(newEvent).subscribe(
-      event => {
-        this.headerMessageService.show('Event created successfully', 'SUCCESS');
-        this.router.navigate(['/events', 'details', event._id]);
-      },
-      () => FormControlsHelperService.invalidateFormControls(this.form)
-    );
+  private scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   onAddCustomField(field: CustomFieldInterface): void {

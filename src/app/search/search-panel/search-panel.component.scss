@@ -1,3 +1,5 @@
+@import "./src/assets/scss/responsive";
+
 .hero {
   .input {
     box-shadow: none;
@@ -8,6 +10,10 @@
   .box {
     background-color: rgba(255, 255, 255, 0.7);
 
+    @media #{$mobile} {
+      flex-flow: column;
+    }
+
     input, select {
       background: transparent;
     }
@@ -16,7 +22,9 @@
       padding: 15px;
 
       &:not(:last-child):not(:nth-last-child(2)) {
-        border-right: 1px solid lightgray;
+        @media #{$desktop} and #{$tablet} {
+          border-right: 1px solid lightgray;
+        }
       }
     }
   }
@@ -25,8 +33,14 @@
     &.is-fullwidth {
       height: 100%;
       padding: 15px 30px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      @media #{$desktop} {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      @media #{$mobile} {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
     }
   }
 }

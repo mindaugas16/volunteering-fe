@@ -7,13 +7,11 @@ const IMAGE_PLACEHOLDER = 'https://www.cidempanama.org/files/2019/04/import_plac
   providedIn: 'root'
 })
 export class ImagePathFormatterService {
-
-  constructor() {
-  }
+  constructor() {}
 
   static format(imagePath) {
     if (imagePath) {
-      return `${environment.apiRest}assets/images/${imagePath}`;
+      return `${environment.api}assets/images/${imagePath}`;
     }
     return IMAGE_PLACEHOLDER;
   }

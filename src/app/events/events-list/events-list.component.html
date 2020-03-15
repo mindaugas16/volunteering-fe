@@ -2,24 +2,24 @@
   <ng-container [ngSwitch]="viewMode">
     <ng-container *ngSwitchCase="'GRID'">
       <div class="columns is-desktop is-multiline">
-
         <div class="column is-4 is-flex" *ngFor="let event of events">
           <app-events-list-card [event]="event"></app-events-list-card>
         </div>
       </div>
     </ng-container>
     <div class="list is-hoverable" *ngSwitchCase="'LIST'">
-      <div *ngFor="let event of events" class="list-item is-flex align-items-center justify-content-between">
+      <div
+        *ngFor="let event of events"
+        class="list-item is-flex align-items-center justify-content-between"
+      >
         <a [routerLink]="['/events', 'details', event._id]">
           <app-event-status-label [status]="event?.status"></app-event-status-label>
           <span>
-            {{event.title}}
+            {{ event.title }}
           </span>
         </a>
         <div>
-          <a class="icon is-small"
-             [routerLink]="['/events', 'details', event._id, 'edit']"
-          >
+          <a class="icon is-small" [routerLink]="['/events', 'details', event._id, 'edit']">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </a>
         </div>

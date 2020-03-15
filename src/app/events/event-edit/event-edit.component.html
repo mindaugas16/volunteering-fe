@@ -1,9 +1,9 @@
-<div class="section">
+<div class="section" *ngIf="event">
   <div class="container">
     <app-breadcrumb *ngIf="breadcrumb.length" [items]="breadcrumb"></app-breadcrumb>
 
     <h1 class="title">
-      {{ event ? 'Edit event' : 'Create new event' }}
+      {{ event._id ? 'Edit event' : 'Create new event' }}
     </h1>
     <hr />
     <div class="columns">
@@ -13,7 +13,7 @@
             {{ 'General information' }}
           </h4>
           <app-upload-image
-            [image]="image"
+            [image]="event.imagePath"
             [shouldRemoveImage]="removeImage"
             (imageUpload)="onImageChange($event)"
             (removeImage)="removeImage = $event"
@@ -46,6 +46,11 @@
                 [dateRange]="event?.date"
                 (dateSelect)="onDateSelect($event)"
               ></app-date-range-picker>
+            </div>
+            <div class="help is-danger" *ngIf="form.get('startDate').invalid">
+              <span>
+                {{ 'Public event must have event date set' }}
+              </span>
             </div>
           </div>
           <hr />
@@ -149,7 +154,7 @@
                       appClickStopPropagation
                     >
                       <span class="icon" (click)="onRemoveCustomField(customField.id)">
-                        <i class="fa fa-close"></i>
+                        <i class="fa fa-trash"></i>
                       </span>
                     </button>
                   </div>
@@ -190,26 +195,21 @@
 
           <hr />
           <div class="is-flex justify-content-between">
-            <div
-              class="select"
-              [class.is-danger]="form.get('status')?.dirty && form.get('status')?.errors"
-            >
-              <select formControlName="status">
-                <option [value]="eventStatus.DRAFT">Draft</option>
-                <option [value]="eventStatus.PUBLIC">Public</option>
-                <option [value]="eventStatus.PRIVATE">Private</option>
-              </select>
+            <div class="is-flex align-items-center">
+              <span class="mr-2 has-text-weight-semibold">Status:</span>
               <div
-                class="help is-danger"
-                *ngIf="form.get('status')?.dirty && form.get('status')?.errors"
+                class="select"
+                [class.is-danger]="form.get('status')?.dirty && form.get('status')?.errors"
               >
-                <span>
-                  {{ 'Event status is required' }}
-                </span>
+                <select formControlName="status">
+                  <option [value]="eventStatus.DRAFT">Draft</option>
+                  <option [value]="eventStatus.PUBLIC">Public</option>
+                  <option [value]="eventStatus.PRIVATE">Private</option>
+                </select>
               </div>
             </div>
             <div class="buttons">
-              <button class="button is-text" (click)="onCancel()">
+              <button class="button is-text" (click)="onReset()" [disabled]="!form.dirty">
                 {{ (event ? 'COMMON.RESET' : 'COMMON.CANCEL') | translate }}
               </button>
               <button class="button is-primary" type="submit" (click)="onSubmit()">

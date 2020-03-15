@@ -1,4 +1,4 @@
 export interface BreadcrumbInterface {
   title: string;
-  link: string[];
+  link?: string[];
 }

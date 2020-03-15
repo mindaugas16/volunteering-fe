@@ -6,9 +6,7 @@ import { ApiService } from '../../api.service';
   providedIn: 'root'
 })
 export class UploaderService {
-
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   upload(image): Observable<string> {
     if (!image) {
